@@ -89,10 +89,8 @@ This workshop consists of three parts:
  + ...
  
 4 Amazing Applications of R
-
-<center>
-<img src="images/teach.png", width="20%", height="20%">
-</center>
+  + typical analyses sequences in action
+  + ...
 
 <!-- *********** NEW SLIDE ************** -->
 
