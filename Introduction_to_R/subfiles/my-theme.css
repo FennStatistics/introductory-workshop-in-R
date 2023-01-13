@@ -1,0 +1,84 @@
+/* Two-column layout */
+.pull-left2 {
+  float: left;
+  width: 40%;
+}
+.pull-right2 {
+  float: right;
+  width: 60%;
+}
+.pull-left3 {
+  float: left;
+  width: 30%;
+}
+.pull-right3 {
+  float: right;
+  width: 70%;
+}
+.small-code .remark-code { 
+    font-size: 70%;
+}
+.small h1, h2, h3 {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.small .remark-code { 
+    font-size: 70%;
+}
+
+.inline-grey code {
+  background: #F5F5F5; /* lighter */
+  /* background: #e7e8e2; /* darker */
+  border-radius: 2px;
+  padding: 2px;
+} 
+
+/* color of headings + line below*/
+.h1,h2,h3{
+  color:#4969a2;
+  border-bottom:1px solid #CCC;
+  float:left;
+  width:100%;
+  padding-bottom:3px;
+  margin-bottom: 10px;
+}
+
+
+
+.inverse h1, .inverse h2, .inverse h3 {
+  color: #f3f3f3;
+  border-bottom: none;
+}
+
+
+
+
+
+/* color of links */
+a, a > code {
+  color: #e46c31;
+}
+
+/* define slide type heading */
+.heading {
+  background-color: #4969a2;  /* blue background */
+  color: #fff;                /* white text*/
+  text-shadow: 0 0 0;         /* no text shadow */
+  border-bottom: 0;           /* no border */
+  font-size: 350%;            /* large text size */
+  text-align: center;         /* center text */
+}
+
+/* do not show slide number on heading slides */
+.heading .remark-slide-number {
+  display: none;
+}
+
+/* do not show slide number on title slides */
+.title-slide .remark-slide-number {
+  display: none;
+}
+
+/* color code highlighting  */
+.remark-code-line-highlighted     { background-color: #FEBC9C; }

@@ -1,0 +1,1220 @@
+---
+title: "Journey through R"
+subtitle: "A motivating workshop"
+author: "Julius Fenn"
+date: "January 18, 2023"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["default", "default-fonts","subfiles/my-theme.css","subfiles/my-fonts.css","xaringan-themer.css"]
+    nature:
+      highlightStyle: github
+      ratio: "16:9"
+      highlightLines: true
+      countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE, message = FALSE, warning=FALSE}
+options(htmltools.dir.version = FALSE)
+library(fontawesome)
+
+################
+# Packages
+################
+# if packages are not already installed, the function will install and activate them
+usePackage <- function(p) {
+  if (!is.element(p, installed.packages()[,1]))
+    install.packages(p, dep = TRUE)
+  require(p, character.only = TRUE)
+}
+
+usePackage("stargazer") # create tables
+usePackage("Cairo") # environment to save graphics
+usePackage("moments") # skewness, kurtosis
+
+usePackage("epade") # easy plots like bar3d
+# usePackage("gplots")
+
+usePackage("tidyverse")
+
+usePackage("fontawesome") 
+
+usePackage("DT")
+
+
+################
+# Data
+################
+# load data
+dat_twins <- read.csv2("data/tramo1998etal_twins.csv", header = TRUE, sep = ",")
+
+
+# additional variable
+dat_twins$IQ.cat <- cut(x = dat_twins$IQ, breaks = 3, labels = c("below average", "medium", "above average"))
+# Data preparation
+# str(dat_twins)
+
+dat_twins$ID <- factor(dat_twins$ID)
+dat_twins$IDZP <- factor(dat_twins$IDZP)
+dat_twins$GR <- factor(dat_twins$GR)
+dat_twins$GES <- factor(dat_twins$GES)
+dat_twins$CC <- as.numeric(as.character(dat_twins$CC))
+dat_twins$KU <- as.numeric(as.character(dat_twins$KU))
+dat_twins$KG <- as.numeric(as.character(dat_twins$KG))
+dat_twins$OG <- as.numeric(as.character(dat_twins$OG))
+
+
+dat_twins$IQ.cat <- factor(dat_twins$IQ.cat, ordered = TRUE)
+```
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+
+## Workshop
+
+This workshop consists of three parts:
+
+1 Pep talk (*a speech which is intended to encourage someone to make more effort or feel more confident*)
+  + first some basics
+  
+2 Knowledge Management: How to learn these things?!
+  
+3 Introduction to R
+ + Overview
+ + Objects
+ + Data Structures
+ + ...
+ 
+4 Amazing Applications of R
+
+<center>
+<img src="images/teach.png", width="20%", height="20%">
+</center>
+
+<!-- *********** NEW SLIDE ************** -->
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 1: Pep talk
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 1: Pep talk - Some Basics
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Definition: What is statistics?
+
+- Statistics is the science of responsible data analysis.
+- Statistics is a cross-sectional discipline that is characterized by a combination of knowledge in
+  - Mathematics (abstraction, modeling, stochastics, numerics),
+  - Computer science (programming, scientific computing),
+  - Fields of application (life, natural or economic sciences, etc.).
+- Statistical modeling allows the description of stochastic phenomena and thus supports the finding of rational decisions under uncertainty.
+
+
+<br>
+
+Encyclopedia Britannica: Statistics is the art and science of gathering, analyzing and making inferences from data. Originally associated with numbers gathered for governments, the subject now includes large bodies of method and theory.
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## The theoretical master-mind: The Statistician
+
+**Statisticians:** theoretical driven, discussing terms like point estimates, margins of error, confidence intervals and are separated between  “Frequentists” and “Bayesians”
+  - The Frequentist approach to statistics (and testing) is a method which makes predictions on the underlying truths of the experiment, using only data from the current experiment.
+  - The Bayesian approach to statistics is a method that encodes past knowledge of similar experiments into a statistical device, known as prior. This prior is combined with current experiment data to make a conclusion on the test (knowledge accumulation).
+
+
+<center>
+<img src="images/evolutionOfStatistics.jpg", height="250px">
+</center>
+
+<br>
+<a href="https://cxl.com/blog/bayesian-frequentist-ab-testing/" target="_blank">https://cxl.com/blog/bayesian-frequentist-ab-testing/</a>
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## The modern (applied) statistician: The Data Scientist 
+
+**Data scientists:** *data analysis is an art*; a process of data ingest, data transformation, exploratory data analysis, model selection, model evaluation, and data storytelling
+
+<center>
+<img src="images/peng_Epicycles.jpg", height="400px">
+</center>
+
+
+<br>
+see book: Peng, R. D., & Matsui, E. (2016). The Art of Data Science: A Guide for Anyone who Works with Data. Lulu.com. https://bookdown.org/rdpeng/artofdatascience/
+
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 1: Pep talk - The Real Talk
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Why learn programming?!
+
+
+(will I look like this cat?)
+
+<center>
+<img src="https://media4.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif?cid=ecf05e47hmf8l7kqh12kn3rbuh885rmbgzgiyjan1n0v137g&rid=giphy.gif&ct=g", width="30%">
+</center>
+
+
+<br>
+`r fa("fas fa-egg")` `r fa("fas fa-basket-shopping")`: https://osf.io/ytb8q
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## arguable reason: to impress someone
+
+
+<center>
+<img src="images/impressivePieChart.jpg", width="50%">
+</center>
+
+<br>
+*Anyone wants to see impressive R Code in action?!*
+
+
+<br>
+<br>
+<a href="https://stats.stackexchange.com/questions/423/what-is-your-favorite-data-analysis-cartoon" target="_blank">https://stats.stackexchange.com/questions/423/what-is-your-favorite-data-analysis-cartoon</a>
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## better reason: to embrace the complexity of our world - prediction
+
+
+to appreciate uncertainty of our predictions (e.g. prediction paradox)
+<center>
+<img src="images/appreciateUncertainty.jpg", height="250px">
+</center>
+
+> random variables, distributions, expectations, confidence intervall, variance,...
+
+
+<br>
+see book: Silver, N. (2015). The Signal and the Noise: Why So Many Predictions Fail--but Some Don’t. Penguin Publishing Group.
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## better reason: to embrace the complexity of our world - system theory
+
+<center>
+<img src="images/Meadows_Fig31.jpg", height="200px">
+</center>
+
+<center>
+<img src="images/Meadows_Fig32.jpg", height="200px">
+</center>
+
+> computational modelling, simulation...
+
+
+
+<br>
+see book: Meadows, D. H. (2008). Thinking in Systems: A Primer. Chelsea Green Pub.
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## down-to-earth reason: to get a job! - where to study?
+
+- Göttingen: Master of Science (MSc) in Applied Statistics; https://www.uni-goettingen.de/en/421501.html
+- Bamberg:  Masterstudiengang Survey-Statistik; https://www.uni-bamberg.de/miss/
+- Trier: Master of Science (MSc) in Applied Statistics; https://www.uni-trier.de/universitaet/fachbereiche-faecher/fachbereich-iv/faecher/volkswirtschaftslehre/professuren/wirtschafts-und-sozialstatistik/studieren/applied-statistics-msc
+- Economics Master, ...
+
+
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 2: Knowledge Management
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Check out the collection of materials!
+
+
+see: https://docs.google.com/document/d/1Z40Rkux_Ysq15VziCJJH21ca07ipwN52dA_LFYIsZ2g/edit?usp=sharing
+
+<br>
+start reading: 
+- Possible Learning Process
+- Mixed -> Knowledge management and learning
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Getting Things Done - workflow
+
+**workflow:**
+<center>
+<img src="images/GTD_workflow.jpg", height="450px">
+</center>
+
+
+<br>
+see book: Allen, D. (2015). Getting Things Done: The Art of Stress-Free Productivity. Penguin.
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Getting Things Done - projects
+
+**projects:**
+*a project is anything we want to do that requires more than one action step. It’s therefore a mechanism to remember that, when we finish that first action step, there will still be something more to do*
+
+
+1. Set up a project list, which is an index, in no particular order, of all your open loops (to dos).
+
+2. For every project define at least the first next action step (OR waiting for, or calendar action).
+
+3. The Projects list and project plans are typically reviewed in your GTD Weekly Review, ensuring each project has at least one current next action, waiting for, or calendar item.
+
+4. It’s fine to have multiple next actions on any given project, as long as they are parallel and not sequential actions.
+
+5. Projects are listed by the outcome you will achieve when you can mark it as done.
+  + Effective project names motivate you toward the outcome you wish to achieve, and give you clear direction about what you are trying to accomplish.
+  
+<br>
+<br>
+=> that's how you set up a **learning plan**
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## How to learn - One Approach
+
+**Organize your knowledge as a "Zettelkasten":**
+<center>
+<img src="images/Zettelkasten_Luhmann.jpg", height="150px">
+</center>
+
+- use Anki: https://apps.ankiweb.net/
+- organize the "Zettel" by using Obsidian: https://obsidian.md/
+
+
+<center>
+<img src="images/Obsidian_Example.jpg", height="150px">
+</center>
+
+
+Check out YouTube Video SpiegelMining – Reverse Engineering von Spiegel-Online: https://www.youtube.com/watch?v=-YpwsdRKt8Q
+
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 3: Introduction to R
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - Overview
+
+*Setting up your first project*
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Main Literatur
+
+
+* easy readable introduction R and statistics: Field, Andy, Jeremy Miles, and Zoë Field. Discovering Statistics Using R. SAGE, 2012.
+* Resource for improving coding skills and deepening (technical) understanding of R:
+  + Wickham, Hadley. Advanced R, Second Edition. CRC Press, 2019. https://adv-r.hadley.nz/.
+  + Jones, Owen, Robert Maillardet, and Andrew Robinson. Introduction to Scientific Programming and Simulation Using R, Second Edition. CRC Press, 2014. https://nyu-cdsc.github.io/learningr/assets/simulation.pdf.
+  
+  
+<br>
+plus collected materials / workshops...
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Introduction to R
+
+* R is a programming language and tool for statistical computing and data analysis
+* consist of basic functionalities (i.e., objects and functions) as well as packages that allow for robust and efficient coding
+* in R are multiple object-oriented programming (OOP) included like S3, R6, S4, ..., enables *polymorphism* (use the same function form for different types of input)
+
+
+```{r}
+summary(c(TRUE, TRUE, FALSE, TRUE))
+```
+
+
+```{r}
+summary(rnorm(n = 100, mean = 0, sd = 20))
+```
+
+Important:
+* Everything that exists is an object.
+* Everything that happens is a function call.
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Side-Note: Polymorphism?
+
+```{r}
+methods(generic.function = "summary")[1:20]
+```
+
+other important functions are: 
+
+```{r eval=FALSE}
+?typeof
+?class
+?mode
+```
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## set your working directory
+
+* every time when starting R set your working directory (or better create an R Project*)
+
+<br>
+
+<center>
+<img src="images/workingdir_pic.png", width="50%">
+</center>
+
+*you could also use the R API: 
+
+```{r eval=FALSE}
+# sets the directory of location of this script as the current directory
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
+```
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## your workflow
+
+! **modular programming**
+
+<br>
+
+if using R projects: 
+* Create a project folder
+* In this folder, organize your file in subfolders (e.g., data)
+* All filepaths in your script(s) are specified relative to the folder’s top level
+* Thus, your working directory is always this top level
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Side-Note: modular programming?
+
+you separate your programs into separate functional units (modules). Each module does a well-defined task and the modules are called by one-another as needed. Typically, the state of each module is encapsulated and only supposed to be altered by the functions from that module.
+
+<center>
+<img src="images/modular_programming.jpg", height=350px">
+</center>
+
+
+> Modular programming decomposes a large program into modules!
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Side-Note: modular programming - Importance
+
+without following the principle of modular programming (*or sometimes structured programming*) you cannot set up a typical data science project:
+
+
+<center>
+<img src="images/dataAnalysisPipeline.jpg", height=350px">
+</center>
+
+
+see in detail: https://r4ds.had.co.nz/introduction.html
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## RStudio Projects
+
+When using a project, RStudio will automatically set your working directory to the location of the project file.
+
+Additionally, RStudio will
+
+* load .RData files
+* load .RHistory files
+* open source files (scripts)
+* restore RStudio settings
+
+This will particularly benefit your workflow when collaborating with others/sharing your script, for example by using
+
+<center>
+<img src="images/githublogo.jpg", width="30%", heigth="150px">
+</center>
+
+[https://codehorizons.com/making-your-first-github-r-project/](https://codehorizons.com/making-your-first-github-r-project/)
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hands-on: set up a project!
+
+and remember the philosophy of R:
+
+**Everything that exists is an object.**
+
+**Everything that happens is a function call.**
+
+
+<center>
+<img src="images/memeletsdothis.jpg", width="50%">
+</center>
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - Objects
+
+*Using R as a sophisticated calculator*
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## ??????! I am lost
+
+
+Is anyone lost?
+
+<br>
+<br>
+
+
+<center>
+<img src="https://media1.giphy.com/media/1kYx8tpKGbfee2drT7/giphy.gif?cid=790b7611d38e7d9633b5e62c5857c72dfa16e5b014d7e358&rid=giphy.gif&ct=g", width="70%">
+</center>
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## the very basics
+
+
+.pull-left[
+**Explanation:**
+
+1 get help 
+
+2 assignments
+
+3 operators
+
+4 comparisons
+
+5 comments: everything that follows #
+
+<br>
+> case sensitive: usage of CAPITAL and small letters matters!
+
+]
+
+.pull-right[
+**R commands:**
+
+1
+```{r eval=FALSE}
+?topic, help(topic)
+```
+2
+```{r eval=FALSE}
+x <- 5 (recommended), x = 5, 5 -> x
+```
+3
+```{r eval=FALSE}
++, -, *, /, ^, &, &&; see help("+")
+```
+4
+```{r eval=FALSE}
+== , != , >, >= , <, <=; see help("=")
+```
+5
+```{r eval=FALSE}
+# I am a comment
+```
+]
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## basic data structures
+
+
+.pull-left[
+**Explanation:**
+
+1 integer
+
+2 double
+
+3 logical
+
+4 character
+
+5 missings
+]
+
+.pull-right[
+**R commands:**
+
+1
+```{r eval=FALSE}
+1; 2; 301L
+```
+2
+```{r eval=FALSE}
+1.0; .141; 1.23e-3; NaN; Inf; -Inf
+```
+3
+```{r eval=FALSE}
+TRUE; FALSE #(not T, F!)
+```
+4
+```{r eval=FALSE}
+"hello"; "I'm a string"
+```
+5
+```{r eval=FALSE}
+NA
+```
+]
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## basic data structures - construction & coercion I
+
+
+.pull-left[
+**Explanation:**
+
+Coercion: When you call a function with an argument of the wrong type, R will try to coerce values to a different type so that the function will work. R will convert from more specific types to more general types.
+
+
+**R commands:**
+
+you define a vector x as follows
+```{r eval=TRUE}
+x <- c(1, 2, 3, 4, 5)
+x
+typeof(x); class(x)
+```
+]
+
+.pull-right[
+**R commands:**
+
+
+change the second element of the vector to the word “hat.”
+```{r eval=TRUE}
+x[2] <- "hat"
+x
+typeof(x); class(x)
+```
+]
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## basic data structures - construction & coercion II
+
+
+.pull-left[
+**Explanation:**
+
+Coercion: 
+* coerce to a type xxx by as.xxx()
+* check if xxx is a specific type by is.xxx()
+* when combining different data types, they will be coerced to the most flexible type
+* coercion often happens automatically
+
+]
+
+.pull-right[
+**R commands:**
+
+```{r eval=TRUE}
+x <- 1
+is.numeric(x)
+as.logical(x)
+x <- c(FALSE, FALSE, TRUE)
+as.numeric(x)
+```
+]
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## basic data structures - represent nothing
+
+
+.pull-left[
+**Explanation:**
+
+In R, there are three ways to represent 'nothing', but the reason for the missingness of the information can be distinguished:
+* NA: missing sample values, impossible coercion, . . .
+* NaN: undefined results in mathematical operation (e.g. log(-1), 1/0)
+* NULL: null pointer, i.e. pointer in empty/undefined memory
+]
+
+.pull-right[
+**R commands:**
+
+```{r eval=TRUE}
+c(3, NA)
+c(3, 0/0)
+c(3, NULL)
+max(3, NA)
+```
+]
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## basic data structures - Infinity
+
+
+.pull-left[
+**Explanation:**
+
+Some mathematical operations can be performed with Inf and -Inf:
+]
+
+.pull-right[
+**R commands:**
+
+```{r eval=TRUE}
+max(3, Inf)
+min(3, Inf)
+c(Inf + Inf, (-Inf) * Inf, Inf - Inf)
+```
+]
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hands-on: try out the basic data structures
+
+
+The bored people can open the R Reference Card 2.0 and try out more fancy stuff: https://cran.r-project.org/doc/contrib/Baggott-refcard-v2.pdf
+
+
+<center>
+<img src="images/memeletsdothis.jpg", width="50%">
+</center>
+
+<br>
+check out also the folder "additional scripts -> Basic Vocabulary"
+
+
+
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - Data Structures
+
+*We are going to face the 10th dimension (wuuuuhu)*
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## ??????! I am not lost but thirsty
+
+
+Anyone needs a coffee / break?
+
+<br>
+<br>
+
+<center>
+<img src="https://i.giphy.com/media/lXCQNy6VTwmk0/giphy.webp", width="500" height="300">
+</center>
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## complex data types
+
+
+complex data structures in R can be organized by their dimensionality and if all their contents are of the same type (homogeneous), or not (heterogeneous)
+
+.pull-left[
+**homogeneous:**
+
+* 1d atomic vector
+```{r eval=FALSE}
+1:10; c(1,2,3,4,5,6,7,8,9,10)
+```
+
+* 2d matrix
+```{r eval=FALSE}
+matrix(data = NA, nrow = 2, ncol = 3)
+```
+
+* nd array
+```{r eval=FALSE}
+array(1:60, dim=c(3,4,5))
+```
+]
+
+.pull-right[
+**heterogeneous:**
+
+* 1d list
+```{r eval=FALSE}
+list(1:10, letters)
+```
+
+* 2d matrix data frame
+```{r eval=FALSE}
+data.frame(id = 1:26, 
+           letters = letters, 
+           constant = "Hello World")
+```
+]
+
+
+> we need depending on the issue we are facing different database paradigms! 
+
+check out Fireship YouTube Video: https://youtu.be/W2Z7fbCLSTw
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## complex data types - very rare in psychology (social science)
+
+often we have simple relational databases, which are made of
+* **column**, which represents a variable (like ID)
+* **rows**, which represents an instance of data in the data set (like a participant)
+
+
+```{r}
+DT::datatable(dat_twins, options = list(pageLength = 5))
+```
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## every data set should be accompanied by a codebook
+
+Sample size N = 20
+Variables (columns):
+* ID: Identifier of the individual person
+* IDZP: Identifier of the twin pair
+* GR: Birth order
+* GES: Sex (1 = male, 2 = female)
+* OG: Surface area of the cerebral cortex in cm2
+* VG: Volume of the forebrain in cm3
+* CC: Area of the corpus callosum in cm2
+* KU: Circumference of head in cm
+* IQ: Intelligence quotient
+* KG: Body weight in kg
+* additionally IQ.cat: grouped intelligence quotient in 3 groups
+
+
+Study: https://n.neurology.org/content/50/5/1246
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Side-Note: the most scientific study ever
+
+
+Hypothesis: the size and shape of the human forebrain predict intelligence!
+
+<br>
+the mighty correlation matrix:
+
+```{r}
+round(x = cor(x = dat_twins[, c("VG", "CC", "KU", "KG", "IQ")], method = "spearman"), digits = 2)
+```
+
+> What is your opinion?
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## complex data types - the SQL side of the story
+
+
+for huge data sets you could use, for example SQL (Structured Query Language), which is a domain-specific language used in programming and designed for managing data held in a relational database management system; check out: https://www.dbis.informatik.uni-goettingen.de/Mondial/  
+
+> multiple relational databases are matched by a primary key / multiple primary keys
+
+and complex data bases can be depicted for example as entity relationship models: 
+
+
+<center>
+<img src="images/ERMstudent.jpg", height="400px">
+</center>
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## complex data types - add attributes
+
+
+All objects can have arbitrary additional attributes, used to store metadata about the object
+
+* can be thought of as a named list (with unique names); other frequently encountered attributes: "dimnames", "names", "class"(!)
+* can be accessed individually with attr() or all at once (as a list) with attributes()
+* arrays are simply vectors with a "dim"-attribute.
+* factor is a vector with attribute levels
+
+
+
+
+
+.pull-left[
+
+```{r eval=TRUE}
+dat <- data.frame(id = 1:26, 
+           letters = letters, 
+           constant = "Hello World")
+head(dat)
+```
+
+]
+
+.pull-right[
+
+```{r eval=TRUE}
+attr(x = dat, which = "names")
+attributes(x = dat)
+```
+
+]
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hands-on: try out the different data structures
+
+Hint: we have the following data structures: 
+
+.pull-left[
+**homogeneous:**
+
+* 1d atomic vector
+```{r eval=FALSE}
+1:10; c(1,2,3,4,5,6,7,8,9,10)
+```
+* 2d matrix
+```{r eval=FALSE}
+matrix(data = NA, nrow = 2, ncol = 3)
+```
+* nd array
+```{r eval=FALSE}
+array(1:60, dim=c(3,4,5))
+```
+]
+
+.pull-right[
+**heterogeneous:**
+
+* 1d list
+```{r eval=FALSE}
+list(1:10, letters)
+```
+
+* 2d matrix data frame
+```{r eval=FALSE}
+data.frame(id = 1:26, 
+           letters = letters, 
+           constant = "Hello World")
+```
+]
+
+If you want to save your data structures to an R object e.g. write: 
+```{r eval=FALSE}
+myFirstVector <- 1:10
+```
+
+
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - Subsetting
+
+*From the 10th dimension down to spaceship earth again.*
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## ??????! When you had to debug your first error messages
+
+
+I'm a Celebrity … Get Me Out of Here! (also valuable TV show: Get the F*ck out of my House)
+
+<br>
+<br>
+
+<center>
+<img src="https://i.giphy.com/media/JIX9t2j0ZTN9S/giphy.webp", width="400" height="300">
+</center>
+
+
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - Flow control
+
+*That's how adults play Looping Louie!*
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## ??????! Before running circles we need a break right?!
+
+Time to learn p-hacking for experts (in German we say "T-Test rechnen bis die Tasten glühen")
+<br>
+<br>
+
+
+.pull-left[
+
+<center>
+<img src="images/pHackingComic.jpg", height="400px">
+</center>
+
+]
+
+.pull-right[
+
+Instead of p-hacking why not just starting a research program to solve finally this paradox:
+
+<center>
+<img src="https://i.giphy.com/media/xCBE0RPfYsyWI/giphy.webp", width="400" height="300">
+</center>
+]
+
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - Writing Functions
+
+*Statisticians are lazy as hell, that's why we write code only once!*
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## ! Clap your hands we are working faster than the US National Archive
+
+
+*From the invention of computer programming languages up to the mid-1970s, most computer programmers created, edited and stored their programs line by line on punch cards.* 
+
+
+<br>
+<br>
+
+<center>
+<img src="https://i.giphy.com/media/uYnLS3DHApc0KdXywq/giphy.webp", width="400" height="300">
+</center>
+
+
+
+
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - Adding Packages
+
+*Statisticians are lazy as hell, that's why we add packages to avoid writing any code!*
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## !! Smart kids let the computer do the job
+
+
+But please do not pet my cat!!!
+<br>
+
+<center>
+<img src="https://media4.giphy.com/media/d7nd6bdypnYjGT1jP3/giphy.gif?cid=ecf05e47scl4l1loifczg8vwcos4wex8tttk74cypq1tejk2&rid=giphy.gif&ct=g", width="400" height="300">
+</center>
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## add packages
+
+* the R community’s package development means it has the most prewritten functionality of any data analysis software
+
+
+New packages are installed via
+````markdown
+install.packages('package_name') # mind the quotes
+````
+and need to be loaded at the beginning of each session (when using them):
+````markdown
+library(package_name) # no quotes necessary
+````
+<br>
+cool kidz use functions: 
+````markdown
+usePackage <- function(p) {
+  if (!is.element(p, installed.packages()[,1]))
+    install.packages(p, dep = TRUE)
+  require(p, character.only = TRUE)
+}
+usePackage("tidyverse")
+````
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## The (art) gallery of the most impressionistic packages I
+
+
+Psychometric theory in one central package in R called **psych**: [https://personality-project.org/r/book/](https://personality-project.org/r/book/)
+
+<br>
+<br>
+*Psychometrics is that area of psychology that specializes in how to measure what we talk and think about (focused on problems in measurment)*
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## The (art) gallery of the most impressionistic packages II
+
+
+**tidyverse** is a collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures: https://www.tidyverse.org/
+
+<center>
+<img src="images/rmarkdownPic.jpg", width="50%">
+</center>
+
+just write: 
+
+```{r, eval=FALSE}
+install.packages("tidyverse")
+```
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 4: Amazing Applications of R
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## !!? It's a new dawn! It's a new day! yeah (quote: Nina Simone - Feeling Good)
+
+
+If you replace pain by pleasure (or better joy) you get what I mean...
+
+<br>
+
+<center>
+<img src="https://i.giphy.com/media/saAZVlxwMPOW4/giphy.webp", width="400" height="300">
+</center>
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Bibliometrix
+
+
+blub...
