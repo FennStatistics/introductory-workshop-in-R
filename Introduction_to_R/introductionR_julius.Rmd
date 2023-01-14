@@ -252,6 +252,7 @@ see book: Meadows, D. H. (2008). Thinking in Systems: A Primer. Chelsea Green Pu
 - Göttingen: Master of Science (MSc) in Applied Statistics; https://www.uni-goettingen.de/en/421501.html
 - Bamberg:  Masterstudiengang Survey-Statistik; https://www.uni-bamberg.de/miss/
 - Trier: Master of Science (MSc) in Applied Statistics; https://www.uni-trier.de/universitaet/fachbereiche-faecher/fachbereich-iv/faecher/volkswirtschaftslehre/professuren/wirtschafts-und-sozialstatistik/studieren/applied-statistics-msc
+- Tübingen: Kognitionswissenschaft (MSc); https://uni-tuebingen.de/fakultaeten/mathematisch-naturwissenschaftliche-fakultaet/fachbereiche/informatik/studium/studiengaenge/kognitionswissenschaft/
 - Economics Master, ...
 
 
@@ -850,10 +851,9 @@ check out Fireship YouTube Video: https://youtu.be/W2Z7fbCLSTw
 ---
 ## complex data types - very rare in psychology (social science)
 
-often we have simple relational databases, which are made of
+often we have "simple" rectangular data, which are made of (values are associated with a variable and a observation):
 * **column**, which represents a variable (like ID)
 * **rows**, which represents an instance of data in the data set (like a participant)
-
 
 ```{r}
 DT::datatable(dat_twins, options = list(pageLength = 5))
@@ -894,10 +894,16 @@ Hypothesis: the size and shape of the human forebrain predict intelligence!
 the mighty correlation matrix:
 
 ```{r}
-round(x = cor(x = dat_twins[, c("VG", "CC", "KU", "KG", "IQ")], method = "spearman"), digits = 2)
+round(x = cor(x = dat_twins[, c("VG", "CC", "KU", "KG", "IQ")], 
+              method = "spearman"), digits = 2)
 ```
 
 > What is your opinion?
+
+* Spearman correlation coefficient only maps monotone relationships; r_SP > 0, if in tendency x large -> also y large and vice versa; indicate a monotonic relationship in the same direction (not linear relationship!)
+  + to be applied especially when the data are not normally distributed, the scales have unequal answering options, for very small sample sizes (or better use concordance measures)
+
+
 
 
 <!-- *********** NEW SLIDE ************** -->
@@ -1082,17 +1088,16 @@ Part 3: Introduction to R - Writing Functions
 
 <!-- *********** NEW SLIDE ************** -->
 ---
-## ! Clap your hands we are working faster than the US National Archive
+## ?!!! Never get completely lost anymore
 
-
-*From the invention of computer programming languages up to the mid-1970s, most computer programmers created, edited and stored their programs line by line on punch cards.* 
+Otherwise it could get dark (at least your mood when writing code)!
 
 
 <br>
 <br>
 
 <center>
-<img src="https://i.giphy.com/media/uYnLS3DHApc0KdXywq/giphy.webp", width="400" height="300">
+<img src="https://i.giphy.com/media/bPCwGUF2sKjyE/giphy.webp", width="400" height="300">
 </center>
 
 
@@ -1141,7 +1146,6 @@ and need to be loaded at the beginning of each session (when using them):
 ````markdown
 library(package_name) # no quotes necessary
 ````
-<br>
 cool kidz use functions: 
 ````markdown
 usePackage <- function(p) {
@@ -1153,22 +1157,11 @@ usePackage("tidyverse")
 ````
 
 
-<!-- *********** NEW SLIDE ************** -->
----
-## The (art) gallery of the most impressionistic packages I
-
-
-Psychometric theory in one central package in R called **psych**: [https://personality-project.org/r/book/](https://personality-project.org/r/book/)
-
-<br>
-<br>
-*Psychometrics is that area of psychology that specializes in how to measure what we talk and think about (focused on problems in measurment)*
-
 
 
 <!-- *********** NEW SLIDE ************** -->
 ---
-## The (art) gallery of the most impressionistic packages II
+## The (art) gallery of the most impressionistic packages I - **tidyverse**
 
 
 **tidyverse** is a collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures: https://www.tidyverse.org/
@@ -1186,6 +1179,103 @@ install.packages("tidyverse")
 
 
 <!-- *********** NEW SLIDE ************** -->
+---
+## The (art) gallery of the most impressionistic packages II - **tidyverse**
+
+
+Which packages are included in tidyverse?
+see: https://www.tidyverse.org/packages/
+
+
+Using these collection of R package you have everything to analyze the complete data analysis pipeline:
+<center>
+<img src="images/dataAnalysisPipeline.jpg", height=250px">
+</center>
+
+<br>
+<br>
+gread introductiory book: Wickham, H., & Grolemund, G. (2017). R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. O’Reilly Media, Inc. https://r4ds.had.co.nz/
+
+> if you confronted in the future with hughe datasets (>> 100mb) then it could be reasonable to teach yourself the R package **data.table**; e.g. watch: https://www.youtube.com/watch?v=SfrjF5YSj0Y 
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## The (art) gallery of the most impressionistic packages III - **psych**
+
+
+Psychometric theory in one central package in R called **psych**: [https://personality-project.org/r/book/](https://personality-project.org/r/book/)
+
+<br>
+<br>
+*Psychometrics is that area of psychology that specializes in how to measure what we talk and think about (focused on problems in measurement)*
+
+<br>
+<br>
+What is possible in R?!
+
+check out: Mair, P. (2018). Modern Psychometrics with R. Springer International Publishing. https://doi.org/10.1007/978-3-319-93177-7
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## The (art) gallery of the most impressionistic packages IV - entering the world of hypothesis tests
+
+
+**Statistical hypothesis test** is a method of statistical inference used to decide whether the data at hand sufficiently support a particular hypothesis; allows us to make probabilistic statements about population parameters. 
+
+<br>
+Set of great R packages: 
+* **afex**: convenience functions for analyzing factorial experiments using ANOVA or mixed models (multiple wrapper functions)
+* **ggstatsplot**: extension of **ggplot2** package for creating graphics with details from statistical tests included in the information-rich plots themselves
+* **BayesFactor**: enables the computation of Bayes factors in standard designs, such as one- and two- sample designs, ANOVA designs, and regression (any evidence for the H0 out there?!)
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## The (art) gallery of the most impressionistic packages V - entering the world of regression models
+
+
+**Regression models** provide a function that describes the relationship between one or more independent variables and a response, dependent, or target variable of any type (binary, numeric, ...)
+
+
+<br>
+Set of great R packages: 
+* **lme4**: analyze grouped data and complex hierarchical structures using mixed-effects models
+  + **lmerTest**: provides p-values in type I, II or III anova and summary tables for lmer model fits
+* **nlme**: fits a nonlinear mixed-effects model 
+
+
+<br>
+<br>
+gread starting book: Fox, J. (2016). Applied Regression Analysis and Generalized Linear Models. SAGE Publications.
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## The (art) gallery of the most impressionistic packages VI - entering the world of dynamic documents
+
+
+**Dynamic analysis documents** combine code, rendered output (such as figures), and text using the **rmarkdown** package
+
+* R Markdown allows you to create documents that serve as a neat record of your analysis
+*  enables reproducible research (appendix to a paper, upload it to an online repository, keep as a personal record, ...)
+* R Markdown file (.Rmd); when you knit the RMarkdown file, the Markdown formatting and the R code are evaluated, and an output file (HTML, PDF, etc) is produced
+* R Markdown makes use of *Markdown* syntax
+
+
+<br>
+<br>
+gread starting book: Xie, Y. (2017). Dynamic Documents with R and knitr. Chapman and Hall/CRC, https://duhi23.github.io/Analisis-de-datos/Yihue.pdf
+
+check out also the file "additional scripts -> rmarkdown package"
+
+
 
 <!-- *********** HEADING ************** -->
 ---
@@ -1210,9 +1300,110 @@ If you replace pain by pleasure (or better joy) you get what I mean...
 
 
 
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 4: Amazing Applications of R - analyses sequences
+
+
+ *<font size="5">The most important skill for the applied statistician (some people call such a person "data scientist") is to learn sequences of analyses and the assumptions and relationships of different statistical models (quote by J.F.).</font>* 
+
+
+
 <!-- *********** NEW SLIDE ************** -->
 ---
-## Bibliometrix
+## Motivation to learn the dependencies between different statistical models / frameworks I
+
+
+**A story of the six blind men and the elephant.**
+
+Six blind men were discussing exactly what they believed an elephant to be, since each had heard how strange the creature was, yet none had ever seen one before. So the blind men agreed to find an elephant and discover what the animal was really like...
+
+
+<center>
+<img src="images/storyElephant.jpg", height="300px">
+</center>
+
+
+from http://www.1000ventures.com/business_guide/crosscuttings/knowing_people_perceptions_elephant.html
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Motivation to learn the dependencies between different statistical models / frameworks II
+
+
+**concept of Generalizability Theory:**
+
+
+
+<center>
+<img src="images/GeneralizabilityTheory.jpg", width="500px">
+</center>
+
+
+Sources of variability of results: 
+
+* persons
+* items (there is a potential universe of possible items for the query of individual knowledge areas)
+* statistical models
+* time point of measurement
+
+<br>
+<br>
+recommended book: Shadish, W. R., Cook, T. D., & Campbell, D. T. (2002). Experimental and quasi-experimental designs for generalized causal inference. Houghton, Mifflin and Company.
+
+and article: https://www.researchgate.net/publication/227580118_Generalizability_Theory_Overview
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## descriptive summary statistics I 
+
+
+blub...
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests I - assumptions
+
+blub...
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## multiple linear regression I - assumptions
+
+Assumption of a linear regression (A. 8 is normally never taught!):
+
+<center>
+<img src="images/assumptionsLinearModel.jpg", heigth="500px">
+</center>
+
+
+
+> All models are wrong, but some are useful" - George Box. The aphorism acknowledges that statistical models always fall short of the complexities of reality but can still be useful nonetheless. 
+
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 4: Amazing Applications of R - Bibliometrix
+
+*Why read literature if you can use R?!*
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Bibliometrix I
 
 
 blub...

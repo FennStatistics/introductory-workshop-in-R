@@ -218,6 +218,7 @@ see book: Meadows, D. H. (2008). Thinking in Systems: A Primer. Chelsea Green Pu
 - Göttingen: Master of Science (MSc) in Applied Statistics; https://www.uni-goettingen.de/en/421501.html
 - Bamberg:  Masterstudiengang Survey-Statistik; https://www.uni-bamberg.de/miss/
 - Trier: Master of Science (MSc) in Applied Statistics; https://www.uni-trier.de/universitaet/fachbereiche-faecher/fachbereich-iv/faecher/volkswirtschaftslehre/professuren/wirtschafts-und-sozialstatistik/studieren/applied-statistics-msc
+- Tübingen: Kognitionswissenschaft (MSc); https://uni-tuebingen.de/fakultaeten/mathematisch-naturwissenschaftliche-fakultaet/fachbereiche/informatik/studium/studiengaenge/kognitionswissenschaft/
 - Economics Master, ...
 
 
@@ -365,8 +366,8 @@ summary(rnorm(n = 100, mean = 0, sd = 20))
 ```
 
 ```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -52.899 -14.768  -3.226  -1.240  14.440  52.874
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -65.9396 -14.6114  -0.7923  -0.2415  14.8804  44.3164
 ```
 
 Important:
@@ -955,18 +956,17 @@ check out Fireship YouTube Video: https://youtu.be/W2Z7fbCLSTw
 ---
 ## complex data types - very rare in psychology (social science)
 
-often we have simple relational databases, which are made of
+often we have "simple" rectangular data, which are made of (values are associated with a variable and a observation):
 * **column**, which represents a variable (like ID)
 * **rows**, which represents an instance of data in the data set (like a participant)
-
 
 
 ```r
 DT::datatable(dat_twins, options = list(pageLength = 5))
 ```
 
-<div id="htmlwidget-464edc459902e1b6da2f" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-464edc459902e1b6da2f">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c44addb729d0cbdf480f" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c44addb729d0cbdf480f">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 
 
@@ -1004,7 +1004,8 @@ the mighty correlation matrix:
 
 
 ```r
-round(x = cor(x = dat_twins[, c("VG", "CC", "KU", "KG", "IQ")], method = "spearman"), digits = 2)
+round(x = cor(x = dat_twins[, c("VG", "CC", "KU", "KG", "IQ")], 
+              method = "spearman"), digits = 2)
 ```
 
 ```
@@ -1017,6 +1018,11 @@ round(x = cor(x = dat_twins[, c("VG", "CC", "KU", "KG", "IQ")], method = "spearm
 ```
 
 &gt; What is your opinion?
+
+* Spearman correlation coefficient only maps monotone relationships; r_SP &gt; 0, if in tendency x large -&gt; also y large and vice versa; indicate a monotonic relationship in the same direction (not linear relationship!)
+  + to be applied especially when the data are not normally distributed, the scales have unequal answering options, for very small sample sizes (or better use concordance measures)
+
+
 
 
 &lt;!-- *********** NEW SLIDE ************** --&gt;
@@ -1238,17 +1244,16 @@ Part 3: Introduction to R - Writing Functions
 
 &lt;!-- *********** NEW SLIDE ************** --&gt;
 ---
-## ! Clap your hands we are working faster than the US National Archive
+## ?!!! Never get completely lost anymore
 
-
-*From the invention of computer programming languages up to the mid-1970s, most computer programmers created, edited and stored their programs line by line on punch cards.* 
+Otherwise it could get dark (at least your mood when writing code)!
 
 
 &lt;br&gt;
 &lt;br&gt;
 
 &lt;center&gt;
-&lt;img src="https://i.giphy.com/media/uYnLS3DHApc0KdXywq/giphy.webp", width="400" height="300"&gt;
+&lt;img src="https://i.giphy.com/media/bPCwGUF2sKjyE/giphy.webp", width="400" height="300"&gt;
 &lt;/center&gt;
 
 
@@ -1297,7 +1302,6 @@ and need to be loaded at the beginning of each session (when using them):
 ````markdown
 library(package_name) # no quotes necessary
 ````
-&lt;br&gt;
 cool kidz use functions: 
 ````markdown
 usePackage &lt;- function(p) {
@@ -1309,22 +1313,11 @@ usePackage("tidyverse")
 ````
 
 
-&lt;!-- *********** NEW SLIDE ************** --&gt;
----
-## The (art) gallery of the most impressionistic packages I
-
-
-Psychometric theory in one central package in R called **psych**: [https://personality-project.org/r/book/](https://personality-project.org/r/book/)
-
-&lt;br&gt;
-&lt;br&gt;
-*Psychometrics is that area of psychology that specializes in how to measure what we talk and think about (focused on problems in measurment)*
-
 
 
 &lt;!-- *********** NEW SLIDE ************** --&gt;
 ---
-## The (art) gallery of the most impressionistic packages II
+## The (art) gallery of the most impressionistic packages I - **tidyverse**
 
 
 **tidyverse** is a collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures: https://www.tidyverse.org/
@@ -1343,6 +1336,103 @@ install.packages("tidyverse")
 
 
 &lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## The (art) gallery of the most impressionistic packages II - **tidyverse**
+
+
+Which packages are included in tidyverse?
+see: https://www.tidyverse.org/packages/
+
+
+Using these collection of R package you have everything to analyze the complete data analysis pipeline:
+&lt;center&gt;
+&lt;img src="images/dataAnalysisPipeline.jpg", height=250px"&gt;
+&lt;/center&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+gread introductiory book: Wickham, H., &amp; Grolemund, G. (2017). R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. O’Reilly Media, Inc. https://r4ds.had.co.nz/
+
+&gt; if you confronted in the future with hughe datasets (&gt;&gt; 100mb) then it could be reasonable to teach yourself the R package **data.table**; e.g. watch: https://www.youtube.com/watch?v=SfrjF5YSj0Y 
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## The (art) gallery of the most impressionistic packages III - **psych**
+
+
+Psychometric theory in one central package in R called **psych**: [https://personality-project.org/r/book/](https://personality-project.org/r/book/)
+
+&lt;br&gt;
+&lt;br&gt;
+*Psychometrics is that area of psychology that specializes in how to measure what we talk and think about (focused on problems in measurement)*
+
+&lt;br&gt;
+&lt;br&gt;
+What is possible in R?!
+
+check out: Mair, P. (2018). Modern Psychometrics with R. Springer International Publishing. https://doi.org/10.1007/978-3-319-93177-7
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## The (art) gallery of the most impressionistic packages IV - entering the world of hypothesis tests
+
+
+**Statistical hypothesis test** is a method of statistical inference used to decide whether the data at hand sufficiently support a particular hypothesis; allows us to make probabilistic statements about population parameters. 
+
+&lt;br&gt;
+Set of great R packages: 
+* **afex**: convenience functions for analyzing factorial experiments using ANOVA or mixed models (multiple wrapper functions)
+* **ggstatsplot**: extension of **ggplot2** package for creating graphics with details from statistical tests included in the information-rich plots themselves
+* **BayesFactor**: enables the computation of Bayes factors in standard designs, such as one- and two- sample designs, ANOVA designs, and regression (any evidence for the H0 out there?!)
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## The (art) gallery of the most impressionistic packages V - entering the world of regression models
+
+
+**Regression models** provide a function that describes the relationship between one or more independent variables and a response, dependent, or target variable of any type (binary, numeric, ...)
+
+
+&lt;br&gt;
+Set of great R packages: 
+* **lme4**: analyze grouped data and complex hierarchical structures using mixed-effects models
+  + **lmerTest**: provides p-values in type I, II or III anova and summary tables for lmer model fits
+* **nlme**: fits a nonlinear mixed-effects model 
+
+
+&lt;br&gt;
+&lt;br&gt;
+gread starting book: Fox, J. (2016). Applied Regression Analysis and Generalized Linear Models. SAGE Publications.
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## The (art) gallery of the most impressionistic packages VI - entering the world of dynamic documents
+
+
+**Dynamic analysis documents** combine code, rendered output (such as figures), and text using the **rmarkdown** package
+
+* R Markdown allows you to create documents that serve as a neat record of your analysis
+*  enables reproducible research (appendix to a paper, upload it to an online repository, keep as a personal record, ...)
+* R Markdown file (.Rmd); when you knit the RMarkdown file, the Markdown formatting and the R code are evaluated, and an output file (HTML, PDF, etc) is produced
+* R Markdown makes use of *Markdown* syntax
+
+
+&lt;br&gt;
+&lt;br&gt;
+gread starting book: Xie, Y. (2017). Dynamic Documents with R and knitr. Chapman and Hall/CRC, https://duhi23.github.io/Analisis-de-datos/Yihue.pdf
+
+check out also the file "additional scripts -&gt; rmarkdown package"
+
+
 
 &lt;!-- *********** HEADING ************** --&gt;
 ---
@@ -1367,9 +1457,110 @@ If you replace pain by pleasure (or better joy) you get what I mean...
 
 
 
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 4: Amazing Applications of R - analyses sequences
+
+
+ *&lt;font size="5"&gt;The most important skill for the applied statistician (some people call such a person "data scientist") is to learn sequences of analyses and the assumptions and relationships of different statistical models (quote by J.F.).&lt;/font&gt;* 
+
+
+
 &lt;!-- *********** NEW SLIDE ************** --&gt;
 ---
-## Bibliometrix
+## Motivation to learn the dependencies between different statistical models / frameworks I
+
+
+**A story of the six blind men and the elephant.**
+
+Six blind men were discussing exactly what they believed an elephant to be, since each had heard how strange the creature was, yet none had ever seen one before. So the blind men agreed to find an elephant and discover what the animal was really like...
+
+
+&lt;center&gt;
+&lt;img src="images/storyElephant.jpg", height="300px"&gt;
+&lt;/center&gt;
+
+
+from http://www.1000ventures.com/business_guide/crosscuttings/knowing_people_perceptions_elephant.html
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Motivation to learn the dependencies between different statistical models / frameworks II
+
+
+**concept of Generalizability Theory:**
+
+
+
+&lt;center&gt;
+&lt;img src="images/GeneralizabilityTheory.jpg", width="500px"&gt;
+&lt;/center&gt;
+
+
+Sources of variability of results: 
+
+* persons
+* items (there is a potential universe of possible items for the query of individual knowledge areas)
+* statistical models
+* time point of measurement
+
+&lt;br&gt;
+&lt;br&gt;
+recommended book: Shadish, W. R., Cook, T. D., &amp; Campbell, D. T. (2002). Experimental and quasi-experimental designs for generalized causal inference. Houghton, Mifflin and Company.
+
+and article: https://www.researchgate.net/publication/227580118_Generalizability_Theory_Overview
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## descriptive summary statistics I 
+
+
+blub...
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests I - assumptions
+
+blub...
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## multiple linear regression I - assumptions
+
+Assumption of a linear regression (A. 8 is normally never taught!):
+
+&lt;center&gt;
+&lt;img src="images/assumptionsLinearModel.jpg", heigth="500px"&gt;
+&lt;/center&gt;
+
+
+
+&gt; All models are wrong, but some are useful" - George Box. The aphorism acknowledges that statistical models always fall short of the complexities of reality but can still be useful nonetheless. 
+
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 4: Amazing Applications of R - Bibliometrix
+
+*Why read literature if you can use R?!*
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix I
 
 
 blub...
