@@ -1252,7 +1252,7 @@ Set of great R packages:
 
 <br>
 <br>
-gread starting book: Fox, J. (2016). Applied Regression Analysis and Generalized Linear Models. SAGE Publications.
+great starting book: Fox, J. (2016). Applied Regression Analysis and Generalized Linear Models. SAGE Publications.
 
 
 
@@ -1271,7 +1271,9 @@ gread starting book: Fox, J. (2016). Applied Regression Analysis and Generalized
 
 <br>
 <br>
-gread starting book: Xie, Y. (2017). Dynamic Documents with R and knitr. Chapman and Hall/CRC, https://duhi23.github.io/Analisis-de-datos/Yihue.pdf
+great introductiory book: Xie, Y., Allaire, J. J., & Grolemund, G. (2018). R Markdown: The Definitive Guide. Chapman and Hall/CRC. https://doi.org/10.1201/9781138359444
+
+great book to get an overview: Xie, Y. (2017). Dynamic Documents with R and knitr. Chapman and Hall/CRC, https://duhi23.github.io/Analisis-de-datos/Yihue.pdf
 
 check out also the file "additional scripts -> rmarkdown package"
 
