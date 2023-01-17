@@ -16,6 +16,15 @@ editor_options:
   chunk_output_type: console
 ---
 
+
+```{css, echo=FALSE}
+.scrollChunk {
+  max-height: 450px;
+  overflow-y: auto;
+  background-color: inherit;
+}
+```
+
 ```{r setup, include=FALSE, message = FALSE, warning=FALSE}
 options(htmltools.dir.version = FALSE)
 library(fontawesome)
@@ -42,6 +51,13 @@ usePackage("tidyverse")
 usePackage("fontawesome") 
 
 usePackage("DT")
+
+usePackage("afex")
+usePackage("BayesFactor")
+usePackage("ggstatsplot")
+
+usePackage("rstatix")
+
 
 
 ################
@@ -1025,7 +1041,7 @@ Part 3: Introduction to R - Subsetting
 ## ??????! When you had to debug your first error messages
 
 
-I'm a Celebrity … Get Me Out of Here! (also valuable TV show: Get the F*ck out of my House)
+recommended TV shows: I'm a Celebrity … Get Me Out of Here! (also valuable: Get the F*ck out of my House)
 
 <br>
 <br>
@@ -1035,6 +1051,391 @@ I'm a Celebrity … Get Me Out of Here! (also valuable TV show: Get the F*ck out
 </center>
 
 
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - Theory
+
+* there are three subsetting operators: [, [[, and $
+* the three types of subsetting:
+  + Positive integers return elements at the specified positions.
+  + Logical vectors select elements where the corresponding
+  + logical value is TRUE; application of logical expressions.
+* character vectors to return elements with matching names.
+* important differences in behavior of different objects (e.g., vectors, lists, factors, matrices, and data frames)
+* more advanced subsetting, in particular in combination with complex logical expressions, can be done using the functions subset() and which().
+* (the default drop=TRUE simplifies the data type of the result.)
+
+
+<br>
+you "only" need to learn the behavior of 
+
+* Positive Integers
+* Negative integers
+* Logical vectors
+* Character vectors
+
+on different types of data!
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - Atomic Vector I
+
+
+```{r}
+# define an R Object
+x <- c(2.1, 4.2, 3.3, 5.4)
+```
+
+
+.pull-left[
+**Positive Integers:**
+
+```{r, eval=FALSE}
+x[c(3, 1)]
+#> [1] 3.3 2.1
+x[order(x)]
+#> [1] 2.1 3.3 4.2 5.4
+
+# Duplicate indices will duplicate values
+x[c(1, 1)]
+#> [1] 2.1 2.1
+
+# Real numbers are silently truncated to integers
+x[c(2.1, 2.9)]
+#> [1] 4.2 4.2
+```
+
+
+]
+
+.pull-right[
+**Negative integers:** exclude elements at the specified positions
+
+```{r eval=FALSE}
+x[-c(3, 1)]
+#> [1] 4.2 5.4
+```
+
+**Logical vectors:** select elements where the corresponding logical value is TRUE
+
+```{r eval=FALSE}
+x[c(TRUE, TRUE, FALSE, FALSE)]
+#> [1] 2.1 4.2
+x[x > 3]
+#> [1] 4.2 3.3 5.4
+```
+]
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - Atomic Vector II
+
+
+```{r}
+# define an R Object
+x <- c(2.1, 4.2, 3.3, 5.4)
+```
+
+.pull-left[
+**Logical vectors:** select elements where the corresponding logical value is TRUE
+
+```{r, eval=TRUE}
+x[x>5]
+x>5
+```
+]
+
+.pull-right[
+**Character vectors:** return elements with matching names
+
+```{r eval=FALSE}
+(y <- setNames(x, letters[1:4]))
+#>   a   b   c   d 
+#> 2.1 4.2 3.3 5.4
+y[c("d", "c", "a")]
+#>   d   c   a 
+#> 5.4 3.3 2.1
+
+# Like integer indices, you can repeat indices
+y[c("a", "a", "a")]
+#>   a   a   a 
+#> 2.1 2.1 2.1
+
+# names are always matched exactly
+z <- c(abc = 1, def = 2)
+z[c("a", "d")]
+#> <NA> <NA> 
+#>   NA   NA
+```
+]
+
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - Matrices I
+
+Setting up your matrix: 
+
+```{r}
+# ?matrix
+a <- matrix(data = 1:9, nrow = 3) # ncol, ...
+colnames(a) <- c("A", "B", "C")
+a
+```
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - Matrices II
+
+
+```{r}
+a <- matrix(1:9, nrow = 3)
+colnames(a) <- c("A", "B", "C")
+```
+
+
+.pull-left[
+
+```{r, eval=FALSE}
+a[1:2, ]
+#>      A B C
+#> [1,] 1 4 7
+#> [2,] 2 5 8
+a[c(TRUE, FALSE, TRUE), c("B", "A")]
+#>      B A
+#> [1,] 4 1
+#> [2,] 6 3
+a[0, -2]
+#>      A C
+```
+
+]
+
+.pull-right[
+more advanced: you can also subset higher-dimensional data structures with an integer matrix (or, if named, a character matrix). Each row in the matrix specifies the location of one value, and each column corresponds to a dimension in the array
+
+```{r eval=FALSE}
+vals <- outer(1:5, 1:5, FUN = "paste", sep = ",")
+select <- matrix(ncol = 2, byrow = TRUE, c(
+  1, 1,
+  3, 1,
+  2, 4
+))
+vals[select]
+#> [1] "1,1" "3,1" "2,4"
+```
+
+]
+ 
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - Data frames I 
+
+Setting up your data frame:
+
+```{r}
+# ?data.frame
+df <- data.frame(x = 1:3, y = 3:1, z = letters[1:3]) # stringsAsFactors !
+df
+```
+
+
+Important to note: there is a equivalent of data.frames in more "modern" R frameworks called "tibble" (has enhanced printing, ...): 
+
+```{r}
+# ? tibble::tibble
+tibble::tibble(x = 1:3, y = 3:1, z = letters[1:3])
+```
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - Data frames II 
+
+
+
+.pull-left[
+
+The most important subsetting to get data of certain objects of observation:
+
+```{r, eval=FALSE}
+df[df$x == 2, ]
+#>   x y z
+#> 2 2 2 b
+df[c(1, 3), ]
+#>   x y z
+#> 1 1 3 a
+#> 3 3 1 c
+```
+
+
+the dollar sign is a shorthand operator: "x$y" is roughly equivalent to "x[["y"]]"; often used to access variables in a data frame
+
+```{r, eval=TRUE}
+df$x
+```
+]
+
+.pull-right[
+
+```{r eval=FALSE}
+# There are two ways to select columns from a data frame
+# Like a list
+df[c("x", "z")]
+#>   x z
+#> 1 1 a
+#> 2 2 b
+#> 3 3 c
+# Like a matrix
+df[, c("x", "z")]
+#>   x z
+#> 1 1 a
+#> 2 2 b
+#> 3 3 c
+```
+
+]
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - Lists I 
+
+Setting up your list:
+
+```{r}
+# ?list
+x <- list(1:3, "a", 4:6)
+x
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - Lists II 
+
+```{r}
+x
+```
+
+is equivalent to the following representation: 
+
+
+<center>
+<img src="images/listTrain1.jpg">
+</center>
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - Lists III 
+
+When extracting a single element, you have two options: you can create a smaller train, i.e., fewer carriages, or you can extract the contents of a particular carriage. This is the difference between [ and [[:
+
+
+<center>
+<img src="images/listTrain2.jpg", height="150px">
+</center>
+
+
+
+When extracting multiple (or even zero!) elements, you have to make a smaller train:
+
+<center>
+<img src="images/listTrain3.jpg", height="250px">
+</center>
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - simplifying vs. preserving
+
+* **simplifying subsets** simplest possible data structure, that can represent the output
+* **preserving subsets** keeps the structure of the output the same as the input (better for programming)
+
+<br>
+Example with lists, which return the object inside the list, not a single element list
+
+```{r}
+y <- list(a = 1:2, b = letters[1:3])
+str(y[1])
+str(y[[1]])
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - data frames most useful I 
+
+Do you remember our twin pair data set?
+
+```{r}
+DT::datatable(dat_twins, options = list(pageLength = 5))
+```
+
+Three questions:
+* How do we get only the twins with IQ higher than 120?
+* How do we get only the twins with IQ lower than 100 and body weight higher than 100?
+* How can we order the data set according to IQ?
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - data frames most useful II 
+
+How do we get only the twins with IQ higher than 120?
+
+```{r}
+dat_twins[dat_twins$IQ > 120, ]
+
+## identical function
+subset(dat_twins, IQ > 120)
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - data frames most useful III 
+
+How do we get only the twins with IQ lower than 100 and body weight higher than 100?
+
+```{r}
+dat_twins[dat_twins$IQ < 100 & dat_twins$KG > 100, ] # ! only single logical operator
+```
+
+> such expressions could be of any complexity
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - data frames most useful IV
+
+How can we order the data set according to IQ?
+
+```{r}
+order(dat_twins$IQ)
+head(dat_twins[order(dat_twins$IQ), ])
+# dat_twins[, order(names(dat_twins))] # order data set alphabetically
+```
+
+> ordering according to the primary key (ID variable) is often necessary before matching data
 
 
 <!-- *********** HEADING ************** -->
@@ -1075,6 +1476,219 @@ Instead of p-hacking why not just starting a research program to solve finally t
 ]
 
 
+<!-- *********** NEW SLIDE ************** -->
+---
+## Flow control - vocabulary
+
+There are some new words to learn if you want to become a flow control master: 
+
+```{r, eval=FALSE}
+# Control flow
+if - &&, || (short circuiting)
+for, while
+next, break
+switch
+ifelse
+
+# Debugging
+stop
+warning
+message
+```
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Flow control - if statement I
+
+Normally we want to combine if statements with loops (plus functions).
+
+<br>
+**if statements** have the following form: 
+
+```{r eval=FALSE}
+## abstract representation
+if (condition) true_action
+if (condition) true_action else false_action
+```
+
+in action:
+
+```{r eval=TRUE}
+x1 <- if (TRUE) 1 else 2 # the experts write code like this!
+x1
+x2 <- if (FALSE) 1 else 2
+x2
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Flow control - if statement II
+
+
+```{r eval=TRUE}
+greet <- function(name, birthday = FALSE) {
+  paste0(
+    "Hi ", name,
+    if (birthday) { # but I prefer this way of writing code
+      " and HAPPY BIRTHDAY"
+    } else{
+      " and you do not have BIRTHDAY"
+    }
+  )
+}
+greet("Maria", FALSE)
+greet("Jaime", TRUE)
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Flow control - if statement III
+
+If statements can be arbitrarily complex:
+
+```{r eval=TRUE}
+x <- 20
+
+if (x > 30) {
+  print("x > 30")
+} else if (x <= 30 && x > 20) {
+  print("x <= 30 && x > 20")
+} else{
+  print("everything else")
+}
+```
+
+
+An important function is also the ifelse() function: 
+
+```{r eval=TRUE}
+x <- 1:10
+ifelse(x %% 2 == 0, "even", "odd")
+```
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Flow control - For Loop
+
+
+
+.pull-left[
+
+<center>
+<img src="images/forLoopIdea.jpg", height="500px">
+</center>
+
+]
+
+.pull-right[
+
+```{r eval=TRUE}
+for(i in 1:10) { # Head of for-loop
+  x1 <- i^2 # Code block
+  print(x1) # Print results
+}
+```
+
+]
+
+see multiple examples: https://statisticsglobe.com/for-loop-in-r
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Flow control - Why Awesome?! I 
+
+Imagine we want to drawn for the prices of diamonds for every different quality of the cut; data set with over 50.000 diamonds
+
+
+```{r eval=TRUE}
+# ? diamonds
+# How many cuts? 
+levels(diamonds$cut)
+# Is there a difference in price?
+diamonds %>%
+  group_by(cut) %>%
+  summarize(mean(price))
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Flow control - Why Awesome?! II
+
+Imagine we want to drawn for the prices of diamonds for every different quality of the cut; data set with over 50.000 diamonds
+
+```{r eval=FALSE}
+for(c in levels(diamonds$cut)) {
+  cat("quality of cut: ", c, "\n")
+  tmp <- diamonds$price[diamonds$cut == c]
+  cat("    > # of diamonds: ", length(tmp), "\n")
+  cat("    > skewness: ", moments::skewness(tmp), "\n")
+  cat("    > kurtosis: ", moments::kurtosis(tmp), "\n")
+  hist(tmp, main = c, xlab = "price")
+  abline(v = mean(tmp), col = "red") # add mean
+  
+  if(length(tmp) < 5000){
+    message("Oh no there are not even 5000 diamonds.")
+  }
+}
+```
+
+
+> by using print() or cat() you can print additional information in the console
+
+> by adding if() statements you can implement a complex logical structure in your for loop
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - for loop useful example I  
+
+In the twin data set we have the variable "IDZP" (identifier of the twin pair)
+
+```{r}
+DT::datatable(dat_twins, options = list(pageLength = 5))
+```
+
+```{r}
+table(dat_twins$IDZP)
+```
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Subsetting - for loop useful example II
+
+Compute the mean difference of IQ for every twin pair: 
+
+```{r}
+mean_twinPairs <- double(10) # empty vector made up of 0 to fill up
+h=1 # index variable
+for(t in levels(dat_twins$IDZP)) {
+  # cat("twin pair: ", t, "\n")
+  tmp <- dat_twins$IQ[dat_twins$IDZP == t]
+  # cat("    > IQ values: ", tmp, "\n")
+
+  mean_twinPairs[h] <- diff(tmp)
+  h=h+1 # increase index variable by 1
+}
+
+mean_twinPairs
+```
+
+
+
+
 
 <!-- *********** HEADING ************** -->
 ---
@@ -1102,6 +1716,303 @@ Otherwise it could get dark (at least your mood when writing code)!
 
 
 
+<!-- *********** NEW SLIDE ************** -->
+---
+## Writing Functions - vocabulary
+
+Also here are some new words to learn if you want to program your own function:
+
+```{r, eval=FALSE}
+# Functions to do with functions
+function
+missing
+return, invisible
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Writing Functions - Theory I
+
+* R, at its heart, is a functional programming language. This means that it provides many tools for the creation and manipulation of functions.
+* The structure of a function is given by
+
+```{r, eval=FALSE}
+function ( <arglist> ){ <body> }
+```
+
+* the keyword function indicates the beginning of a function
+* arguments <arglist> are defined by comma-separated key-value-pairs
+* <body> is a block of R commands which are executed by the function
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Writing Functions - Theory II
+
+All R functions are objects and consist of three parts:
+* body() the code inside the function.
+* formals() the list of arguments which controls how you can call the function.
+* environment() the 'map' of the location of the function's variables. If the environment isn't displayed, it means
+
+```{r, eval=TRUE}
+f <- function(x){
+  square <- x^2 # compute the square
+  return(square) # return the value
+}
+```
+
+
+.pull-left[
+
+```{r eval=TRUE}
+formals(f)
+body(f) 
+```
+
+]
+
+.pull-right[
+
+```{r eval=TRUE}
+environment(f)
+```
+
+]
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Writing Functions - Human Interaction is Incoming I
+
+Recommendation of Xie (chief software engineer of R): 
+
+> Avoid the commands that require human interaction: human input can be highly unpredictable; e.g., we do not know for sure which file the user will choose if we pop up a dialog box asking the user to choose a data file...
+
+
+The user breaks our function: 
+```{r, eval=TRUE, error=TRUE}
+f
+f(x = "I am a string!")
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Writing Functions - Human Interaction is Incoming II
+
+If you writing functions it is good practice to control for the input:
+
+```{r, eval=TRUE, error=TRUE}
+
+f <- function(x){
+  if(is.numeric(x)){
+    square <- x^2 # compute the square
+    return(square) # return the value
+  }else{
+    message("You should provide a numeric value / numeric vector.")
+    return(NULL)
+  }
+
+}
+
+f(x = "I am a string!")
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Writing Functions - Human Interaction is Incoming III
+
+If you have a "character" argument like "sex = c("Male", "Female")" you can check the provided values by: 
+
+* match.arg matches arguments against a table of candidate values specified by choices
+
+```{r, eval=FALSE}
+match.arg(arg, choices, several.ok = FALSE)
+```
+
+* missing argument will be replaced with the first candidate
+
+```{r, eval=TRUE, error=TRUE}
+talk_about_sex <- function(sex = c("Male", "Female", "Non-binary")) {
+  match.arg(sex)
+}
+
+talk_about_sex("F") # partial matching (not good practice)
+talk_about_sex()
+talk_about_sex("W")
+```
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Writing Functions - Function Arguments
+
+* formals() the list of **arguments** which controls how you can call the function.
+  + Function arguments in R can have default values.
+  + They can be also defined in terms of other arguments.
+  + You can determine if an argument was supplied or not with the missing() function.
+
+
+```{r, fig.show="hold", out.width="20%"}
+myplot <- function(x, y, mycol = 'red') {
+  if (missing(y)) {
+    y <- x
+    x <- 1:length(y)
+    }
+  plot(x, y, col = mycol)
+}
+par(mar = c(4, 4, .1, .1))
+myplot(x = 1:20)
+myplot(x = 1:20, y = rnorm(20), mycol='darkgreen')
+```
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Writing Functions - examples I  
+
+Using the **Cairo** package you could save your graphics directly as files to your computer in great resolution:
+
+```{r, eval=FALSE}
+############################################################################
+##### save_graphic()
+# save graphic object as png file
+############################################################################
+save_graphic <- function(filename){
+  tmp <- paste(filename, ".png", sep = "")
+  Cairo::Cairo(file=tmp,
+               type="png",
+               units="px",
+               width=2500,
+               height=1700,
+               pointsize=44, # text size is artifically shrunked when saved 
+               dpi= "auto",
+               bg = "white")
+}
+
+dev.off()
+save_graphic(filename = "myFirstPlot")
+plot(cars$speed, cars$dist)
+dev.off()
+```
+
+(also possible to use for example ggsave() from the **ggplot2** package)
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Writing Functions - examples II  
+
+Using the **stargazer** package you could save your easily set up summary statistics in the APA 7 format:
+
+.scrollChunk[
+```{r, eval=FALSE}
+############################################################################
+##### getDescriptives()
+# get multiple summary statistics to R console AND / OR to HTML
+############################################################################
+getDescriptives <- function(dataset = NULL, 
+                            variables = NULL,
+                            nameAPAtable = NULL){
+  x <- dataset[, variables]
+
+
+  ## table
+  tmp_descriptives <- sapply(x, function(x) c(
+    "Mean"= mean(x,na.rm=TRUE),
+    "SD" = sd(x),
+    "Median" = median(x),
+    "CoeffofVariation" = sd(x)/mean(x,na.rm=TRUE),
+    "Minimum" = min(x),
+    "Maximun" = max(x),
+    "Lower Quantile" = as.numeric(quantile(x,0)),
+    "Upper Quantile" = as.numeric(quantile(x,1)),
+    "Skewness" = moments::skewness(x = x),
+    "Kurtosis(-3)" = moments::kurtosis(x = x) -3,
+    "KS-Test" = ks.test(x = x, y = "pnorm", mean(x), sd(x))$p.value
+  )
+  )
+  tmp_descriptives <- round(x = tmp_descriptives, digits = 2)
+  
+  ## as APA 7 table in HTML using stargazer
+  ## round digits
+  out_tmp <- round(x = t(tmp_descriptives), digits = 2)
+  if(!is.null(nameAPAtable)){
+    notNeeded <- capture.output(stargazer(out_tmp, type = "html", summary = FALSE,
+                                          out = paste0(nameAPAtable, ".html")))
+  }
+  
+  
+  return(tmp_descriptives)
+}
+
+
+getDescriptives(dataset = dat_twins, 
+                variables = c("IQ", "KG"), 
+                nameAPAtable = "myFirstTable")
+```
+]
+
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - File and Data Management
+
+*Statisticians are lazy as hell, that's why we write code only once!*
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## ! we are now on track for our first sophisticated program
+
+The management of your files, your data, your code is key. Keep on riding... 
+
+<br>
+<br>
+
+<center>
+<img src="https://media2.giphy.com/media/cfuL5gqFDreXxkWQ4o/giphy.gif?cid=ecf05e47841a4c59de844460f9bcebc6ccbd30748a6b65f8", width="400" height="300">
+</center>
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## organize your program in modules !
+
+.pull-left[
+
+at best use R projects and separate your programs / code / files into separate functional units (modules) / folders: 
+* Create a project folder
+* In this folder, organize your file in subfolders (e.g., data)
+* All file paths in your script(s) are specified relative to the folder’s top level
+
+<center>
+<img src="images/modular_programming.jpg", height=250px">
+</center>
+
+
+]
+
+.pull-right[
+
+check out the folder "additional scripts -> project template"
+
+
+<center>
+<img src="images/modular_programming.jpg", height=250px">
+</center>
+
+]
 
 
 
@@ -1289,7 +2200,7 @@ Part 4: Amazing Applications of R
 
 <!-- *********** NEW SLIDE ************** -->
 ---
-## !!? It's a new dawn! It's a new day! yeah (quote: Nina Simone - Feeling Good)
+## Maybe you will start singing "It's a new dawn! It's a new day! yeah" (quote: Nina Simone - Feeling Good)
 
 
 If you replace pain by pleasure (or better joy) you get what I mean...
@@ -1365,20 +2276,473 @@ and article: https://www.researchgate.net/publication/227580118_Generalizability
 ## descriptive summary statistics I 
 
 
-blub...
+
+```{r}
+sleep %>%
+  group_by(group) %>%
+  summarise(M=mean(extra), SD=sd(extra))
+
+cor(sleep$extra[sleep$group==1], sleep$extra[sleep$group==2])
+```
+
+
+
+
 
 
 <!-- *********** NEW SLIDE ************** -->
 ---
-## hypothesis tests I - assumptions
+## hypothesis tests I - decision tree
 
-blub...
+Which hypothesis test should I use?
+
+<center>
+<img src="images/decisionTreeHypothesisTest.jpg", height="450px">
+</center>
+
+
+see: https://www.utwente.nl/en/bms/m-store/step-by-step-guide/statistical-tests/choice-test-2/
 
 
 
 <!-- *********** NEW SLIDE ************** -->
 ---
-## multiple linear regression I - assumptions
+## hypothesis tests II - in R
+
+Which hypothesis test are implemented in R?
+
+
+```{r}
+apropos(what = "\\.test$") # Find Objects by (Partial) Name
+# library(afex)
+apropos("^aov") # ANOVAs
+# many more!
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests III - example t-Tests
+
+
+**in general**: The goal of hypothesis testing is to test a hypothesis about the population using a sample; there are two hypotheses:
+
+* Null hypothesis $H_0$: hypothesis to be tested (contains "critical" assumption).
+* Alternative hypothesis $H_1$: Opposite to the null hypothesis
+
+
+<br>
+! Decision rule of classical significance tests (frequentist perspective!): Reject the $H_0$ only if it is very unlikely to be true.
+
+<br>
+<br>
+**t-Test**: statistical hypothesis test in which the test statistic follows a Student's t-distribution under the null hypothesis; most common application is to test whether the means of two populations are different
+
+
+for relative equal variances:
+$$
+t = \frac{\overline{X}_1 - \overline{X}_2}{S_p* \sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}
+$$
+
+<br>
+question: Which hypothesis test should I use in case of 2 variables; independent variable with 2 levels?
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests IV - always consider non-parametric tests
+**parametric tests:**
+
+* information about the distribution of the population is known and is based on a fixed set of parameters
+
+<br>
+**non-parametric tests:**
+
+* information about the distribution of a population is unknown, and the parameters are not fixed
+  +  no requirement for any distribution of the population in the non-parametric test (also known as distribution-free testing)
+* usually performed when the independent variables are non-metric or central assumptions are violated (e.g. normality)
+
+
+<center>
+<img src="images/parametric_nonparametric.jpg", height="210px">
+</center>
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## jumping to outer space for a second! 
+
+*Embrace yourself we will enter the top floor of crazy tower for a second!*
+
+
+<center>
+<img src="images/topFloor.jpg", height="400px">
+</center>
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Bayesian Hypothesis Testing
+
+
+**frequentist hypothesis testing:**
+
+* focuses on null hypothesis significance testing (*NHST*), whereby p-values can only reject the null hypothesis
+  + whether to reject a hypothesis, accept it as true (! categorical decision) or to withhold judgement because no decision can be made (if we assuming insufficient power)
+  + relative strength of an effect can be made by *effect sizes*
+
+<br>
+**bayesian hypothesis testing:**
+
+* Bayes factor can state evidence for both the null and the alternative hypothesis, making confirmation of hypotheses possible
+ + Bayes factor is the ratio of the likelihood of one particular hypothesis to the likelihood of another. It can be interpreted as a measure of the strength of evidence in favor of one theory among two competing theories
+
+> you could use the statistic program JASP to compute Baysian Hypothesis Tests: https://jasp-stats.org/
+ 
+<!-- *********** NEW SLIDE ************** -->
+---
+## Bayesian vs. Frequentist Hypothesis Testing
+
+<center>
+<img src="images/BayesianFrequentist.jpg", height="450px">
+</center>
+
+
+<br>
+slide from MIT: https://math.mit.edu/~dav/05.dir/class17-slides-all.pdf
+ 
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Fancy ways to formulate informative hypotheses
+
+Three common types of hypotheses anchored to a point-value of interest of a parameter (! smallest effect size of interest): 
+
+<center>
+<img src="images/formulateHypothesisFancy.jpg", height="350px">
+</center>
+
+<br>
+see in more detail: 
+book online: https://michael-franke.github.io/intro-data-analysis/
+
+article: Lakens, D., Scheel, A. M., & Isager, P. M. (2018). Equivalence Testing for Psychological Research: A Tutorial. Advances in Methods and Practices in Psychological Science, 1(2), 259–269. https://doi.org/10.1177/2515245918770963
+
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests V - steps of sequences
+
+1 get an overview of your data:
+
+```{r}
+data("sleep")
+DT::datatable(sleep, options = list(pageLength = 5))
+```
+
+> paired sample t-test is needed; consist of a sample of matched pairs of similar units (e.g. using Propensity Score Matching), or one group of units that has been tested twice 
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data I - simple plots:
+
+.pull-left[
+```{r, out.width="50%"}
+## grouped boxplot
+boxplot(sleep$extra ~ sleep$group)
+## compute mean deviations:
+sleep1 <- with(sleep, extra[group == 2] - extra[group == 1])
+summary(sleep1)
+```
+]
+
+.pull-right[
+```{r, out.width="50%"}
+stripchart(sleep1, method = "stack", xlab = "hours",
+           main = "Sleep prolongation (n = 10)")
+boxplot(sleep1, horizontal = TRUE, add = TRUE,
+        at = .6, pars = list(boxwex = 0.5, staplewex = 0.25))
+```
+]
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data II - more sophisticated plots (**ggplot2**) I: 
+
+template for adjusting the format of ggplot2 figures to APA style: 
+
+```{r, out.width="50%"}
+ggplot_theme <- theme(axis.title.x = element_blank(),
+                      axis.title.y = element_text(size=12),
+                      axis.text.x = element_text(size=10,hjust=0.5,vjust=0.5,face="plain", 
+                                                 colour = "black"),
+                      axis.text.y = element_text(size=12,face="plain", colour = "black"),
+                      panel.border = element_blank(),
+                      axis.line = element_line(colour = "black"),
+                      panel.grid.major = element_blank(),
+                      panel.grid.minor = element_blank(),
+                      panel.background = element_blank(),
+                      legend.position="none")  # no legend
+```
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data II - more sophisticated plots (**ggplot2**) II: 
+
+
+```{r, out.width="30%", fig.align = 'center'}
+# grouped boxplot
+ggplot(sleep, aes(x=group, y=extra)) + 
+    geom_boxplot() + ggplot_theme
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data II - more sophisticated plots (**ggstatsplot**) I:  
+
+Using the type argument you can specify the statistical approach: 
+
+* "parametric"
+* "nonparametric"
+* "robust"
+* "bayes"
+
+```{r}
+## parametric t-test
+p1 <- ggwithinstats(
+  data = sleep,
+  x = group,
+  y = extra,
+  type = "p",
+  effsize.type = "d",
+  conf.level = 0.95,
+  title = "Parametric test"
+)
+```
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data II - more sophisticated plots (**ggstatsplot**) II:
+
+```{r, out.width="40%", fig.align = 'center'}
+## parametric t-test
+p1
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests VII - steps of sequences
+
+3 check the assumptions of the paired sample t-test:
+
+1. Independence: Each observation should be independent of every other observation.
+
+2. Normality: The differences between the pairs should be approximately normally distributed.
+  + No Extreme Outliers: There should be no extreme outliers in the differences.
+  + Remark: quite often in practice, if $n >> 30$ this assumption is not checked
+
+
+```{r, out.width="30%", fig.align = 'center'}
+## check outlier assumption
+boxplot(sleep1) # to check outlier assumption
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests VII - steps of sequences
+
+3 check the assumptions of the paired sample t-test:
+
+applying Kolmogorov-Smirnov OR Shapiro-Wilk-Test to check normality; sample size sensitive: tests become more sensitive to minimal deviations from the normal distribution as sample size increases 
+
+
+Use Shapiro-Wilk normality test as described at: Normality Test in R.
+* Null hypothesis: the data are normally distributed
+* Alternative hypothesis: the data are not normally distributed
+
+
+```{r, out.width="50%", fig.align = 'center'}
+# Shapiro-Wilk normality test for the differences
+shapiro.test(sleep1)
+```
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests VII - steps of sequences
+
+3 check the assumptions of the paired sample t-test:
+
+because of the  sample size sensitivity it is often better to visually check the assumption of normality:
+
+drawing **Q-Q Plot**:
+
+```{r, out.width="30%", fig.align = 'center'}
+sleep1_sc <- scale(sleep1) # z standardize mean differences
+
+qqnorm(sleep1_sc) # QQ Plot
+qqline(sleep1_sc) # vertical line
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests VII - steps of sequences
+
+3 check the assumptions of the paired sample t-test:
+
+because of the  sample size sensitivity it is often better to visually check the assumption of normality:
+
+drawing **Histogram** and overlay normal distribution:
+
+```{r, out.width="30%", fig.align = 'center'}
+hist(sleep1_sc, freq = FALSE, xlim = c(-3,3))
+x<-seq(-4,+4,by=0.02)
+curve(dnorm(x), add=TRUE)
+```
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests VII - steps of sequences
+
+4 compute paired sample t-test:
+
+
+```{r}
+## Formula interface
+t.test(extra ~ group, data = sleep, paired = TRUE)
+```
+
+outputs: 
+
+* t is the t-test statistic value
+* df is the degrees of freedom
+* p-value is the significance level of the t-test
+* conf.int is the confidence interval (conf.int) of the mean differences at 95%
+* sample estimates is the mean differences between pairs
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests VII - steps of sequences
+
+4 compute paired sample t-test:
+
+compute the Bayes factor: 
+
+```{r}
+## Traditional interface
+with(sleep, ttestBF(extra[group == 1], extra[group == 2], paired=TRUE))
+```
+
+> Bayse factor of 17.25888
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests VII - steps of sequences
+
+4 compute paired sample t-test:
+
+evaluate the Bayes factor: 
+
+> Bayse factor of 17.25888
+
+
+<center>
+<img src="images/BayseFactorsEvidence.jpg", height="250px">
+</center>
+
+
+copied from: https://www.statlect.com/fundamentals-of-statistics/Jeffreys-scale
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests VIII - steps of sequences - missing parts
+
+We have forgot to run a **power analysis**
+
+
+<center>
+<img src="images/gPowerPostHoc.jpg", height="300px">
+</center>
+
+
+if you want to install / use / read more about G*Power: https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## hypothesis tests VIII - steps of sequences - missing parts
+
+We have forgot to compute a appropriate **effect size**
+
+The standardized mean difference effect size for within-subjects designs is referred to as Cohen’s $d_z$, which can be computed as: 
+
+
+.pull-left[
+```{r}
+## by hand:
+means <- with(sleep, tapply(extra, group, mean)) # get group means
+md <- means[1]-means[2] # get mean difference
+sleep_wide <- cbind(sleep$extra[sleep$group==1], sleep$extra[sleep$group==2])
+
+(md / sqrt(sum(((sleep_wide[,1] - sleep_wide[,2])-md)^2) / (10-1))) # (d_z <- md / sd(sleep_wide[,1] - sleep_wide[,2])) # using sd
+```
+]
+
+.pull-right[
+```{r}
+## by package "rstatix"
+sleep %>% cohens_d(extra ~ group, paired = TRUE)
+```
+]
+
+
+see: Lakens, D. (2013). Calculating and reporting effect sizes to facilitate cumulative science: A practical primer for t-tests and ANOVAs. Frontiers in Psychology, 4. https://www.frontiersin.org/articles/10.3389/fpsyg.2013.00863
+
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## multiple linear regression - assumptions
 
 Assumption of a linear regression (A. 8 is normally never taught!):
 
@@ -1405,7 +2769,171 @@ Part 4: Amazing Applications of R - Bibliometrix
 
 <!-- *********** NEW SLIDE ************** -->
 ---
-## Bibliometrix I
+## Bibliometrix - types
 
 
-blub...
+.pull-left[
+**systematic reviews**: search available literature for evidence with which to address a research question
+]
+
+.pull-right[
+**meta-analyses**: quantitatively assess statistical evidence found through systematic reviews -> dependent on good systematic review
+]
+
+**goals**:
+* integrate past literature
+* critically analyse the existing literature
+* identify issues central to a field
+
+**center often on one single area**:
+* summarize / list findings of individual primary studies
+  + .. methods used to carry out research
+  + .. theories meant to explain the same or related phenomena
+  + .. practices programs, treatments, .. being used in applied context
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Bibliometrix - search strategies
+
+different modes should be used concurrently and used search strategies should be made explicit
+
+<center>
+<img src="images/searchStrategies.jpg", height="450px">
+</center>
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Bibliometrix - main concern of literature retrieval
+
+return all of the studies relevant to the review (‘recall’) without retrieving irrelevant studies (‘precision’)
+
+**Recall**:
+* expresses (as a percentage) the ratio of relevant documents retrieved to all those in a collection that should be retrieved
+* pure fiction: if we could identify all existing relevant documents in order to count them, we could retrieve them all, and so recall would always be 100 percent
+
+
+**Precision**:
+* expresses (as a percentage) the ratio of documents retrieved and judged relevant to all those actually retrieved
+* measures how many irrelevant documents-false positives-one must go through to find the true positives or hits
+
+<br>
+-> trade-off: high recall leads to degrading precision
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Bibliometrix - main concern of literature retrieval II 
+
+<center>
+<img src="images/STMreport.jpg", height="450px">
+</center>
+
+
+see: https://www.stm-assoc.org/2018_10_04_STM_Report_2018.pdf
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Bibliometrix - main concern of literature retrieval III 
+
+**solution: need for high recall !!!**
+
+<br>
+* „there is no way of ascertaining whether the set of located studies is representative of the full set of existing studies on the topic, the best protection against an unrepresentative set is to locate as many of the existing studies as is possible“
+* „The point is to avoid missing a useful paper that lies outside one’s regular purview, thereby ensuring that one’s habitual channels of communication will not bias the results of studies obtained by the search... history of science and scholarship is full of examples of mutually relevant specialties that were unaware of each other for years because their members construed their own literatures too narrowly and failed to ask what other researchers did“
+
+
+<br>
+<br>
+recommended book: Cooper, Hedges und Valentine (2009): The handbook of research synthesis and meta-analysis. Second Edition.
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Bibliometrix - traditional methods 
+
+Traditional methods often include (from my perspective) manual literature searches in arbitrary databases without clear inclusion criteria. Results of the research are often gathered in Excel.
+
+<br>
+however, there are immensely important procedures in the traditional approach:
+
+<center>
+<img src="images/searchStrategiesTraditional.jpg", height="350px">
+</center>
+
+
+<br>
+How to use Google Scholar: https://www.wur.nl/en/article/How-to-use-Google-Scholar.htm
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Bibliometrix - definition, databases 
+
+The branch of library science concerned with the application of mathematical and statistical analysis to bibliography; the statistical analysis of books, articles, or other publications the use of statistical methods to analyse books, articles and other publications by means of 
+* simple descriptive measures
+* complex indices
+* network theory
+
+<br>
+<br>
+there are three principal databases (increasing number of sources, but lower data quality):
+* Web of Science: www.webofknowledge.com
+* Scopus: https://www.scopus.com/
+* Google Scholar: https://scholar.google.com/
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Bibliometrix - working process
+
+1. download found sources as plain text from www.webofknowledge.com (when multiples times collect single txt-files with unique name in a folder)
+2. use the ShinyApp of the R-package **bibliometrix** to check the found sources for possible errors and visualize your sources
+3. use the R-package **litsearchr** to identify further search terms
+4. use the R-package **scholar** to further investigate the publications of key authors
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Bibliometrix - bibliometrix package
+
+most advanced is **bibliometrix**, which allows to compute: 
+
+* descriptive statistics
+* Bibliographic coupling: occurs when two works reference a common third work in their bibliographies (helpful to detect connections between research groups, ...)
+* Co-citation: frequency with which two documents are cited together by other documents (helpful in detecting a shift in paradigms and schools of thought - using betweenness, ...)
+* ...
+
+
+```{r eval=FALSE}
+## to run shiny app:
+library(bibliometrix)
+biblioshiny()
+```
+
+also check out the webpage: https://www.bibliometrix.org/home/
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Who wants to learn statistics and programming now? - Thank you for your attention :-)!
+
+
+The final slide is reserved for Bob Ross!
+<br>
+
+<center>
+<img src="https://media0.giphy.com/media/B4OVvY3CVNN0Q/giphy.gif?cid=ecf05e47axiata7fc4y4j5m779ltm6aezwj1nudqznamk4ou", width="500" height="350">
+</center>
+
+
+To relax you can watch Bob Ross motivating painting videos: https://www.youtube.com/watch?v=2lBQUqzcbEg

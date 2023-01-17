@@ -34,6 +34,15 @@ class: center, middle, inverse, title-slide
 
 
 
+&lt;style type="text/css"&gt;
+.scrollChunk {
+  max-height: 450px;
+  overflow-y: auto;
+  background-color: inherit;
+}
+&lt;/style&gt;
+
+
 
 
 
@@ -366,8 +375,8 @@ summary(rnorm(n = 100, mean = 0, sd = 20))
 ```
 
 ```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -50.599 -17.207  -5.131  -5.109   6.585  51.596
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -62.1059 -12.9654   2.1552  -0.7018  10.4417  45.2788
 ```
 
 Important:
@@ -385,16 +394,16 @@ methods(generic.function = "summary")[1:20]
 ```
 
 ```
-##  [1] "summary,ANY-method"            "summary,DBIObject-method"     
-##  [3] "summary.aov"                   "summary.aovlist"              
-##  [5] "summary.aspell"                "summary.check_packages_in_dir"
-##  [7] "summary.connection"            "summary.data.frame"           
-##  [9] "summary.Date"                  "summary.default"              
-## [11] "summary.Duration"              "summary.ecdf"                 
-## [13] "summary.factor"                "summary.ggplot"               
-## [15] "summary.glm"                   "summary.haven_labelled"       
-## [17] "summary.hcl_palettes"          "summary.infl"                 
-## [19] "summary.Interval"              "summary.lm"
+##  [1] "summary,ANY-method"              "summary,BFBayesFactor-method"   
+##  [3] "summary,BFBayesFactorTop-method" "summary,BFodds-method"          
+##  [5] "summary,BFprobability-method"    "summary,DBIObject-method"       
+##  [7] "summary,diagonalMatrix-method"   "summary,sparseMatrix-method"    
+##  [9] "summary.aareg"                   "summary.afex_aov"               
+## [11] "summary.allFit"                  "summary.Anova.mlm"              
+## [13] "summary.aov"                     "summary.aovlist"                
+## [15] "summary.aspell"                  "summary.bcnPowerTransform"      
+## [17] "summary.bcnPowerTransformlmer"   "summary.boot"                   
+## [19] "summary.cch"                     "summary.check_packages_in_dir"
 ```
 
 other important functions are: 
@@ -965,8 +974,8 @@ often we have "simple" rectangular data, which are made of (values are associate
 DT::datatable(dat_twins, options = list(pageLength = 5))
 ```
 
-<div id="htmlwidget-e78ab44a687b285aad40" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e78ab44a687b285aad40">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-36fcefcf00eb3270ab98" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-36fcefcf00eb3270ab98">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 
 
@@ -1181,7 +1190,7 @@ Part 3: Introduction to R - Subsetting
 ## ??????! When you had to debug your first error messages
 
 
-I'm a Celebrity … Get Me Out of Here! (also valuable TV show: Get the F*ck out of my House)
+recommended TV shows: I'm a Celebrity … Get Me Out of Here! (also valuable: Get the F*ck out of my House)
 
 &lt;br&gt;
 &lt;br&gt;
@@ -1191,6 +1200,530 @@ I'm a Celebrity … Get Me Out of Here! (also valuable TV show: Get the F*ck out
 &lt;/center&gt;
 
 
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Theory
+
+* there are three subsetting operators: [, [[, and $
+* the three types of subsetting:
+  + Positive integers return elements at the specified positions.
+  + Logical vectors select elements where the corresponding
+  + logical value is TRUE; application of logical expressions.
+* character vectors to return elements with matching names.
+* important differences in behavior of different objects (e.g., vectors, lists, factors, matrices, and data frames)
+* more advanced subsetting, in particular in combination with complex logical expressions, can be done using the functions subset() and which().
+* (the default drop=TRUE simplifies the data type of the result.)
+
+
+&lt;br&gt;
+you "only" need to learn the behavior of 
+
+* Positive Integers
+* Negative integers
+* Logical vectors
+* Character vectors
+
+on different types of data!
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Atomic Vector I
+
+
+
+```r
+# define an R Object
+x &lt;- c(2.1, 4.2, 3.3, 5.4)
+```
+
+
+.pull-left[
+**Positive Integers:**
+
+
+```r
+x[c(3, 1)]
+#&gt; [1] 3.3 2.1
+x[order(x)]
+#&gt; [1] 2.1 3.3 4.2 5.4
+
+# Duplicate indices will duplicate values
+x[c(1, 1)]
+#&gt; [1] 2.1 2.1
+
+# Real numbers are silently truncated to integers
+x[c(2.1, 2.9)]
+#&gt; [1] 4.2 4.2
+```
+
+
+]
+
+.pull-right[
+**Negative integers:** exclude elements at the specified positions
+
+
+```r
+x[-c(3, 1)]
+#&gt; [1] 4.2 5.4
+```
+
+**Logical vectors:** select elements where the corresponding logical value is TRUE
+
+
+```r
+x[c(TRUE, TRUE, FALSE, FALSE)]
+#&gt; [1] 2.1 4.2
+x[x &gt; 3]
+#&gt; [1] 4.2 3.3 5.4
+```
+]
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Atomic Vector II
+
+
+
+```r
+# define an R Object
+x &lt;- c(2.1, 4.2, 3.3, 5.4)
+```
+
+.pull-left[
+**Logical vectors:** select elements where the corresponding logical value is TRUE
+
+
+```r
+x[x&gt;5]
+```
+
+```
+## [1] 5.4
+```
+
+```r
+x&gt;5
+```
+
+```
+## [1] FALSE FALSE FALSE  TRUE
+```
+]
+
+.pull-right[
+**Character vectors:** return elements with matching names
+
+
+```r
+(y &lt;- setNames(x, letters[1:4]))
+#&gt;   a   b   c   d 
+#&gt; 2.1 4.2 3.3 5.4
+y[c("d", "c", "a")]
+#&gt;   d   c   a 
+#&gt; 5.4 3.3 2.1
+
+# Like integer indices, you can repeat indices
+y[c("a", "a", "a")]
+#&gt;   a   a   a 
+#&gt; 2.1 2.1 2.1
+
+# names are always matched exactly
+z &lt;- c(abc = 1, def = 2)
+z[c("a", "d")]
+#&gt; &lt;NA&gt; &lt;NA&gt; 
+#&gt;   NA   NA
+```
+]
+
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Matrices I
+
+Setting up your matrix: 
+
+
+```r
+# ?matrix
+a &lt;- matrix(data = 1:9, nrow = 3) # ncol, ...
+colnames(a) &lt;- c("A", "B", "C")
+a
+```
+
+```
+##      A B C
+## [1,] 1 4 7
+## [2,] 2 5 8
+## [3,] 3 6 9
+```
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Matrices II
+
+
+
+```r
+a &lt;- matrix(1:9, nrow = 3)
+colnames(a) &lt;- c("A", "B", "C")
+```
+
+
+.pull-left[
+
+
+```r
+a[1:2, ]
+#&gt;      A B C
+#&gt; [1,] 1 4 7
+#&gt; [2,] 2 5 8
+a[c(TRUE, FALSE, TRUE), c("B", "A")]
+#&gt;      B A
+#&gt; [1,] 4 1
+#&gt; [2,] 6 3
+a[0, -2]
+#&gt;      A C
+```
+
+]
+
+.pull-right[
+more advanced: you can also subset higher-dimensional data structures with an integer matrix (or, if named, a character matrix). Each row in the matrix specifies the location of one value, and each column corresponds to a dimension in the array
+
+
+```r
+vals &lt;- outer(1:5, 1:5, FUN = "paste", sep = ",")
+select &lt;- matrix(ncol = 2, byrow = TRUE, c(
+  1, 1,
+  3, 1,
+  2, 4
+))
+vals[select]
+#&gt; [1] "1,1" "3,1" "2,4"
+```
+
+]
+ 
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Data frames I 
+
+Setting up your data frame:
+
+
+```r
+# ?data.frame
+df &lt;- data.frame(x = 1:3, y = 3:1, z = letters[1:3]) # stringsAsFactors !
+df
+```
+
+```
+##   x y z
+## 1 1 3 a
+## 2 2 2 b
+## 3 3 1 c
+```
+
+
+Important to note: there is a equivalent of data.frames in more "modern" R frameworks called "tibble" (has enhanced printing, ...): 
+
+
+```r
+# ? tibble::tibble
+tibble::tibble(x = 1:3, y = 3:1, z = letters[1:3])
+```
+
+```
+## # A tibble: 3 x 3
+##       x     y z    
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;
+## 1     1     3 a    
+## 2     2     2 b    
+## 3     3     1 c
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Data frames II 
+
+
+
+.pull-left[
+
+The most important subsetting to get data of certain objects of observation:
+
+
+```r
+df[df$x == 2, ]
+#&gt;   x y z
+#&gt; 2 2 2 b
+df[c(1, 3), ]
+#&gt;   x y z
+#&gt; 1 1 3 a
+#&gt; 3 3 1 c
+```
+
+
+the dollar sign is a shorthand operator: "x$y" is roughly equivalent to "x[["y"]]"; often used to access variables in a data frame
+
+
+```r
+df$x
+```
+
+```
+## [1] 1 2 3
+```
+]
+
+.pull-right[
+
+
+```r
+# There are two ways to select columns from a data frame
+# Like a list
+df[c("x", "z")]
+#&gt;   x z
+#&gt; 1 1 a
+#&gt; 2 2 b
+#&gt; 3 3 c
+# Like a matrix
+df[, c("x", "z")]
+#&gt;   x z
+#&gt; 1 1 a
+#&gt; 2 2 b
+#&gt; 3 3 c
+```
+
+]
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Lists I 
+
+Setting up your list:
+
+
+```r
+# ?list
+x &lt;- list(1:3, "a", 4:6)
+x
+```
+
+```
+## [[1]]
+## [1] 1 2 3
+## 
+## [[2]]
+## [1] "a"
+## 
+## [[3]]
+## [1] 4 5 6
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Lists II 
+
+
+```r
+x
+```
+
+```
+## [[1]]
+## [1] 1 2 3
+## 
+## [[2]]
+## [1] "a"
+## 
+## [[3]]
+## [1] 4 5 6
+```
+
+is equivalent to the following representation: 
+
+
+&lt;center&gt;
+&lt;img src="images/listTrain1.jpg"&gt;
+&lt;/center&gt;
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Lists III 
+
+When extracting a single element, you have two options: you can create a smaller train, i.e., fewer carriages, or you can extract the contents of a particular carriage. This is the difference between [ and [[:
+
+
+&lt;center&gt;
+&lt;img src="images/listTrain2.jpg", height="150px"&gt;
+&lt;/center&gt;
+
+
+
+When extracting multiple (or even zero!) elements, you have to make a smaller train:
+
+&lt;center&gt;
+&lt;img src="images/listTrain3.jpg", height="250px"&gt;
+&lt;/center&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - simplifying vs. preserving
+
+* **simplifying subsets** simplest possible data structure, that can represent the output
+* **preserving subsets** keeps the structure of the output the same as the input (better for programming)
+
+&lt;br&gt;
+Example with lists, which return the object inside the list, not a single element list
+
+
+```r
+y &lt;- list(a = 1:2, b = letters[1:3])
+str(y[1])
+```
+
+```
+## List of 1
+##  $ a: int [1:2] 1 2
+```
+
+```r
+str(y[[1]])
+```
+
+```
+##  int [1:2] 1 2
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - data frames most useful I 
+
+Do you remember our twin pair data set?
+
+
+```r
+DT::datatable(dat_twins, options = list(pageLength = 5))
+```
+
+<div id="htmlwidget-2d879c00dcac8e1f92a7" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2d879c00dcac8e1f92a7">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+
+Three questions:
+* How do we get only the twins with IQ higher than 120?
+* How do we get only the twins with IQ lower than 100 and body weight higher than 100?
+* How can we order the data set according to IQ?
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - data frames most useful II 
+
+How do we get only the twins with IQ higher than 120?
+
+
+```r
+dat_twins[dat_twins$IQ &gt; 120, ]
+```
+
+```
+##    ID IDZP GR GES      OG   VG   CC   KU  IQ     KG        IQ.cat
+## 9   9    5  1   2 1743.04 1034 6.48 53.1 127 62.143 above average
+## 10 10    5  2   2 1709.30 1070 6.43 54.8 126 83.009 above average
+## 20 20   10  1   1 1971.63 1160 7.67 58.5 124 72.576 above average
+```
+
+```r
+## identical function
+subset(dat_twins, IQ &gt; 120)
+```
+
+```
+##    ID IDZP GR GES      OG   VG   CC   KU  IQ     KG        IQ.cat
+## 9   9    5  1   2 1743.04 1034 6.48 53.1 127 62.143 above average
+## 10 10    5  2   2 1709.30 1070 6.43 54.8 126 83.009 above average
+## 20 20   10  1   1 1971.63 1160 7.67 58.5 124 72.576 above average
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - data frames most useful III 
+
+How do we get only the twins with IQ lower than 100 and body weight higher than 100?
+
+
+```r
+dat_twins[dat_twins$IQ &lt; 100 &amp; dat_twins$KG &gt; 100, ] # ! only single logical operator
+```
+
+```
+##   ID IDZP GR GES      OG   VG   CC   KU IQ      KG        IQ.cat
+## 8  8    4  2   2 1850.64 1079 6.84 55.3 96 107.503 below average
+```
+
+&gt; such expressions could be of any complexity
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - data frames most useful IV
+
+How can we order the data set according to IQ?
+
+
+```r
+order(dat_twins$IQ)
+```
+
+```
+##  [1] 16  3  4 14  2 13 15  1  8 12 17  5 11  6  7 19 18 20 10  9
+```
+
+```r
+head(dat_twins[order(dat_twins$IQ), ])
+```
+
+```
+##    ID IDZP GR GES      OG   VG   CC   KU IQ     KG        IQ.cat
+## 16 16    8  1   1 2154.67 1439 7.62 57.2 85 99.792 below average
+## 3   3    2  1   2 1902.36 1035 6.22 53.0 87 64.184 below average
+## 4   4    2  2   2 1860.24 1027 5.80 52.9 87 58.514 below average
+## 14 14    7  1   1 2018.92 1104 6.32 57.2 88 79.380 below average
+## 2   2    1  2   2 1684.89  963 5.73 54.2 89 58.968 below average
+## 13 13    7  2   1 2136.37 1067 6.32 57.2 93 83.916 below average
+```
+
+```r
+# dat_twins[, order(names(dat_twins))] # order data set alphabetically
+```
+
+&gt; ordering according to the primary key (ID variable) is often necessary before matching data
 
 
 &lt;!-- *********** HEADING ************** --&gt;
@@ -1231,6 +1764,305 @@ Instead of p-hacking why not just starting a research program to solve finally t
 ]
 
 
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Flow control - vocabulary
+
+There are some new words to learn if you want to become a flow control master: 
+
+
+```r
+# Control flow
+if - &amp;&amp;, || (short circuiting)
+for, while
+next, break
+switch
+ifelse
+
+# Debugging
+stop
+warning
+message
+```
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Flow control - if statement I
+
+Normally we want to combine if statements with loops (plus functions).
+
+&lt;br&gt;
+**if statements** have the following form: 
+
+
+```r
+## abstract representation
+if (condition) true_action
+if (condition) true_action else false_action
+```
+
+in action:
+
+
+```r
+x1 &lt;- if (TRUE) 1 else 2 # the experts write code like this!
+x1
+```
+
+```
+## [1] 1
+```
+
+```r
+x2 &lt;- if (FALSE) 1 else 2
+x2
+```
+
+```
+## [1] 2
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Flow control - if statement II
+
+
+
+```r
+greet &lt;- function(name, birthday = FALSE) {
+  paste0(
+    "Hi ", name,
+    if (birthday) { # but I prefer this way of writing code
+      " and HAPPY BIRTHDAY"
+    } else{
+      " and you do not have BIRTHDAY"
+    }
+  )
+}
+greet("Maria", FALSE)
+```
+
+```
+## [1] "Hi Maria and you do not have BIRTHDAY"
+```
+
+```r
+greet("Jaime", TRUE)
+```
+
+```
+## [1] "Hi Jaime and HAPPY BIRTHDAY"
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Flow control - if statement III
+
+If statements can be arbitrarily complex:
+
+
+```r
+x &lt;- 20
+
+if (x &gt; 30) {
+  print("x &gt; 30")
+} else if (x &lt;= 30 &amp;&amp; x &gt; 20) {
+  print("x &lt;= 30 &amp;&amp; x &gt; 20")
+} else{
+  print("everything else")
+}
+```
+
+```
+## [1] "everything else"
+```
+
+
+An important function is also the ifelse() function: 
+
+
+```r
+x &lt;- 1:10
+ifelse(x %% 2 == 0, "even", "odd")
+```
+
+```
+##  [1] "odd"  "even" "odd"  "even" "odd"  "even" "odd"  "even" "odd"  "even"
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Flow control - For Loop
+
+
+
+.pull-left[
+
+&lt;center&gt;
+&lt;img src="images/forLoopIdea.jpg", height="500px"&gt;
+&lt;/center&gt;
+
+]
+
+.pull-right[
+
+
+```r
+for(i in 1:10) { # Head of for-loop
+  x1 &lt;- i^2 # Code block
+  print(x1) # Print results
+}
+```
+
+```
+## [1] 1
+## [1] 4
+## [1] 9
+## [1] 16
+## [1] 25
+## [1] 36
+## [1] 49
+## [1] 64
+## [1] 81
+## [1] 100
+```
+
+]
+
+see multiple examples: https://statisticsglobe.com/for-loop-in-r
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Flow control - Why Awesome?! I 
+
+Imagine we want to drawn for the prices of diamonds for every different quality of the cut; data set with over 50.000 diamonds
+
+
+
+```r
+# ? diamonds
+# How many cuts? 
+levels(diamonds$cut)
+```
+
+```
+## [1] "Fair"      "Good"      "Very Good" "Premium"   "Ideal"
+```
+
+```r
+# Is there a difference in price?
+diamonds %&gt;%
+  group_by(cut) %&gt;%
+  summarize(mean(price))
+```
+
+```
+## # A tibble: 5 x 2
+##   cut       `mean(price)`
+##   &lt;ord&gt;             &lt;dbl&gt;
+## 1 Fair              4359.
+## 2 Good              3929.
+## 3 Very Good         3982.
+## 4 Premium           4584.
+## 5 Ideal             3458.
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Flow control - Why Awesome?! II
+
+Imagine we want to drawn for the prices of diamonds for every different quality of the cut; data set with over 50.000 diamonds
+
+
+```r
+for(c in levels(diamonds$cut)) {
+  cat("quality of cut: ", c, "\n")
+  tmp &lt;- diamonds$price[diamonds$cut == c]
+  cat("    &gt; # of diamonds: ", length(tmp), "\n")
+  cat("    &gt; skewness: ", moments::skewness(tmp), "\n")
+  cat("    &gt; kurtosis: ", moments::kurtosis(tmp), "\n")
+  hist(tmp, main = c, xlab = "price")
+  abline(v = mean(tmp), col = "red") # add mean
+  
+  if(length(tmp) &lt; 5000){
+    message("Oh no there are not even 5000 diamonds.")
+  }
+}
+```
+
+
+&gt; by using print() or cat() you can print additional information in the console
+
+&gt; by adding if() statements you can implement a complex logical structure in your for loop
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - for loop useful example I  
+
+In the twin data set we have the variable "IDZP" (identifier of the twin pair)
+
+
+```r
+DT::datatable(dat_twins, options = list(pageLength = 5))
+```
+
+<div id="htmlwidget-79d6ac22ce676725a811" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-79d6ac22ce676725a811">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+
+
+```r
+table(dat_twins$IDZP)
+```
+
+```
+## 
+##  1  2  3  4  5  6  7  8  9 10 
+##  2  2  2  2  2  2  2  2  2  2
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - for loop useful example II
+
+Compute the mean difference of IQ for every twin pair: 
+
+
+```r
+mean_twinPairs &lt;- double(10) # empty vector made up of 0 to fill up
+h=1 # index variable
+for(t in levels(dat_twins$IDZP)) {
+  # cat("twin pair: ", t, "\n")
+  tmp &lt;- dat_twins$IQ[dat_twins$IDZP == t]
+  # cat("    &gt; IQ values: ", tmp, "\n")
+
+  mean_twinPairs[h] &lt;- diff(tmp)
+  h=h+1 # increase index variable by 1
+}
+
+mean_twinPairs
+```
+
+```
+##  [1] -7  0  2 -7 -1 -5 -5 -9 17 11
+```
+
+
+
+
 
 &lt;!-- *********** HEADING ************** --&gt;
 ---
@@ -1258,6 +2090,374 @@ Otherwise it could get dark (at least your mood when writing code)!
 
 
 
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - vocabulary
+
+Also here are some new words to learn if you want to program your own function:
+
+
+```r
+# Functions to do with functions
+function
+missing
+return, invisible
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - Theory I
+
+* R, at its heart, is a functional programming language. This means that it provides many tools for the creation and manipulation of functions.
+* The structure of a function is given by
+
+
+```r
+function ( &lt;arglist&gt; ){ &lt;body&gt; }
+```
+
+* the keyword function indicates the beginning of a function
+* arguments &lt;arglist&gt; are defined by comma-separated key-value-pairs
+* &lt;body&gt; is a block of R commands which are executed by the function
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - Theory II
+
+All R functions are objects and consist of three parts:
+* body() the code inside the function.
+* formals() the list of arguments which controls how you can call the function.
+* environment() the 'map' of the location of the function's variables. If the environment isn't displayed, it means
+
+
+```r
+f &lt;- function(x){
+  square &lt;- x^2 # compute the square
+  return(square) # return the value
+}
+```
+
+
+.pull-left[
+
+
+```r
+formals(f)
+```
+
+```
+## $x
+```
+
+```r
+body(f) 
+```
+
+```
+## {
+##     square &lt;- x^2
+##     return(square)
+## }
+```
+
+]
+
+.pull-right[
+
+
+```r
+environment(f)
+```
+
+```
+## &lt;environment: R_GlobalEnv&gt;
+```
+
+]
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - Human Interaction is Incoming I
+
+Recommendation of Xie (chief software engineer of R): 
+
+&gt; Avoid the commands that require human interaction: human input can be highly unpredictable; e.g., we do not know for sure which file the user will choose if we pop up a dialog box asking the user to choose a data file...
+
+
+The user breaks our function: 
+
+```r
+f
+```
+
+```
+## function(x){
+##   square &lt;- x^2 # compute the square
+##   return(square) # return the value
+## }
+```
+
+```r
+f(x = "I am a string!")
+```
+
+```
+## Error in x^2: nicht-numerisches Argument für binären Operator
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - Human Interaction is Incoming II
+
+If you writing functions it is good practice to control for the input:
+
+
+```r
+f &lt;- function(x){
+  if(is.numeric(x)){
+    square &lt;- x^2 # compute the square
+    return(square) # return the value
+  }else{
+    message("You should provide a numeric value / numeric vector.")
+    return(NULL)
+  }
+
+}
+
+f(x = "I am a string!")
+```
+
+```
+## You should provide a numeric value / numeric vector.
+```
+
+```
+## NULL
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - Human Interaction is Incoming III
+
+If you have a "character" argument like "sex = c("Male", "Female")" you can check the provided values by: 
+
+* match.arg matches arguments against a table of candidate values specified by choices
+
+
+```r
+match.arg(arg, choices, several.ok = FALSE)
+```
+
+* missing argument will be replaced with the first candidate
+
+
+```r
+talk_about_sex &lt;- function(sex = c("Male", "Female", "Non-binary")) {
+  match.arg(sex)
+}
+
+talk_about_sex("F") # partial matching (not good practice)
+```
+
+```
+## [1] "Female"
+```
+
+```r
+talk_about_sex()
+```
+
+```
+## [1] "Male"
+```
+
+```r
+talk_about_sex("W")
+```
+
+```
+## Error in match.arg(sex): 'arg' should be one of "Male", "Female", "Non-binary"
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - Function Arguments
+
+* formals() the list of **arguments** which controls how you can call the function.
+  + Function arguments in R can have default values.
+  + They can be also defined in terms of other arguments.
+  + You can determine if an argument was supplied or not with the missing() function.
+
+
+
+```r
+myplot &lt;- function(x, y, mycol = 'red') {
+  if (missing(y)) {
+    y &lt;- x
+    x &lt;- 1:length(y)
+    }
+  plot(x, y, col = mycol)
+}
+par(mar = c(4, 4, .1, .1))
+myplot(x = 1:20)
+myplot(x = 1:20, y = rnorm(20), mycol='darkgreen')
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-81-1.png" width="20%" /&gt;&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-81-2.png" width="20%" /&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - examples I  
+
+Using the **Cairo** package you could save your graphics directly as files to your computer in great resolution:
+
+
+```r
+############################################################################
+##### save_graphic()
+# save graphic object as png file
+############################################################################
+save_graphic &lt;- function(filename){
+  tmp &lt;- paste(filename, ".png", sep = "")
+  Cairo::Cairo(file=tmp,
+               type="png",
+               units="px",
+               width=2500,
+               height=1700,
+               pointsize=44, # text size is artifically shrunked when saved 
+               dpi= "auto",
+               bg = "white")
+}
+
+dev.off()
+save_graphic(filename = "myFirstPlot")
+plot(cars$speed, cars$dist)
+dev.off()
+```
+
+(also possible to use for example ggsave() from the **ggplot2** package)
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - examples II  
+
+Using the **stargazer** package you could save your easily set up summary statistics in the APA 7 format:
+
+.scrollChunk[
+
+```r
+############################################################################
+##### getDescriptives()
+# get multiple summary statistics to R console AND / OR to HTML
+############################################################################
+getDescriptives &lt;- function(dataset = NULL, 
+                            variables = NULL,
+                            nameAPAtable = NULL){
+  x &lt;- dataset[, variables]
+
+
+  ## table
+  tmp_descriptives &lt;- sapply(x, function(x) c(
+    "Mean"= mean(x,na.rm=TRUE),
+    "SD" = sd(x),
+    "Median" = median(x),
+    "CoeffofVariation" = sd(x)/mean(x,na.rm=TRUE),
+    "Minimum" = min(x),
+    "Maximun" = max(x),
+    "Lower Quantile" = as.numeric(quantile(x,0)),
+    "Upper Quantile" = as.numeric(quantile(x,1)),
+    "Skewness" = moments::skewness(x = x),
+    "Kurtosis(-3)" = moments::kurtosis(x = x) -3,
+    "KS-Test" = ks.test(x = x, y = "pnorm", mean(x), sd(x))$p.value
+  )
+  )
+  tmp_descriptives &lt;- round(x = tmp_descriptives, digits = 2)
+  
+  ## as APA 7 table in HTML using stargazer
+  ## round digits
+  out_tmp &lt;- round(x = t(tmp_descriptives), digits = 2)
+  if(!is.null(nameAPAtable)){
+    notNeeded &lt;- capture.output(stargazer(out_tmp, type = "html", summary = FALSE,
+                                          out = paste0(nameAPAtable, ".html")))
+  }
+  
+  
+  return(tmp_descriptives)
+}
+
+
+getDescriptives(dataset = dat_twins, 
+                variables = c("IQ", "KG"), 
+                nameAPAtable = "myFirstTable")
+```
+]
+
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - File and Data Management
+
+*Statisticians are lazy as hell, that's why we write code only once!*
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## ! we are now on track for our first sophisticated program
+
+The management of your files, your data, your code is key. Keep on riding... 
+
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;center&gt;
+&lt;img src="https://media2.giphy.com/media/cfuL5gqFDreXxkWQ4o/giphy.gif?cid=ecf05e47841a4c59de844460f9bcebc6ccbd30748a6b65f8", width="400" height="300"&gt;
+&lt;/center&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## organize your program in modules !
+
+.pull-left[
+
+at best use R projects and separate your programs / code / files into separate functional units (modules) / folders: 
+* Create a project folder
+* In this folder, organize your file in subfolders (e.g., data)
+* All file paths in your script(s) are specified relative to the folder’s top level
+
+&lt;center&gt;
+&lt;img src="images/modular_programming.jpg", height=250px"&gt;
+&lt;/center&gt;
+
+
+]
+
+.pull-right[
+
+check out the folder "additional scripts -&gt; project template"
+
+
+&lt;center&gt;
+&lt;img src="images/modular_programming.jpg", height=250px"&gt;
+&lt;/center&gt;
+
+]
 
 
 
@@ -1446,7 +2646,7 @@ Part 4: Amazing Applications of R
 
 &lt;!-- *********** NEW SLIDE ************** --&gt;
 ---
-## !!? It's a new dawn! It's a new day! yeah (quote: Nina Simone - Feeling Good)
+## Maybe you will start singing "It's a new dawn! It's a new day! yeah" (quote: Nina Simone - Feeling Good)
 
 
 If you replace pain by pleasure (or better joy) you get what I mean...
@@ -1522,20 +2722,599 @@ and article: https://www.researchgate.net/publication/227580118_Generalizability
 ## descriptive summary statistics I 
 
 
-blub...
+
+
+```r
+sleep %&gt;%
+  group_by(group) %&gt;%
+  summarise(M=mean(extra), SD=sd(extra))
+```
+
+```
+## # A tibble: 2 x 3
+##   group     M    SD
+##   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 1      0.75  1.79
+## 2 2      2.33  2.00
+```
+
+```r
+cor(sleep$extra[sleep$group==1], sleep$extra[sleep$group==2])
+```
+
+```
+## [1] 0.7951702
+```
+
+
+
+
 
 
 &lt;!-- *********** NEW SLIDE ************** --&gt;
 ---
-## hypothesis tests I - assumptions
+## hypothesis tests I - decision tree
 
-blub...
+Which hypothesis test should I use?
+
+&lt;center&gt;
+&lt;img src="images/decisionTreeHypothesisTest.jpg", height="450px"&gt;
+&lt;/center&gt;
+
+
+see: https://www.utwente.nl/en/bms/m-store/step-by-step-guide/statistical-tests/choice-test-2/
 
 
 
 &lt;!-- *********** NEW SLIDE ************** --&gt;
 ---
-## multiple linear regression I - assumptions
+## hypothesis tests II - in R
+
+Which hypothesis test are implemented in R?
+
+
+
+```r
+apropos(what = "\\.test$") # Find Objects by (Partial) Name
+```
+
+```
+##  [1] "agostino.test"        "ansari.test"          "anscombe.test"       
+##  [4] "bartlett.test"        "binom.test"           "bonett.test"         
+##  [7] "Box.test"             "chisq.test"           "cor.test"            
+## [10] "fisher.test"          "fligner.test"         "friedman.test"       
+## [13] "jarque.test"          "kruskal.test"         "ks.test"             
+## [16] "mantelhaen.test"      "mauchly.test"         "mcnemar.test"        
+## [19] "mood.test"            "oneway.test"          "pairwise.prop.test"  
+## [22] "pairwise.t.test"      "pairwise.wilcox.test" "poisson.test"        
+## [25] "power.anova.test"     "power.prop.test"      "power.t.test"        
+## [28] "PP.test"              "prop.test"            "prop.trend.test"     
+## [31] "quade.test"           "shapiro.test"         "t.test"              
+## [34] "var.test"             "wilcox.test"
+```
+
+```r
+# library(afex)
+apropos("^aov") # ANOVAs
+```
+
+```
+## [1] "aov"     "aov.car" "aov_4"   "aov_car" "aov_ez"  "aov4"
+```
+
+```r
+# many more!
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests III - example t-Tests
+
+
+**in general**: The goal of hypothesis testing is to test a hypothesis about the population using a sample; there are two hypotheses:
+
+* Null hypothesis `\(H_0\)`: hypothesis to be tested (contains "critical" assumption).
+* Alternative hypothesis `\(H_1\)`: Opposite to the null hypothesis
+
+
+&lt;br&gt;
+! Decision rule of classical significance tests (frequentist perspective!): Reject the `\(H_0\)` only if it is very unlikely to be true.
+
+&lt;br&gt;
+&lt;br&gt;
+**t-Test**: statistical hypothesis test in which the test statistic follows a Student's t-distribution under the null hypothesis; most common application is to test whether the means of two populations are different
+
+
+for relative equal variances:
+$$
+t = \frac{\overline{X}_1 - \overline{X}_2}{S_p* \sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}
+$$
+
+&lt;br&gt;
+question: Which hypothesis test should I use in case of 2 variables; independent variable with 2 levels?
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests IV - always consider non-parametric tests
+**parametric tests:**
+
+* information about the distribution of the population is known and is based on a fixed set of parameters
+
+&lt;br&gt;
+**non-parametric tests:**
+
+* information about the distribution of a population is unknown, and the parameters are not fixed
+  +  no requirement for any distribution of the population in the non-parametric test (also known as distribution-free testing)
+* usually performed when the independent variables are non-metric or central assumptions are violated (e.g. normality)
+
+
+&lt;center&gt;
+&lt;img src="images/parametric_nonparametric.jpg", height="210px"&gt;
+&lt;/center&gt;
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## jumping to outer space for a second! 
+
+*Embrace yourself we will enter the top floor of crazy tower for a second!*
+
+
+&lt;center&gt;
+&lt;img src="images/topFloor.jpg", height="400px"&gt;
+&lt;/center&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bayesian Hypothesis Testing
+
+
+**frequentist hypothesis testing:**
+
+* focuses on null hypothesis significance testing (*NHST*), whereby p-values can only reject the null hypothesis
+  + whether to reject a hypothesis, accept it as true (! categorical decision) or to withhold judgement because no decision can be made (if we assuming insufficient power)
+  + relative strength of an effect can be made by *effect sizes*
+
+&lt;br&gt;
+**bayesian hypothesis testing:**
+
+* Bayes factor can state evidence for both the null and the alternative hypothesis, making confirmation of hypotheses possible
+ + Bayes factor is the ratio of the likelihood of one particular hypothesis to the likelihood of another. It can be interpreted as a measure of the strength of evidence in favor of one theory among two competing theories
+
+&gt; you could use the statistic program JASP to compute Baysian Hypothesis Tests: https://jasp-stats.org/
+ 
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bayesian vs. Frequentist Hypothesis Testing
+
+&lt;center&gt;
+&lt;img src="images/BayesianFrequentist.jpg", height="450px"&gt;
+&lt;/center&gt;
+
+
+&lt;br&gt;
+slide from MIT: https://math.mit.edu/~dav/05.dir/class17-slides-all.pdf
+ 
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Fancy ways to formulate informative hypotheses
+
+Three common types of hypotheses anchored to a point-value of interest of a parameter (! smallest effect size of interest): 
+
+&lt;center&gt;
+&lt;img src="images/formulateHypothesisFancy.jpg", height="350px"&gt;
+&lt;/center&gt;
+
+&lt;br&gt;
+see in more detail: 
+book online: https://michael-franke.github.io/intro-data-analysis/
+
+article: Lakens, D., Scheel, A. M., &amp; Isager, P. M. (2018). Equivalence Testing for Psychological Research: A Tutorial. Advances in Methods and Practices in Psychological Science, 1(2), 259–269. https://doi.org/10.1177/2515245918770963
+
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests V - steps of sequences
+
+1 get an overview of your data:
+
+
+```r
+data("sleep")
+DT::datatable(sleep, options = list(pageLength = 5))
+```
+
+<div id="htmlwidget-4ee99128d41d44daee8b" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4ee99128d41d44daee8b">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],[0.7,-1.6,-0.2,-1.2,-0.1,3.4,3.7,0.8,0,2,1.9,0.8,1.1,0.1,-0.1,4.4,5.5,1.6,4.6,3.4],["1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2"],["1","2","3","4","5","6","7","8","9","10","1","2","3","4","5","6","7","8","9","10"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>extra<\/th>\n      <th>group<\/th>\n      <th>ID<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":1},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+
+&gt; paired sample t-test is needed; consist of a sample of matched pairs of similar units (e.g. using Propensity Score Matching), or one group of units that has been tested twice 
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data I - simple plots:
+
+.pull-left[
+
+```r
+## grouped boxplot
+boxplot(sleep$extra ~ sleep$group)
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-88-1.png" width="50%" /&gt;
+
+```r
+## compute mean deviations:
+sleep1 &lt;- with(sleep, extra[group == 2] - extra[group == 1])
+summary(sleep1)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    1.05    1.30    1.58    1.70    4.60
+```
+]
+
+.pull-right[
+
+```r
+stripchart(sleep1, method = "stack", xlab = "hours",
+           main = "Sleep prolongation (n = 10)")
+boxplot(sleep1, horizontal = TRUE, add = TRUE,
+        at = .6, pars = list(boxwex = 0.5, staplewex = 0.25))
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-89-1.png" width="50%" /&gt;
+]
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data II - more sophisticated plots (**ggplot2**) I: 
+
+template for adjusting the format of ggplot2 figures to APA style: 
+
+
+```r
+ggplot_theme &lt;- theme(axis.title.x = element_blank(),
+                      axis.title.y = element_text(size=12),
+                      axis.text.x = element_text(size=10,hjust=0.5,vjust=0.5,face="plain", 
+                                                 colour = "black"),
+                      axis.text.y = element_text(size=12,face="plain", colour = "black"),
+                      panel.border = element_blank(),
+                      axis.line = element_line(colour = "black"),
+                      panel.grid.major = element_blank(),
+                      panel.grid.minor = element_blank(),
+                      panel.background = element_blank(),
+                      legend.position="none")  # no legend
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data II - more sophisticated plots (**ggplot2**) II: 
+
+
+
+```r
+# grouped boxplot
+ggplot(sleep, aes(x=group, y=extra)) + 
+    geom_boxplot() + ggplot_theme
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-91-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data II - more sophisticated plots (**ggstatsplot**) I:  
+
+Using the type argument you can specify the statistical approach: 
+
+* "parametric"
+* "nonparametric"
+* "robust"
+* "bayes"
+
+
+```r
+## parametric t-test
+p1 &lt;- ggwithinstats(
+  data = sleep,
+  x = group,
+  y = extra,
+  type = "p",
+  effsize.type = "d",
+  conf.level = 0.95,
+  title = "Parametric test"
+)
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data II - more sophisticated plots (**ggstatsplot**) II:
+
+
+```r
+## parametric t-test
+p1
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-93-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VII - steps of sequences
+
+3 check the assumptions of the paired sample t-test:
+
+1. Independence: Each observation should be independent of every other observation.
+
+2. Normality: The differences between the pairs should be approximately normally distributed.
+  + No Extreme Outliers: There should be no extreme outliers in the differences.
+  + Remark: quite often in practice, if `\(n &gt;&gt; 30\)` this assumption is not checked
+
+
+
+```r
+## check outlier assumption
+boxplot(sleep1) # to check outlier assumption
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-94-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VII - steps of sequences
+
+3 check the assumptions of the paired sample t-test:
+
+applying Kolmogorov-Smirnov OR Shapiro-Wilk-Test to check normality; sample size sensitive: tests become more sensitive to minimal deviations from the normal distribution as sample size increases 
+
+
+Use Shapiro-Wilk normality test as described at: Normality Test in R.
+* Null hypothesis: the data are normally distributed
+* Alternative hypothesis: the data are not normally distributed
+
+
+
+```r
+# Shapiro-Wilk normality test for the differences
+shapiro.test(sleep1)
+```
+
+```
+## 
+## 	Shapiro-Wilk normality test
+## 
+## data:  sleep1
+## W = 0.82987, p-value = 0.03334
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VII - steps of sequences
+
+3 check the assumptions of the paired sample t-test:
+
+because of the  sample size sensitivity it is often better to visually check the assumption of normality:
+
+drawing **Q-Q Plot**:
+
+
+```r
+sleep1_sc &lt;- scale(sleep1) # z standardize mean differences
+
+qqnorm(sleep1_sc) # QQ Plot
+qqline(sleep1_sc) # vertical line
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-96-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VII - steps of sequences
+
+3 check the assumptions of the paired sample t-test:
+
+because of the  sample size sensitivity it is often better to visually check the assumption of normality:
+
+drawing **Histogram** and overlay normal distribution:
+
+
+```r
+hist(sleep1_sc, freq = FALSE, xlim = c(-3,3))
+x&lt;-seq(-4,+4,by=0.02)
+curve(dnorm(x), add=TRUE)
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-97-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VII - steps of sequences
+
+4 compute paired sample t-test:
+
+
+
+```r
+## Formula interface
+t.test(extra ~ group, data = sleep, paired = TRUE)
+```
+
+```
+## 
+## 	Paired t-test
+## 
+## data:  extra by group
+## t = -4.0621, df = 9, p-value = 0.002833
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -2.4598858 -0.7001142
+## sample estimates:
+## mean of the differences 
+##                   -1.58
+```
+
+outputs: 
+
+* t is the t-test statistic value
+* df is the degrees of freedom
+* p-value is the significance level of the t-test
+* conf.int is the confidence interval (conf.int) of the mean differences at 95%
+* sample estimates is the mean differences between pairs
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VII - steps of sequences
+
+4 compute paired sample t-test:
+
+compute the Bayes factor: 
+
+
+```r
+## Traditional interface
+with(sleep, ttestBF(extra[group == 1], extra[group == 2], paired=TRUE))
+```
+
+```
+## Bayes factor analysis
+## --------------
+## [1] Alt., r=0.707 : 17.25888 ±0%
+## 
+## Against denominator:
+##   Null, mu = 0 
+## ---
+## Bayes factor type: BFoneSample, JZS
+```
+
+&gt; Bayse factor of 17.25888
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VII - steps of sequences
+
+4 compute paired sample t-test:
+
+evaluate the Bayes factor: 
+
+&gt; Bayse factor of 17.25888
+
+
+&lt;center&gt;
+&lt;img src="images/BayseFactorsEvidence.jpg", height="250px"&gt;
+&lt;/center&gt;
+
+
+copied from: https://www.statlect.com/fundamentals-of-statistics/Jeffreys-scale
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VIII - steps of sequences - missing parts
+
+We have forgot to run a **power analysis**
+
+
+&lt;center&gt;
+&lt;img src="images/gPowerPostHoc.jpg", height="300px"&gt;
+&lt;/center&gt;
+
+
+if you want to install / use / read more about G*Power: https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VIII - steps of sequences - missing parts
+
+We have forgot to compute a appropriate **effect size**
+
+The standardized mean difference effect size for within-subjects designs is referred to as Cohen’s `\(d_z\)`, which can be computed as: 
+
+
+.pull-left[
+
+```r
+## by hand:
+means &lt;- with(sleep, tapply(extra, group, mean)) # get group means
+md &lt;- means[1]-means[2] # get mean difference
+sleep_wide &lt;- cbind(sleep$extra[sleep$group==1], sleep$extra[sleep$group==2])
+
+(md / sqrt(sum(((sleep_wide[,1] - sleep_wide[,2])-md)^2) / (10-1))) # (d_z &lt;- md / sd(sleep_wide[,1] - sleep_wide[,2])) # using sd
+```
+
+```
+##         1 
+## -1.284558
+```
+]
+
+.pull-right[
+
+```r
+## by package "rstatix"
+sleep %&gt;% cohens_d(extra ~ group, paired = TRUE)
+```
+
+```
+## # A tibble: 1 x 7
+##   .y.   group1 group2 effsize    n1    n2 magnitude
+## * &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;ord&gt;    
+## 1 extra 1      2        -1.28    10    10 large
+```
+]
+
+
+see: Lakens, D. (2013). Calculating and reporting effect sizes to facilitate cumulative science: A practical primer for t-tests and ANOVAs. Frontiers in Psychology, 4. https://www.frontiersin.org/articles/10.3389/fpsyg.2013.00863
+
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## multiple linear regression - assumptions
 
 Assumption of a linear regression (A. 8 is normally never taught!):
 
@@ -1562,10 +3341,175 @@ Part 4: Amazing Applications of R - Bibliometrix
 
 &lt;!-- *********** NEW SLIDE ************** --&gt;
 ---
-## Bibliometrix I
+## Bibliometrix - types
 
 
-blub...
+.pull-left[
+**systematic reviews**: search available literature for evidence with which to address a research question
+]
+
+.pull-right[
+**meta-analyses**: quantitatively assess statistical evidence found through systematic reviews -&gt; dependent on good systematic review
+]
+
+**goals**:
+* integrate past literature
+* critically analyse the existing literature
+* identify issues central to a field
+
+**center often on one single area**:
+* summarize / list findings of individual primary studies
+  + .. methods used to carry out research
+  + .. theories meant to explain the same or related phenomena
+  + .. practices programs, treatments, .. being used in applied context
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - search strategies
+
+different modes should be used concurrently and used search strategies should be made explicit
+
+&lt;center&gt;
+&lt;img src="images/searchStrategies.jpg", height="450px"&gt;
+&lt;/center&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - main concern of literature retrieval
+
+return all of the studies relevant to the review (‘recall’) without retrieving irrelevant studies (‘precision’)
+
+**Recall**:
+* expresses (as a percentage) the ratio of relevant documents retrieved to all those in a collection that should be retrieved
+* pure fiction: if we could identify all existing relevant documents in order to count them, we could retrieve them all, and so recall would always be 100 percent
+
+
+**Precision**:
+* expresses (as a percentage) the ratio of documents retrieved and judged relevant to all those actually retrieved
+* measures how many irrelevant documents-false positives-one must go through to find the true positives or hits
+
+&lt;br&gt;
+-&gt; trade-off: high recall leads to degrading precision
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - main concern of literature retrieval II 
+
+&lt;center&gt;
+&lt;img src="images/STMreport.jpg", height="450px"&gt;
+&lt;/center&gt;
+
+
+see: https://www.stm-assoc.org/2018_10_04_STM_Report_2018.pdf
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - main concern of literature retrieval III 
+
+**solution: need for high recall !!!**
+
+&lt;br&gt;
+* „there is no way of ascertaining whether the set of located studies is representative of the full set of existing studies on the topic, the best protection against an unrepresentative set is to locate as many of the existing studies as is possible“
+* „The point is to avoid missing a useful paper that lies outside one’s regular purview, thereby ensuring that one’s habitual channels of communication will not bias the results of studies obtained by the search... history of science and scholarship is full of examples of mutually relevant specialties that were unaware of each other for years because their members construed their own literatures too narrowly and failed to ask what other researchers did“
+
+
+&lt;br&gt;
+&lt;br&gt;
+recommended book: Cooper, Hedges und Valentine (2009): The handbook of research synthesis and meta-analysis. Second Edition.
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - traditional methods 
+
+Traditional methods often include (from my perspective) manual literature searches in arbitrary databases without clear inclusion criteria. Results of the research are often gathered in Excel.
+
+&lt;br&gt;
+however, there are immensely important procedures in the traditional approach:
+
+&lt;center&gt;
+&lt;img src="images/searchStrategiesTraditional.jpg", height="350px"&gt;
+&lt;/center&gt;
+
+
+&lt;br&gt;
+How to use Google Scholar: https://www.wur.nl/en/article/How-to-use-Google-Scholar.htm
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - definition, databases 
+
+The branch of library science concerned with the application of mathematical and statistical analysis to bibliography; the statistical analysis of books, articles, or other publications the use of statistical methods to analyse books, articles and other publications by means of 
+* simple descriptive measures
+* complex indices
+* network theory
+
+&lt;br&gt;
+&lt;br&gt;
+there are three principal databases (increasing number of sources, but lower data quality):
+* Web of Science: www.webofknowledge.com
+* Scopus: https://www.scopus.com/
+* Google Scholar: https://scholar.google.com/
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - working process
+
+1. download found sources as plain text from www.webofknowledge.com (when multiples times collect single txt-files with unique name in a folder)
+2. use the ShinyApp of the R-package **bibliometrix** to check the found sources for possible errors and visualize your sources
+3. use the R-package **litsearchr** to identify further search terms
+4. use the R-package **scholar** to further investigate the publications of key authors
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - bibliometrix package
+
+most advanced is **bibliometrix**, which allows to compute: 
+
+* descriptive statistics
+* Bibliographic coupling: occurs when two works reference a common third work in their bibliographies (helpful to detect connections between research groups, ...)
+* Co-citation: frequency with which two documents are cited together by other documents (helpful in detecting a shift in paradigms and schools of thought - using betweenness, ...)
+* ...
+
+
+
+```r
+## to run shiny app:
+library(bibliometrix)
+biblioshiny()
+```
+
+also check out the webpage: https://www.bibliometrix.org/home/
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Who wants to learn statistics and programming now? - Thank you for your attention :-)!
+
+
+The final slide is reserved for Bob Ross!
+&lt;br&gt;
+
+&lt;center&gt;
+&lt;img src="https://media0.giphy.com/media/B4OVvY3CVNN0Q/giphy.gif?cid=ecf05e47axiata7fc4y4j5m779ltm6aezwj1nudqznamk4ou", width="500" height="350"&gt;
+&lt;/center&gt;
+
+
+To relax you can watch Bob Ross motivating painting videos: https://www.youtube.com/watch?v=2lBQUqzcbEg
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

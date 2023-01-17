@@ -1,0 +1,3 @@
+"0","boxplot(dat$mean_stf ~ dat$lrscale_dummy)"
+"2","Error in eval(predvars, data, env) : object 'dat' not found
+"

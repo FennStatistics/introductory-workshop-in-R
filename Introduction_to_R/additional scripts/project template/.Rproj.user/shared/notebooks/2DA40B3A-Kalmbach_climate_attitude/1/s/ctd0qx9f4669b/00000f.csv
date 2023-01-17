@@ -1,0 +1,23 @@
+"0","climate_score <- dat %>%"
+"0","  select(c(Q3:Q18)) %>%"
+"0","  rowSums()"
+"0",""
+"0",""
+"0","dat %>%"
+"0","  select(c(Q1:Q13))"
+"1","[1m[33mError[39m in `chr_as_locations()`:[22m
+[33m![39m Can't subset columns that don't exist.
+[31mx[39m Column `Q1` doesn't exist.
+Backtrace:
+[90m  1. [39mdat %>% select(c(Q1:Q13))
+[90m  3. [39m[1mdplyr[22m:::select.data.frame(., c(Q1:Q13))
+[90m  4. [39m[1mtidyselect[22m::eval_select(expr(c(...)), .data)
+[90m  5. [39mtidyselect:::eval_select_impl(...)
+[90m 14. [39mtidyselect:::vars_select_eval(...)
+     ...
+[90m 22. [39mtidyselect:::eval_colon(expr, data_mask, context_mask)
+[90m 23. [39mtidyselect:::walk_data_tree(...)
+[90m 24. [39mtidyselect:::as_indices_sel_impl(...)
+[90m 25. [39mtidyselect:::as_indices_impl(x, vars, call = call, strict = strict)
+[90m 26. [39m[1m[94mtidyselect:::chr_as_locations([39m[22mx, vars, call = call[1m[94m)[39m[22m
+"
