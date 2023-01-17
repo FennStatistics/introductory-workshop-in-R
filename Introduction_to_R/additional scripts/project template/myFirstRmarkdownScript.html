@@ -662,6 +662,29 @@ data</h3>
 ## mean_imAllow       1.00      4.00     3.00 -0.34    -0.04   0.01
 ## mean_stf           0.25     10.00     9.75 -0.63     0.57   0.03
 ## sd_stf             0.00      6.36     6.36  0.58     0.32   0.02</code></pre>
+<pre class="r CSSoutput"><code># Immigration enriching economy, culture, place to live
+sel_var &lt;- c(&quot;imbgeco&quot;, &quot;imueclt&quot;, &quot;imwbcnt&quot;)
+getDescriptives(dataset = dat, variables = sel_var, nameAPAtable = &quot;immigrationEnrich&quot;)</code></pre>
+<pre><code>## Warning in ks.test(x = x, y = &quot;pnorm&quot;, mean(x, na.rm = TRUE), sd(x, na.rm =
+## TRUE)): ties should not be present for the Kolmogorov-Smirnov test
+
+## Warning in ks.test(x = x, y = &quot;pnorm&quot;, mean(x, na.rm = TRUE), sd(x, na.rm =
+## TRUE)): ties should not be present for the Kolmogorov-Smirnov test
+
+## Warning in ks.test(x = x, y = &quot;pnorm&quot;, mean(x, na.rm = TRUE), sd(x, na.rm =
+## TRUE)): ties should not be present for the Kolmogorov-Smirnov test</code></pre>
+<pre><code>##                  imbgeco imueclt imwbcnt
+## Mean                6.13    6.02    5.35
+## SD                  2.33    2.52    2.24
+## Median              6.00    6.00    5.00
+## CoeffofVariation    0.38    0.42    0.42
+## Minimum             0.00    0.00    0.00
+## Maximun            10.00   10.00   10.00
+## Lower Quantile      0.00    0.00    0.00
+## Upper Quantile     10.00   10.00   10.00
+## Skewness           -0.53   -0.44   -0.22
+## Kurtosis(-3)       -0.03   -0.42   -0.03
+## KS-Test             0.00    0.00    0.00</code></pre>
 </div>
 <div id="identify-people-with-extreme-left-right-political-orientation" class="section level3" number="4.1.2">
 <h3><span class="header-section-number">4.1.2</span> identify people
@@ -980,45 +1003,6 @@ mean_stf
 <td colspan="8" style="border-bottom: 1px solid black">
 </td>
 </tr>
-</table>
-<pre class="r CSSoutput"><code>knitr::kable(mtcars[1:2, 1:2], &quot;html&quot;)</code></pre>
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-mpg
-</th>
-<th style="text-align:right;">
-cyl
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Mazda RX4
-</td>
-<td style="text-align:right;">
-21
-</td>
-<td style="text-align:right;">
-6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Mazda RX4 Wag
-</td>
-<td style="text-align:right;">
-21
-</td>
-<td style="text-align:right;">
-6
-</td>
-</tr>
-</tbody>
 </table>
 </div>
 <div id="statistical-tests" class="section level3" number="4.1.3">

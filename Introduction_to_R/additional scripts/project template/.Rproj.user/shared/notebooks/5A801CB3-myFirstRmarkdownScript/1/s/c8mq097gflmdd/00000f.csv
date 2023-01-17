@@ -1,0 +1,6 @@
+"0","cor(dat$mean_stf, dat$mean_imEnrich, use = ""complete"")"
+"1","[1]"
+"1"," 0.4120765"
+"1","
+"
+"0","plot(dat$mean_stf ~ dat$mean_imEnrich)"

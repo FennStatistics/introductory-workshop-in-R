@@ -34,10 +34,10 @@ knitr::opts_chunk$set(class.source = "CSSoutput",
 ```
 
 
-```{r setup, include=FALSE}
+```{r packages, include=FALSE}
 # reset R environment
-rm(list=ls(all=TRUE))
-graphics.off()
+rm(list=ls(all=TRUE)) # ! not needed in rmarkdown, but good practice
+graphics.off() # ! not needed in rmarkdown
 
 ################
 # install and load packages
@@ -61,7 +61,20 @@ usePackage("stargazer") # create tables
 rm(usePackage)
 ```
 
+```{r additionalFunctions, include=FALSE}
+################
+# install and load packages
+################
+## change working directory
+setwd("functions")
+source(file = "getDescriptives.R", encoding = "UTF-8")
+setwd("..") # ! not needed in rmarkdown, but good practice
+```
+
 ```{r loaddata, include=FALSE}
+################
+# load and clean data
+################
 ## change working directory
 setwd("data")
 ## load data
@@ -103,7 +116,7 @@ dat$sd_stf <- dat %>%
 # stfgov	How satisfied with the national government	All rounds: Now thinking about the [country] government, how satisfied are you with the way it is doing its job?
 # stfdem	How satisfied with the way democracy works in country	All rounds: And on the whole, how satisfied are you with the way democracy works in [country]?
 
-setwd("..")
+setwd("..") # ! not needed in rmarkdown, but good practice
 ```
 
 
@@ -142,6 +155,12 @@ First glimpse / get summary of the loaded data:
 glimpse(dat)
 summary(dat)
 psych::describe(dat)
+```
+
+```{r}
+# Immigration enriching economy, culture, place to live
+sel_var <- c("imbgeco", "imueclt", "imwbcnt")
+getDescriptives(dataset = dat, variables = sel_var, nameAPAtable = "immigrationEnrich")
 ```
 
 
@@ -186,9 +205,6 @@ Using the **stargazer** package you can create nice tables. You sometimes need t
 ```{r, results='asis'}
 stargazer(round(x = tmp_desc, digits = 4), type = "html", summary = FALSE)
 stargazer(x = as.data.frame(dat[, str_subset(string = colnames(dat), pattern = "mean_")]), type = "html", summary = TRUE, digits = 2)
-
-knitr::kable(mtcars[1:2, 1:2], "html")
-
 ```
 
 ### statistical tests

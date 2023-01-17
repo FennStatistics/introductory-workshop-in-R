@@ -1,0 +1,2 @@
+"0","dat$lrscale_dummy[dat$lrscale_dummy == 0] <- NA"
+"0","boxplot(dat$mean_stf ~ dat$lrscale_dummy)"

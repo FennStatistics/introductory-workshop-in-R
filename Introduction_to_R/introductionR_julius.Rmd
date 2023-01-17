@@ -58,6 +58,9 @@ usePackage("ggstatsplot")
 
 usePackage("rstatix")
 
+usePackage("haven")
+
+usePackage("janitor")
 
 
 ################
@@ -1916,29 +1919,30 @@ Using the **stargazer** package you could save your easily set up summary statis
 ##### getDescriptives()
 # get multiple summary statistics to R console AND / OR to HTML
 ############################################################################
-getDescriptives <- function(dataset = NULL, 
+### functionals:
+# dataset = dat_twins
+# variables = c("IQ", "KG")
+# nameAPAtable = "myFirstTable"
+getDescriptives <- function(dataset = NULL,
                             variables = NULL,
                             nameAPAtable = NULL){
   x <- dataset[, variables]
-
-
   ## table
   tmp_descriptives <- sapply(x, function(x) c(
-    "Mean"= mean(x,na.rm=TRUE),
-    "SD" = sd(x),
-    "Median" = median(x),
-    "CoeffofVariation" = sd(x)/mean(x,na.rm=TRUE),
-    "Minimum" = min(x),
-    "Maximun" = max(x),
-    "Lower Quantile" = as.numeric(quantile(x,0)),
-    "Upper Quantile" = as.numeric(quantile(x,1)),
-    "Skewness" = moments::skewness(x = x),
-    "Kurtosis(-3)" = moments::kurtosis(x = x) -3,
-    "KS-Test" = ks.test(x = x, y = "pnorm", mean(x), sd(x))$p.value
+    "Mean"= mean(x, na.rm=TRUE),
+    "SD" = sd(x, na.rm=TRUE),
+    "Median" = median(x, na.rm=TRUE),
+    "CoeffofVariation" = sd(x, na.rm=TRUE)/mean(x, na.rm=TRUE),
+    "Minimum" = min(x, na.rm=TRUE),
+    "Maximun" = max(x, na.rm=TRUE),
+    "Lower Quantile" = as.numeric(quantile(x,0, na.rm=TRUE)),
+    "Upper Quantile" = as.numeric(quantile(x,1, na.rm=TRUE)),
+    "Skewness" = moments::skewness(x = x, na.rm=TRUE),
+    "Kurtosis(-3)" = moments::kurtosis(x = x, na.rm=TRUE) -3,
+    "KS-Test" = ks.test(x = x, y = "pnorm", mean(x, na.rm=TRUE), sd(x, na.rm=TRUE))$p.value
   )
   )
   tmp_descriptives <- round(x = tmp_descriptives, digits = 2)
-  
   ## as APA 7 table in HTML using stargazer
   ## round digits
   out_tmp <- round(x = t(tmp_descriptives), digits = 2)
@@ -1946,10 +1950,9 @@ getDescriptives <- function(dataset = NULL,
     notNeeded <- capture.output(stargazer(out_tmp, type = "html", summary = FALSE,
                                           out = paste0(nameAPAtable, ".html")))
   }
-  
-  
   return(tmp_descriptives)
 }
+
 
 
 getDescriptives(dataset = dat_twins, 
@@ -1967,7 +1970,7 @@ class: heading,middle
 
 Part 3: Introduction to R - File and Data Management
 
-*Statisticians are lazy as hell, that's why we write code only once!*
+*Of all the things I've lost, I miss my mind the most. (Mark Twain)*
 
 
 <!-- *********** NEW SLIDE ************** -->
@@ -1987,7 +1990,7 @@ The management of your files, your data, your code is key. Keep on riding...
 
 <!-- *********** NEW SLIDE ************** -->
 ---
-## organize your program in modules !
+## organize your program in modules I
 
 .pull-left[
 
@@ -2007,15 +2010,215 @@ at best use R projects and separate your programs / code / files into separate f
 
 check out the folder "additional scripts -> project template"
 
-
 <center>
-<img src="images/modular_programming.jpg", height=250px">
+<img src="images/projectTemplate.jpg", height=250px">
 </center>
+
+> click on the R Project file "project template" to open the project
 
 ]
 
 
+<!-- *********** NEW SLIDE ************** -->
+---
+## organize your program in modules II
 
+.pull-left[
+
+check out the folder "additional scripts -> project template"
+
+<center>
+<img src="images/projectTemplate.jpg", height=250px">
+</center>
+
+> click on the R Project file "project template" to open the project
+
+]
+
+.pull-right[
+
+* code snippets: R Code you do not need at the moment, but maybe in future
+* data: your data files and **codebook** (provides information on the structure, contents, and layout of a data file)
+* functions: functions you have written
+* *immigrationEnrich: can be ignored (output from myFirstRmarkdownScript.Rmd)*
+* myFirstRmarkdownScript.Rmd:  an R Markdown template, which allows you to create documents that serve as a neat record of your analysis combining codes and texts
+
+]
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Side-Note: the lazy module experts
+
+managing many data files and multiple outputs experts use the following R functions: 
+
+<center>
+<img src="images/fileManagementR.jpg", height=450px">
+</center>
+
+Chapter 11 in Munzert, S., Rubba, C., Meißner, P., & Nyhuis, D. (2015). Automated Data Collection with R: A Practical Guide to Web Scraping and Text Mining. John Wiley & Sons.
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Data Import and Export 
+
+* Data Import and Export can be a frustrating task and can take far more time than the statistical analysis itself (sometimes about 80% of an analysis project)
+* majority of the data will be given in the format of spreadsheet-like data (rectangular data)
+* it is often easier to import badly formatted data than explain what a "good" format is)
+* R is not particularly well suited to manipulations of large-scale data) or relational databases (! but possible)
+  + more than a (few) hundred megabytes in size can cause R to run out of memory (depending on your RAM)
+* in practice, you will be often faced with data corrections and updates), e.g. by a project management
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Data Import Vocabulary
+
+```{r, eval=FALSE}
+# Reading data
+data # loads specified data sets
+count.fields # counts the number of fields
+read.table # Reads a file in table format
+read.fwf # Read a table of fixed width formatted data
+load # Reload 'RData' datasets
+library(foreign) # Read Data Stored by Minitab, SAS, SPSS, ...
+
+# Files and directories
+setwd, getwd # set and get current working directory
+dir # names of files or directories in a directory
+dirname # returns the directory name
+file.path # reads path to a file from components
+normalizePath # convert file paths to canonical form
+file.choose # choose a file interactively
+download.file # download a file from the Internet
+
+# low-level interface to the computer's file system:
+file.copy, file.create, file.remove, file.rename, dir.create, file.exists, file.info
+```
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Data Import - spreadsheet-like data I
+
+To read spreadsheet-like data you can use functions like 
+* read.table() 
+* and variations like read.csv(), ...
+
+These functions often have the following arguments:
+* fileEncoding: use latin1 for data produced in Windows, and utf-8 for data from Unix
+* header: names of variables (columns) and observations (rows)
+* sep: field separator vs. record separator
+* quote: protecting separators appearing in strings
+* na.strings: which string (or number) represents missing values?
+* skip: number of lines skipped before beginning to read data
+* ...
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Data Import - spreadsheet-like data II
+
+**Example:**
+
+
+```{r}
+# if no idea how data is structured
+head(readLines("data/tramo1998etal_twins.csv"))
+# load csv2 (seperated by ",")
+dat_twins <- read.csv2("data/tramo1998etal_twins.csv", header = TRUE, sep = ",")
+```
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Data Import - from other statistical softwares
+
+if you want to import (or export) data, for example, from SPSS you could use the **haven** R package: 
+
+* SPSS: "read_sav()" reads .sav files; "write_sav()" writes .sav files.
+
+```{r, eval=FALSE}
+# ?haven::read_spss
+
+haven::read_sav(
+  file,
+  encoding = NULL,
+  user_na = FALSE,
+  col_select = NULL,
+  skip = 0,
+  n_max = Inf,
+  .name_repair = "unique"
+)
+```
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Side-Note: naming convention
+
+outside of the scope of the workshop are processes of data cleaning to get *tidy data*, but there is a useful function from the **janitor** R package to get the right naming convention for variables:
+
+```{r, eval=TRUE}
+x <- data.frame(caseID = 1, DOB = 2, Other = 3)
+# use camelCase variable names:
+janitor::clean_names(x, "lower_camel")
+```
+
+and possible convention (use one!): 
+
+* **lowerCamelCase** for functions: single word names consist of lower case letters and in names consisting of more than one word all, except the first word, are capitalized as in "colMeans" or "suppressPackageStartupMessage"
+* **period.separated** for functions or parameters: all letters are lower case and multiple words are separated by a period. This naming convention is unique to R and used
+in many core functions such as "as.numeric" or "read.table"
+
+<br>
+see: The State of Naming Conventions in R: https://scilifelab.github.io/courses/r_programming/1703/files/Rnaming.pdf
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Data Export Vocabulary
+
+```{r, eval=FALSE}
+# Output
+print, cat # `cat' performs much less conversion
+# than `print'
+dput # Writes an ASCII text representation of
+# an R object to a file
+sink, capture.output # Evaluates its arguments with the output
+# being returned as a character string or
+# sent to a file.
+
+# Writing data
+write # The data (usually a matrix) are written
+# to file
+write.table, write.csv # converts the object to a data frame and
+# prints it to a file
+save # writes an external representation of
+# R objects
+```
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Data Export - fundamentals and example
+
+* exporting results from R is usually a less contentious task than importing
+* normally a .txt (text) or .csv file will be the most convenient interchange vehicle with "write.table" or "write.csv"
+  + **foreign**::write.foreign enables the export of a data set to another statistical software (e.g. SPSS, SAS, ..)
+  + **haven**::write_ also enables the export of a data set to another statistical software 
+  
+<br> 
+the XLSX document file is the Microsoft Excel standard format file type for Excel2007 and above, which can be normally open by everyone
+
+```{r, eval=FALSE}
+library(xlsx)
+xlsx::write.xlsx2(x = dat_twins, file = "dat_twings.xlsx", sheetName = "mytwins")
+```
+
+  
 <!-- *********** HEADING ************** -->
 ---
 class: heading,middle
@@ -2105,7 +2308,7 @@ Using these collection of R package you have everything to analyze the complete 
 
 <br>
 <br>
-gread introductiory book: Wickham, H., & Grolemund, G. (2017). R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. O’Reilly Media, Inc. https://r4ds.had.co.nz/
+great introductory book: Wickham, H., & Grolemund, G. (2017). R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. O’Reilly Media, Inc. https://r4ds.had.co.nz/
 
 > if you confronted in the future with hughe datasets (>> 100mb) then it could be reasonable to teach yourself the R package **data.table**; e.g. watch: https://www.youtube.com/watch?v=SfrjF5YSj0Y 
 
@@ -2273,17 +2476,49 @@ and article: https://www.researchgate.net/publication/227580118_Generalizability
 
 <!-- *********** NEW SLIDE ************** -->
 ---
-## descriptive summary statistics I 
+## descriptive summary statistics I - base R functions
+
+In the world of base R functions we can apply great functions: 
+
+```{r, eval=FALSE}
+# boxplot and summary contains identical information - 5 point summary statistics
+boxplot(dat_twins$IQ)
+summary(dat_twins$IQ)
+
+# boxplot can be grouped by any non-numeric variable
+boxplot(dat_twins$CC ~ dat_twins$IQ.cat)
+
+# super useful are correlation matrices, coupled with the function pairs
+cor(x = dat_twins[, c("VG", "CC", "KU", "KG", "IQ")], 
+              method = "pearson")
+pairs(dat_twins[, c("VG", "CC", "KU", "KG", "IQ")])
+```
 
 
+many more... 
+
+<br>
+it quite helps if you "google" the test procedure you want to apply with the letter R, e.g. "unpaired t test AND R" to get an overview of possible useful summary statistics
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## descriptive summary statistics II - tidyverse universe
+
+In the world of **tidyverse** we can apply even greater functions (! advanced): 
 
 ```{r}
-sleep %>%
-  group_by(group) %>%
-  summarise(M=mean(extra), SD=sd(extra))
-
-cor(sleep$extra[sleep$group==1], sleep$extra[sleep$group==2])
+dat_twins %>%
+  group_by(IDZP) %>%
+  summarise(M=mean(IQ), SD=sd(IQ), difference=diff(IQ)) %>%
+  print(n=3)
 ```
+
+* by using group_by() the unit of analysis from the complete data set to individual groups is changed
+* together group_by() and summarise() provide one of the tools that you’ll use most commonly when working with grouped summaries
+* the "%>% are called pipes, which link multiple operations from top-to-bottom
+
+<br>
+great introductory book: Wickham, H., & Grolemund, G. (2017). R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. O’Reilly Media, Inc. https://r4ds.had.co.nz/
 
 
 

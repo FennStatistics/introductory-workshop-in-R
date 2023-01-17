@@ -1,0 +1,2 @@
+"0","lm <- lm(formula = mean_stf ~ mean_imEnrich, data = dat)"
+"0","abline(lm, col = ""red"")"

@@ -1,0 +1,4 @@
+"0","dat$lrscale_scaled <- scale(x = dat$lrscale, center = TRUE, scale = TRUE)"
+"0","mean_upper <- mean(dat$lrscale_scaled[dat$lrscale_scaled > 1], na.rm = TRUE)"
+"0","mean_lower <- mean(dat$lrscale_scaled[dat$lrscale_scaled < -1], na.rm = TRUE)"
+"0","hist(dat$lrscale_scaled)"

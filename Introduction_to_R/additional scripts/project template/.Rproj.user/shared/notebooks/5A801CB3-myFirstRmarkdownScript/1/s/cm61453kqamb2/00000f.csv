@@ -1,0 +1,10 @@
+"0","################"
+"0","# install and load packages"
+"0","################"
+"0","## change working directory"
+"0","setwd(""functions"")"
+"2","Warning:"
+"2"," The working directory was changed to C:/DATEN/PHD/WORKSHOPS/introductory workshop in R - in progress/Introduction_to_R/additional scripts/project template/functions inside a notebook chunk. The working directory will be reset when the chunk is finished running. Use the knitr root.dir option in the setup chunk to change the working directory for notebook chunks.
+"
+"0","source(file = ""getDescriptives.R"", encoding = ""UTF-8"")"
+"0","setwd("".."") # ! not needed in rmarkdown, but good practice"

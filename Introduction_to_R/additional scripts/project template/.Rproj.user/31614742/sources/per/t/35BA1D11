@@ -3,7 +3,7 @@
     "path": "C:/DATEN/PHD/WORKSHOPS/introductory workshop in R - in progress/Introduction_to_R/additional scripts/project template/myFirstRmarkdownScript.Rmd",
     "project_path": "myFirstRmarkdownScript.Rmd",
     "type": "r_markdown",
-    "hash": "1877278437",
+    "hash": "275014827",
     "contents": "",
     "dirty": false,
     "created": 1673961903251.0,
@@ -12,16 +12,16 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "255,0",
-        "scrollLine": "250",
-        "last_setup_crc32": "46014EDB503ae602"
+        "cursorPosition": "160,55",
+        "scrollLine": "158",
+        "last_setup_crc32": ""
     },
     "folds": "",
-    "lastKnownWriteTime": 1673964786,
+    "lastKnownWriteTime": 1673975892,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1673964786011,
+    "last_content_update": 1673977630979,
     "read_only": false,
     "read_only_alternatives": []
 }
