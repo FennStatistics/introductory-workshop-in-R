@@ -252,10 +252,22 @@ stargazer(lm_lower, type = "html")
 investigate finding:
 
 ```{r}
+## right orientation
+#> happy
+cor(dat_upper$happy, dat_upper$mean_imEnrich, use = "complete")
+#> with political system
 cor(dat_upper$mean_stf, dat_upper$mean_imEnrich, use = "complete")
-cor(dat_lower$mean_stf, dat_lower$mean_imEnrich, use = "complete")
 plot(dat_upper$mean_stf ~ dat_upper$mean_imEnrich)
 lm <- lm(formula = mean_stf ~ mean_imEnrich, data = dat_upper)
+abline(lm, col = "red")
+
+## left orientation
+#> happy
+cor(dat_lower$happy, dat_lower$mean_imEnrich, use = "complete")
+#> with political system
+cor(dat_lower$mean_stf, dat_lower$mean_imEnrich, use = "complete")
+plot(dat_lower$mean_stf ~ dat_lower$mean_imEnrich)
+lm <- lm(formula = mean_stf ~ mean_imEnrich, data = dat_lower)
 abline(lm, col = "red")
 ```
 
