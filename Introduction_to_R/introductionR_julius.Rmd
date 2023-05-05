@@ -99,7 +99,7 @@ This workshop consists of three parts:
 1 Pep talk (*a speech which is intended to encourage someone to make more effort or feel more confident*)
   + first some basics
   
-2 Knowledge Management: How to learn these things?!
+2 Useful Software + Knowledge Management: How to enter the space shuttle and learn things?!
   
 3 Introduction to R
  + Overview
@@ -109,7 +109,9 @@ This workshop consists of three parts:
  
 4 Amazing Applications of R
   + typical analyses sequences in action
-  + ...
+  + bibliometric analysis
+  
+5 Templates (R Markdown)
 
 <!-- *********** NEW SLIDE ************** -->
 
@@ -282,7 +284,209 @@ see book: Meadows, D. H. (2008). Thinking in Systems: A Primer. Chelsea Green Pu
 class: heading,middle
 
 
+Part 2: Useful Software + Knowledge Management
+
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
+Part 2: Useful Software
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## if you want to publish
+
+.pull-left[
+
+**Open Researcher and Contributer ID**
+
+<center>
+<img src="images/orcid.jpg", height="150px">
+</center>
+
+https://orcid.org/
+
+]
+
+.pull-right[
+**ResearchGate, GoogleScholar**
+
+<center>
+<img src="images/researchGateGoogleScholar.jpg", height="150px">
+</center>
+
+https://scholar.google.com/intl/de/scholar/citations.html
+https://www.researchgate.net/login
+
+]
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## if you want to promote your stuff
+
+.pull-left[
+
+**set up your own webpage**
+
+* Why not use R package **blogdown**: https://bookdown.org/yihui/blogdown/
+* or existing frameworks: https://github.com/alshedivat/al-folio
+* ...
+
+<br>
+
+**instant messaging program**
+
+* Discord
+* Slack
+* ...
+
+]
+
+.pull-right[
+**social media**
+
+* LinkedIn, Xing
+* Twitter (Mastodon)
+
+
+]
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## bring colloboration to a next level
+
+.pull-left[
+
+**write your articles together**
+
+* Google Docs (invite people and create a google account)
+* (Microsoft: Microsoft 365 and OneDrive or SharePoint)
+* overleaf: https://de.overleaf.com/
+
+<br>
+
+**share responsibilities**
+
+* Taskade: https://www.taskade.com/
+* ...
+
+]
+
+.pull-right[
+**share your code**
+
+<center>
+<img src="images/githublogo.jpg", height="150px">
+</center>
+
+https://github.com/
+
+<br>
+
+**share your additional files (literature)**
+
+* Nextcloud: https://nextcloud.com/
+* Google Drive
+
+]
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## make your research transparent and reproducible
+
+.pull-left[
+
+**upload all your files**
+
+<center>
+<img src="images/osflogo.jpg", height="150px">
+</center>
+
+https://osf.io/
+
+<br>
+
+1 Register your research
+2 Share data, material, and code
+3 Publish preprint/share paper
+
+
+
+
+]
+
+.pull-right[
+**write all your scripts in annotated, reproducible documents**
+
+<center>
+<img src="images/rmarkdownPic.jpg", height="150px">
+</center>
+
+* R Markdown
+* use the R package **papaja**: https://github.com/crsh/papaja
+
+
+]
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## set up studies, statistical software [my favourites]
+
+.pull-left[
+
+**set up studies**
+
+* lab.js
+  + https://lab.js.org/
+  + Slack Channel: https://join.slack.com/t/nmbrcrnchrs/shared_invite/zt-1ukiirqar-fvuhI9FXE9xrIdVttY6TAQ
+* SoSci Survey: GUI based (but flexible. . . if you know PHP), easy to use
+  + Video Tutorials: https://www.soscisurvey.de/de/screencast
+
+]
+
+.pull-right[
+**statistical software**
+
+* R
+* JASP (Just Another Statistics Program): https://jasp-stats.org/
+  + SPSS-like GUI for data analysis with R (unflexible!)
+  + Includes Bayesian analysis, growing
+* Python
+  + Some similarities to R (interpreted, syntax), but more powerful
+  + Not customized for statistics, popular for machine learning
+* (Mplus)  
+
+
+<br>
+* Power Analysis: G*Power (or simulation studies)
+
+* bwUniCluster 2.0: https://wiki.bwhpc.de/e/BwUniCluster2.0
+
+]
+
+
+<!-- *********** HEADING ************** -->
+---
+class: heading,middle
+
+
 Part 2: Knowledge Management
+
+
+
 
 
 <!-- *********** NEW SLIDE ************** -->
@@ -938,9 +1142,10 @@ and complex data bases can be depicted for example as entity relationship models
 
 
 <center>
-<img src="images/ERMstudent.jpg", height="400px">
+<img src="images/ERMstudent.jpg", height="300px">
 </center>
 
+there are multiple database paradigms out there: https://www.youtube.com/watch?v=W2Z7fbCLSTw
 
 
 <!-- *********** NEW SLIDE ************** -->
@@ -2048,7 +2253,7 @@ check out the folder "additional scripts -> project template"
 
 <!-- *********** NEW SLIDE ************** -->
 ---
-## Side-Note: the lazy module experts
+## Side-Note: the lazy expert
 
 managing many data files and multiple outputs experts use the following R functions: 
 
@@ -2307,7 +2512,6 @@ Using these collection of R package you have everything to analyze the complete 
 </center>
 
 <br>
-<br>
 great introductory book: Wickham, H., & Grolemund, G. (2017). R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. O’Reilly Media, Inc. https://r4ds.had.co.nz/
 
 > if you confronted in the future with hughe datasets (>> 100mb) then it could be reasonable to teach yourself the R package **data.table**; e.g. watch: https://www.youtube.com/watch?v=SfrjF5YSj0Y 
@@ -2363,6 +2567,9 @@ Set of great R packages:
   + **lmerTest**: provides p-values in type I, II or III anova and summary tables for lmer model fits
 * **nlme**: fits a nonlinear mixed-effects model 
 
+<br>
+* **blme**: Bayesian Linear Mixed-Effects Models
+
 
 <br>
 <br>
@@ -2403,7 +2610,7 @@ Part 4: Amazing Applications of R
 
 <!-- *********** NEW SLIDE ************** -->
 ---
-## Maybe you will start singing "It's a new dawn! It's a new day! yeah" (quote: Nina Simone - Feeling Good)
+## Rriding a bycle for the first time was also difficult? wasn't it?
 
 
 If you replace pain by pleasure (or better joy) you get what I mean...
@@ -2578,9 +2785,6 @@ for relative equal variances:
 $$
 t = \frac{\overline{X}_1 - \overline{X}_2}{S_p* \sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}
 $$
-
-<br>
-question: Which hypothesis test should I use in case of 2 variables; independent variable with 2 levels?
 
 
 
