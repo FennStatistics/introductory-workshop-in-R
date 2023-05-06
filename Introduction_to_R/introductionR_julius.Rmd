@@ -2,7 +2,7 @@
 title: "Journey through R"
 subtitle: "A motivating workshop"
 author: "Julius Fenn"
-date: "January 18, 2023"
+date: "May 5, 2023"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -2423,7 +2423,44 @@ library(xlsx)
 xlsx::write.xlsx2(x = dat_twins, file = "dat_twings.xlsx", sheetName = "mytwins")
 ```
 
-  
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## Data Import and Export - the R Data Format: RDS and RDATA 
+
+Save and load one object to a file
+
+```{r, eval=FALSE}
+# Save an object to a file
+saveRDS(object, file = "my_data.rds")
+# Restore the object
+readRDS(file = "my_data.rds")
+```
+
+
+
+Save and read multiple objects to a file
+
+```{r, eval=FALSE}
+# Save multiple objects
+save(data1, data2, file = "data.RData")
+# To load the data again
+load("data.RData")
+```
+
+
+Save your entire workspace
+
+```{r, eval=FALSE}
+save.image(file = "my_work_space.RData")
+```
+
+
+see: http://www.sthda.com/english/wiki/saving-data-into-r-data-format-rds-and-rdata
+
+
 <!-- *********** HEADING ************** -->
 ---
 class: heading,middle

@@ -4,7 +4,7 @@
     <title>Journey through R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Julius Fenn" />
-    <meta name="date" content="2023-01-18" />
+    <meta name="date" content="2023-05-05" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
@@ -28,7 +28,7 @@ class: center, middle, inverse, title-slide
 # Journey through R
 ## A motivating workshop
 ### Julius Fenn
-### January 18, 2023
+### May 5, 2023
 
 ---
 
@@ -579,8 +579,8 @@ summary(rnorm(n = 100, mean = 0, sd = 20))
 ```
 
 ```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -61.755 -11.132   1.048  -1.129  11.081  48.152
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -65.3367 -13.6718  -0.5578  -0.7155  11.5086  46.4118
 ```
 
 Important:
@@ -1178,8 +1178,8 @@ often we have "simple" rectangular data, which are made of (values are associate
 DT::datatable(dat_twins, options = list(pageLength = 5))
 ```
 
-<div id="htmlwidget-c6a8ec25192685fdfcbd" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c6a8ec25192685fdfcbd">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-99de20456f6b62c43c32" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-99de20456f6b62c43c32">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 
 
@@ -1834,8 +1834,8 @@ Do you remember our twin pair data set?
 DT::datatable(dat_twins, options = list(pageLength = 5))
 ```
 
-<div id="htmlwidget-670ac4054af9e3ca17fb" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-670ac4054af9e3ca17fb">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e8643b8f1c858e96efd6" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e8643b8f1c858e96efd6">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 Three questions:
 * How do we get only the twins with IQ higher than 120?
@@ -2223,8 +2223,8 @@ In the twin data set we have the variable "IDZP" (identifier of the twin pair)
 DT::datatable(dat_twins, options = list(pageLength = 5))
 ```
 
-<div id="htmlwidget-4b50d55a2db72b3d7c0e" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4b50d55a2db72b3d7c0e">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-07a5f6c2b9ca2011b64c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-07a5f6c2b9ca2011b64c">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 
 ```r
@@ -2888,7 +2888,47 @@ library(xlsx)
 xlsx::write.xlsx2(x = dat_twins, file = "dat_twings.xlsx", sheetName = "mytwins")
 ```
 
-  
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Data Import and Export - the R Data Format: RDS and RDATA 
+
+Save and load one object to a file
+
+
+```r
+# Save an object to a file
+saveRDS(object, file = "my_data.rds")
+# Restore the object
+readRDS(file = "my_data.rds")
+```
+
+
+
+Save and read multiple objects to a file
+
+
+```r
+# Save multiple objects
+save(data1, data2, file = "data.RData")
+# To load the data again
+load("data.RData")
+```
+
+
+Save your entire workspace
+
+
+```r
+save.image(file = "my_work_space.RData")
+```
+
+
+see: http://www.sthda.com/english/wiki/saving-data-into-r-data-format-rds-and-rdata
+
+
 &lt;!-- *********** HEADING ************** --&gt;
 ---
 class: heading,middle
@@ -3391,8 +3431,8 @@ data("sleep")
 DT::datatable(sleep, options = list(pageLength = 5))
 ```
 
-<div id="htmlwidget-a62b79d29666185bf2ab" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a62b79d29666185bf2ab">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],[0.7,-1.6,-0.2,-1.2,-0.1,3.4,3.7,0.8,0,2,1.9,0.8,1.1,0.1,-0.1,4.4,5.5,1.6,4.6,3.4],["1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2"],["1","2","3","4","5","6","7","8","9","10","1","2","3","4","5","6","7","8","9","10"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>extra<\/th>\n      <th>group<\/th>\n      <th>ID<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":1},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7c3e5b8e5e9837ce9482" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7c3e5b8e5e9837ce9482">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],[0.7,-1.6,-0.2,-1.2,-0.1,3.4,3.7,0.8,0,2,1.9,0.8,1.1,0.1,-0.1,4.4,5.5,1.6,4.6,3.4],["1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2"],["1","2","3","4","5","6","7","8","9","10","1","2","3","4","5","6","7","8","9","10"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>extra<\/th>\n      <th>group<\/th>\n      <th>ID<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":1},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 &gt; paired sample t-test is needed; consist of a sample of matched pairs of similar units (e.g. using Propensity Score Matching), or one group of units that has been tested twice 
 
@@ -3411,7 +3451,7 @@ DT::datatable(sleep, options = list(pageLength = 5))
 boxplot(sleep$extra ~ sleep$group)
 ```
 
-&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-95-1.png" width="50%" /&gt;
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-98-1.png" width="50%" /&gt;
 
 ```r
 ## compute mean deviations:
@@ -3434,7 +3474,7 @@ boxplot(sleep1, horizontal = TRUE, add = TRUE,
         at = .6, pars = list(boxwex = 0.5, staplewex = 0.25))
 ```
 
-&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-96-1.png" width="50%" /&gt;
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-99-1.png" width="50%" /&gt;
 ]
 
 
@@ -3477,7 +3517,7 @@ ggplot(sleep, aes(x=group, y=extra)) +
     geom_boxplot() + ggplot_theme
 ```
 
-&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-98-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-101-1.png" width="30%" style="display: block; margin: auto;" /&gt;
 
 
 &lt;!-- *********** NEW SLIDE ************** --&gt;
@@ -3521,7 +3561,7 @@ p1 &lt;- ggwithinstats(
 p1
 ```
 
-&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-100-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-103-1.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 
 &lt;!-- *********** NEW SLIDE ************** --&gt;
@@ -3543,7 +3583,7 @@ p1
 boxplot(sleep1) # to check outlier assumption
 ```
 
-&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-101-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-104-1.png" width="30%" style="display: block; margin: auto;" /&gt;
 
 
 &lt;!-- *********** NEW SLIDE ************** --&gt;
@@ -3594,7 +3634,7 @@ qqnorm(sleep1_sc) # QQ Plot
 qqline(sleep1_sc) # vertical line
 ```
 
-&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-103-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-106-1.png" width="30%" style="display: block; margin: auto;" /&gt;
 
 
 &lt;!-- *********** NEW SLIDE ************** --&gt;
@@ -3614,7 +3654,7 @@ x&lt;-seq(-4,+4,by=0.02)
 curve(dnorm(x), add=TRUE)
 ```
 
-&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-104-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-107-1.png" width="30%" style="display: block; margin: auto;" /&gt;
 
 
 

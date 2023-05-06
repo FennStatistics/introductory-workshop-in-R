@@ -136,7 +136,7 @@ Migration 'mother of all political problems,' says German Interior Minister Hors
 
 # Methods
 
-## Hypothesis
+## Research Question (Hypothesis)
 
 **Are different factors relevant to the perceived threat of migrants by people with a high or low left/right orientation?**
 
@@ -174,7 +174,7 @@ mean_upper <- mean(dat$lrscale_scaled[dat$lrscale_scaled > 1], na.rm = TRUE)
 mean_lower <- mean(dat$lrscale_scaled[dat$lrscale_scaled < -1], na.rm = TRUE)
 hist(dat$lrscale_scaled)
 # add vertical line
-abline(v=mean_upper, col = "red")
+abline(v=mean_upper, col = "blue")
 abline(v=mean_lower, col = "red")
 ```
 
@@ -230,9 +230,9 @@ Based on the dichotomized `lrscale` variable compute two **multiple linear regre
 
 ```{r}
 # get subsets of data
-dat_upper <-dat %>%
+dat_upper <- dat %>%
   filter(dat$lrscale_scaled > mean_upper)
-dat_lower <-dat %>%
+dat_lower <- dat %>%
   filter(dat$lrscale_scaled < mean_lower)
 # compute linear models
 lm_upper <- lm(formula = mean_imEnrich ~ mean_stf + happy + agea + gndr, data = dat_upper)
@@ -247,6 +247,30 @@ Again we can use the **stargazer** package, which identifies `lm_upper` for exam
 stargazer(lm_upper, type = "html")
 stargazer(lm_lower, type = "html")
 ```
+
+
+investigate finding:
+
+```{r}
+## right orientation
+#> happy
+cor(dat_upper$happy, dat_upper$mean_imEnrich, use = "complete")
+#> with political system
+cor(dat_upper$mean_stf, dat_upper$mean_imEnrich, use = "complete")
+plot(dat_upper$mean_stf ~ dat_upper$mean_imEnrich)
+lm <- lm(formula = mean_stf ~ mean_imEnrich, data = dat_upper)
+abline(lm, col = "red")
+
+## left orientation
+#> happy
+cor(dat_lower$happy, dat_lower$mean_imEnrich, use = "complete")
+#> with political system
+cor(dat_lower$mean_stf, dat_lower$mean_imEnrich, use = "complete")
+plot(dat_lower$mean_stf ~ dat_lower$mean_imEnrich)
+lm <- lm(formula = mean_stf ~ mean_imEnrich, data = dat_lower)
+abline(lm, col = "red")
+```
+
 
 
 ## Quoting (please remove this for your report!)
