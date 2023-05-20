@@ -68,6 +68,7 @@ rm(usePackage)
 ## change working directory
 setwd("functions")
 source(file = "getDescriptives.R", encoding = "UTF-8")
+source(file = "saveGraphic.R", encoding = "UTF-8")
 setwd("..") # ! not needed in rmarkdown, but good practice
 ```
 
@@ -205,6 +206,19 @@ Using the **stargazer** package you can create nice tables. You sometimes need t
 ```{r, results='asis'}
 stargazer(round(x = tmp_desc, digits = 4), type = "html", summary = FALSE)
 stargazer(x = as.data.frame(dat[, str_subset(string = colnames(dat), pattern = "mean_")]), type = "html", summary = TRUE, digits = 2)
+```
+
+Using the **cairo** package you can save any graphics directly as pictures to your computer (in this example a correlational plot as .png): 
+
+> by defining the local chunk options as "include=FALSE" you would hide this output normally
+
+```{r}
+## save as png
+dev.off()
+save_graphic(filename = "outputs/corTableMeans")
+psych::corPlot(r = cor(dat[, str_subset(string = colnames(dat), pattern = "mean_")], use = "pairwise"))
+dev.off()
+
 ```
 
 ### statistical tests
