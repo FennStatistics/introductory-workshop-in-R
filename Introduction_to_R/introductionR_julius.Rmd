@@ -2,7 +2,7 @@
 title: "Journey through R"
 subtitle: "A motivating workshop"
 author: "Julius Fenn"
-date: "May 5, 2023"
+date: "May 10, 11, 2024"
 output:
   xaringan::moon_reader:
     lib_dir: libs

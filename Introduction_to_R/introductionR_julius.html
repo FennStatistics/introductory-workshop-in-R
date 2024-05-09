@@ -8,6 +8,7 @@
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/htmltools-fill/fill.css" rel="stylesheet" />
     <script src="libs/htmlwidgets/htmlwidgets.js"></script>
     <link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
     <script src="libs/datatables-binding/datatables.js"></script>
@@ -25,10 +26,18 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Journey through R
+]
+.subtitle[
 ## A motivating workshop
+]
+.author[
 ### Julius Fenn
+]
+.date[
 ### May 5, 2023
+]
 
 ---
 
@@ -162,7 +171,7 @@ Part 1: Pep talk - The Real Talk
 
 
 &lt;br&gt;
-<svg aria-hidden="true" role="img" viewBox="0 0 384 512" style="height:1em;width:0.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M192 496C86 496 0 410 0 304C0 192 96 16 192 16s192 176 192 288c0 106-86 192-192 192zM156.5 138l0 0 0 0 0 0c5.5-6.9 4.4-17-2.5-22.5s-17-4.4-22.5 2.5L144 128c-12.5-10-12.5-10-12.5-10l0 0 0 0-.1 .1-.2 .2-.6 .8c-.5 .7-1.3 1.7-2.2 3c-1.9 2.6-4.5 6.3-7.7 11c-6.3 9.4-14.6 23-23 39.7C81.1 206.1 64 252.6 64 304c0 8.8 7.2 16 16 16s16-7.2 16-16c0-44.6 14.9-86.1 30.3-116.8c7.6-15.3 15.3-27.7 21-36.3c2.8-4.3 5.2-7.6 6.8-9.8c.8-1.1 1.4-1.9 1.8-2.4l.4-.6 .1-.1 0 0z"/></svg> <svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M253.3 35.1c6.1-11.8 1.5-26.3-10.2-32.4s-26.3-1.5-32.4 10.2L117.6 192H32c-17.7 0-32 14.3-32 32s14.3 32 32 32L83.9 463.5C91 492 116.6 512 146 512H430c29.4 0 55-20 62.1-48.5L544 256c17.7 0 32-14.3 32-32s-14.3-32-32-32H458.4L365.3 12.9C359.2 1.2 344.7-3.4 332.9 2.7s-16.3 20.6-10.2 32.4L404.3 192H171.7L253.3 35.1zM192 304v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16zm96-16c8.8 0 16 7.2 16 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16zm128 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16z"/></svg>: https://osf.io/ytb8q
+<svg aria-hidden="true" role="img" viewBox="0 0 384 512" style="height:1em;width:0.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M192 496C86 496 0 394 0 288C0 176 64 16 192 16s192 160 192 272c0 106-86 208-192 208zM154.8 134c6.5-6 7-16.1 1-22.6s-16.1-7-22.6-1c-23.9 21.8-41.1 52.7-52.3 84.2C69.7 226.1 64 259.7 64 288c0 8.8 7.2 16 16 16s16-7.2 16-16c0-24.5 5-54.4 15.1-82.8c10.1-28.5 25-54.1 43.7-71.2z"/></svg> <svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M253.3 35.1c6.1-11.8 1.5-26.3-10.2-32.4s-26.3-1.5-32.4 10.2L117.6 192H32c-17.7 0-32 14.3-32 32s14.3 32 32 32L83.9 463.5C91 492 116.6 512 146 512H430c29.4 0 55-20 62.1-48.5L544 256c17.7 0 32-14.3 32-32s-14.3-32-32-32H458.4L365.3 12.9C359.2 1.2 344.7-3.4 332.9 2.7s-16.3 20.6-10.2 32.4L404.3 192H171.7L253.3 35.1zM192 304v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16zm96-16c8.8 0 16 7.2 16 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16zm128 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16z"/></svg>: https://osf.io/ytb8q
 
 &lt;!-- *********** NEW SLIDE ************** --&gt;
 ---
@@ -579,8 +588,8 @@ summary(rnorm(n = 100, mean = 0, sd = 20))
 ```
 
 ```
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -65.3367 -13.6718  -0.5578  -0.7155  11.5086  46.4118
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -45.103 -11.096   2.588   1.633  15.279  43.592
 ```
 
 Important:
@@ -600,14 +609,14 @@ methods(generic.function = "summary")[1:20]
 ```
 ##  [1] "summary,ANY-method"              "summary,BFBayesFactor-method"   
 ##  [3] "summary,BFBayesFactorTop-method" "summary,BFodds-method"          
-##  [5] "summary,BFprobability-method"    "summary,DBIObject-method"       
-##  [7] "summary,diagonalMatrix-method"   "summary,sparseMatrix-method"    
-##  [9] "summary.aareg"                   "summary.afex_aov"               
+##  [5] "summary,BFprobability-method"    "summary,diagonalMatrix-method"  
+##  [7] "summary,sparseMatrix-method"     "summary.aareg"                  
+##  [9] "summary.afex_aov"                "summary.agnes"                  
 ## [11] "summary.allFit"                  "summary.Anova.mlm"              
 ## [13] "summary.aov"                     "summary.aovlist"                
-## [15] "summary.aspell"                  "summary.bcnPowerTransform"      
-## [17] "summary.bcnPowerTransformlmer"   "summary.boot"                   
-## [19] "summary.cch"                     "summary.check_packages_in_dir"
+## [15] "summary.areg.boot"               "summary.aspell"                 
+## [17] "summary.bcnPowerTransform"       "summary.bcnPowerTransformlmer"  
+## [19] "summary.boot"                    "summary.cch"
 ```
 
 other important functions are: 
@@ -1178,8 +1187,8 @@ often we have "simple" rectangular data, which are made of (values are associate
 DT::datatable(dat_twins, options = list(pageLength = 5))
 ```
 
-<div id="htmlwidget-99de20456f6b62c43c32" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-99de20456f6b62c43c32">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-c2f57645a612721ca865" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c2f57645a612721ca865">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.57599999999999],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"IDZP","targets":2},{"name":"GR","targets":3},{"name":"GES","targets":4},{"name":"OG","targets":5},{"name":"VG","targets":6},{"name":"CC","targets":7},{"name":"KU","targets":8},{"name":"IQ","targets":9},{"name":"KG","targets":10},{"name":"IQ.cat","targets":11}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 
 
@@ -1651,7 +1660,7 @@ tibble::tibble(x = 1:3, y = 3:1, z = letters[1:3])
 ```
 
 ```
-## # A tibble: 3 x 3
+## # A tibble: 3 × 3
 ##       x     y z    
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;
 ## 1     1     3 a    
@@ -1834,8 +1843,8 @@ Do you remember our twin pair data set?
 DT::datatable(dat_twins, options = list(pageLength = 5))
 ```
 
-<div id="htmlwidget-e8643b8f1c858e96efd6" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e8643b8f1c858e96efd6">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-e3122dca2de54e976e67" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e3122dca2de54e976e67">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.57599999999999],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"IDZP","targets":2},{"name":"GR","targets":3},{"name":"GES","targets":4},{"name":"OG","targets":5},{"name":"VG","targets":6},{"name":"CC","targets":7},{"name":"KU","targets":8},{"name":"IQ","targets":9},{"name":"KG","targets":10},{"name":"IQ.cat","targets":11}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 Three questions:
 * How do we get only the twins with IQ higher than 120?
@@ -2172,7 +2181,7 @@ diamonds %&gt;%
 ```
 
 ```
-## # A tibble: 5 x 2
+## # A tibble: 5 × 2
 ##   cut       `mean(price)`
 ##   &lt;ord&gt;             &lt;dbl&gt;
 ## 1 Fair              4359.
@@ -2223,8 +2232,8 @@ In the twin data set we have the variable "IDZP" (identifier of the twin pair)
 DT::datatable(dat_twins, options = list(pageLength = 5))
 ```
 
-<div id="htmlwidget-07a5f6c2b9ca2011b64c" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-07a5f6c2b9ca2011b64c">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.576],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-bac262943d552616cc40" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-bac262943d552616cc40">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.57599999999999],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"IDZP","targets":2},{"name":"GR","targets":3},{"name":"GES","targets":4},{"name":"OG","targets":5},{"name":"VG","targets":6},{"name":"CC","targets":7},{"name":"KU","targets":8},{"name":"IQ","targets":9},{"name":"KG","targets":10},{"name":"IQ.cat","targets":11}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 
 ```r
@@ -3229,13 +3238,13 @@ dat_twins %&gt;%
 ```
 
 ```
-## # A tibble: 10 x 4
+## # A tibble: 10 × 4
 ##    IDZP     M    SD difference
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;int&gt;
 ## 1     1  92.5  4.95         -7
 ## 2     2  87    0             0
 ## 3     3 102    1.41          2
-## # ... with 7 more rows
+## # ℹ 7 more rows
 ```
 
 * by using group_by() the unit of analysis from the complete data set to individual groups is changed
@@ -3299,7 +3308,7 @@ apropos("^aov") # ANOVAs
 ```
 
 ```
-## [1] "aov"     "aov.car" "aov_4"   "aov_car" "aov_ez"  "aov4"
+## [1] "aov"     "aov_4"   "aov_car" "aov_ez"
 ```
 
 ```r
@@ -3431,8 +3440,8 @@ data("sleep")
 DT::datatable(sleep, options = list(pageLength = 5))
 ```
 
-<div id="htmlwidget-7c3e5b8e5e9837ce9482" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7c3e5b8e5e9837ce9482">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],[0.7,-1.6,-0.2,-1.2,-0.1,3.4,3.7,0.8,0,2,1.9,0.8,1.1,0.1,-0.1,4.4,5.5,1.6,4.6,3.4],["1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2"],["1","2","3","4","5","6","7","8","9","10","1","2","3","4","5","6","7","8","9","10"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>extra<\/th>\n      <th>group<\/th>\n      <th>ID<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":1},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-f6a040becc72416a9738" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-f6a040becc72416a9738">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],[0.7,-1.6,-0.2,-1.2,-0.1,3.4,3.7,0.8,0,2,1.9,0.8,1.1,0.1,-0.1,4.4,5.5,1.6,4.6,3.4],["1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2"],["1","2","3","4","5","6","7","8","9","10","1","2","3","4","5","6","7","8","9","10"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>extra<\/th>\n      <th>group<\/th>\n      <th>ID<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"extra","targets":1},{"name":"group","targets":2},{"name":"ID","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 &gt; paired sample t-test is needed; consist of a sample of matched pairs of similar units (e.g. using Propensity Score Matching), or one group of units that has been tested twice 
 
@@ -3561,6 +3570,14 @@ p1 &lt;- ggwithinstats(
 p1
 ```
 
+```
+## Warning in min(x): kein nicht-fehlendes Argument für min; gebe Inf zurück
+```
+
+```
+## Warning in max(x): kein nicht-fehlendes Argument für max; gebe -Inf zurück
+```
+
 &lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-103-1.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 
@@ -3677,12 +3694,12 @@ t.test(extra ~ group, data = sleep, paired = TRUE)
 ## 
 ## data:  extra by group
 ## t = -4.0621, df = 9, p-value = 0.002833
-## alternative hypothesis: true difference in means is not equal to 0
+## alternative hypothesis: true mean difference is not equal to 0
 ## 95 percent confidence interval:
 ##  -2.4598858 -0.7001142
 ## sample estimates:
-## mean of the differences 
-##                   -1.58
+## mean difference 
+##           -1.58
 ```
 
 outputs: 
@@ -3795,7 +3812,7 @@ sleep %&gt;% cohens_d(extra ~ group, paired = TRUE)
 ```
 
 ```
-## # A tibble: 1 x 7
+## # A tibble: 1 × 7
 ##   .y.   group1 group2 effsize    n1    n2 magnitude
 ## * &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;ord&gt;    
 ## 1 extra 1      2        -1.28    10    10 large
@@ -4055,6 +4072,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
