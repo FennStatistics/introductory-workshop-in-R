@@ -2,7 +2,7 @@
 title: "Journey through R"
 subtitle: "A motivating workshop"
 author: "Julius Fenn"
-date: "May 10, 11, 2024"
+date: "10th, 11th of May, 2024"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -61,6 +61,9 @@ usePackage("rstatix")
 usePackage("haven")
 
 usePackage("janitor")
+
+usePackage("emo")
+# devtools::install_github("hadley/emo")
 
 
 ################
@@ -218,8 +221,8 @@ Part 1: Pep talk - The Real Talk
 </center>
 
 <br>
-*Anyone wants to see impressive R Code in action?!*
-
+*Anyone wants to see impressive R Code in action?! > "getMeARoom.R"*
+, often `r emo::ji("poop")`, sometimes `r emo::ji("smile")`
 
 <br>
 <br>
@@ -336,8 +339,8 @@ https://www.researchgate.net/login
 
 **set up your own webpage**
 
-* Why not use R package **blogdown**: https://bookdown.org/yihui/blogdown/
-* or existing frameworks: https://github.com/alshedivat/al-folio
+* Why not use R package blogdown: https://bookdown.org/yihui/blogdown/
+* or create your website with **Quarto**: https://www.marvinschmitt.com/blog/website-tutorial-quarto/
 * ...
 
 <br>
@@ -354,7 +357,7 @@ https://www.researchgate.net/login
 **social media**
 
 * LinkedIn, Xing
-* Twitter (Mastodon)
+* X (Mastodon)
 
 
 ]
@@ -370,7 +373,7 @@ https://www.researchgate.net/login
 
 * Google Docs (invite people and create a google account)
 * (Microsoft: Microsoft 365 and OneDrive or SharePoint)
-* overleaf: https://de.overleaf.com/
+* **overleaf**: https://de.overleaf.com/
 
 <br>
 
@@ -388,7 +391,7 @@ https://www.researchgate.net/login
 <img src="images/githublogo.jpg", height="150px">
 </center>
 
-https://github.com/
+* **GitHub**: https://github.com/
 
 <br>
 
@@ -417,9 +420,9 @@ https://osf.io/
 
 <br>
 
-1 Register your research
-2 Share data, material, and code
-3 Publish preprint/share paper
+1. Register your research
+2. Share data, material, and code
+3. Publish preprint/share paper
 
 
 
@@ -433,11 +436,12 @@ https://osf.io/
 <img src="images/rmarkdownPic.jpg", height="150px">
 </center>
 
-* R Markdown
+* **Quarto** (R Markdown)
 * use the R package **papaja**: https://github.com/crsh/papaja
 
 
 ]
+
 
 
 
@@ -471,11 +475,48 @@ https://osf.io/
 
 
 <br>
-* Power Analysis: G*Power (or simulation studies)
+* Power Analysis: G*Power (or simulation studies): https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower
 
-* bwUniCluster 2.0: https://wiki.bwhpc.de/e/BwUniCluster2.0
+* complex analyses - bwUniCluster 2.0: https://wiki.bwhpc.de/e/BwUniCluster2.0
 
 ]
+
+
+
+
+
+<!-- *********** NEW SLIDE ************** -->
+---
+## use A.I. tools [the future]
+
+**List of AI Tools for Research Workflow in Academia**: 
+https://docs.google.com/document/d/1mb4SWtqyi1iEGCn2uTnHkPHqW3UoQr8b0xv5_81a-4Y/edit?usp=sharing
+
+.pull-left[
+
+get state of the art tools for low cost / for free as a student: https://education.github.com/pack
+
+]
+
+.pull-right[
+
+I personally using the following AIs:
+
+* for programming within Visual Studio Code: https://github.com/features/copilot
+* summarizing articles: https://www.chatpdf.com/
+
+two conversational search engines:
+
+* providing sources to questions: https://www.perplexity.ai/
+* **ChatGPT**: https://chat.openai.com/
+
+
+for reviews:
+
+* (for literature reviews https://rayyan.ai/ and https://www.bibliometrix.org/home/)
+
+]
+
 
 
 <!-- *********** HEADING ************** -->
@@ -583,7 +624,7 @@ Part 3: Introduction to R - Overview
 
 <!-- *********** NEW SLIDE ************** -->
 ---
-## Main Literatur
+## Main Literatur, use my templates
 
 
 * easy readable introduction R and statistics: Field, Andy, Jeremy Miles, and Zoë Field. Discovering Statistics Using R. SAGE, 2012.
@@ -595,6 +636,14 @@ Part 3: Introduction to R - Overview
 <br>
 plus collected materials / workshops...
 
+<br>
+
+**templates**
+
+in the folder "templates" you find a template for...
+
+* basic_R_file.R: a (not so) standard R file (a good start)
+* folder "templates" >  "advanced_modular_R_file.qmd" file: a advanced Quarto file (“Let us see how high we can fly before the sun melts the wax in our wings.”)
 
 
 <!-- *********** NEW SLIDE ************** -->
@@ -2213,13 +2262,13 @@ at best use R projects and separate your programs / code / files into separate f
 
 .pull-right[
 
-check out the folder "additional scripts -> project template"
+check out the folder "templates"
 
 <center>
 <img src="images/projectTemplate.jpg", height=250px">
 </center>
 
-> click on the R Project file "project template" to open the project
+> click on the R Project file "templates" to open the project
 
 ]
 
@@ -2236,7 +2285,7 @@ check out the folder "additional scripts -> project template"
 <img src="images/projectTemplate.jpg", height=250px">
 </center>
 
-> click on the R Project file "project template" to open the project
+> click on the R Project file "templates" to open the project
 
 ]
 
@@ -2245,8 +2294,8 @@ check out the folder "additional scripts -> project template"
 * code snippets: R Code you do not need at the moment, but maybe in future
 * data: your data files and **codebook** (provides information on the structure, contents, and layout of a data file)
 * functions: functions you have written
-* *immigrationEnrich: can be ignored (output from myFirstRmarkdownScript.Rmd)*
-* myFirstRmarkdownScript.Rmd:  an R Markdown template, which allows you to create documents that serve as a neat record of your analysis combining codes and texts
+* *advanced_modular_R_file_files: can be ignored (output from advanced_modular_R_file.qmd)*
+* advanced_modular_R_file.qmd:  an Quarto template, which allows you to create documents that serve as a neat record of your analysis combining codes and texts
 
 ]
 
@@ -2623,7 +2672,7 @@ great starting book: Fox, J. (2016). Applied Regression Analysis and Generalized
 
 * R Markdown allows you to create documents that serve as a neat record of your analysis
 *  enables reproducible research (appendix to a paper, upload it to an online repository, keep as a personal record, ...)
-* R Markdown file (.Rmd); when you knit the RMarkdown file, the Markdown formatting and the R code are evaluated, and an output file (HTML, PDF, etc) is produced
+* Quarto file (.qmd); when you knit the Quarto file, the Markdown formatting and the R code are evaluated, and an output file (HTML, PDF, etc) is produced
 * R Markdown makes use of *Markdown* syntax
 
 

@@ -1,8 +1,0 @@
-"0","knitr::opts_chunk$set(class.source = ""CSSoutput"","
-"0","                      eval = TRUE, echo = TRUE, include = TRUE,      "
-"0","                      fig.align='center', fig.show='asis',"
-"0","                      size='footnotesize')"
-"0",""
-"2","Warning:"
-"2"," The working directory was changed to C:/DATEN/PHD/WORKSHOPS/introductory workshop in R - in progress/Introduction_to_R/additional scripts/project template/functions inside a notebook chunk. The working directory will be reset when the chunk is finished running. Use the knitr root.dir option in the setup chunk to change the working directory for notebook chunks.
-"

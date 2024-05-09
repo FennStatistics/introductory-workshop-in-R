@@ -1,0 +1,342 @@
+---
+title: "my title"
+author: "Julius Fenn"
+date: "2021-0X-XX"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 3
+    number_sections: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+  word_document:
+    toc: yes
+    toc_depth: '3'
+bibliography: LibraryAll.bib
+biblio-style: apalike
+link-citations: yes
+---
+
+
+```{css, echo=FALSE}
+.CSSoutput {
+  background-color: white;
+  border: 1px solid black;
+}
+```
+```{r setup chunks, include=FALSE}
+knitr::opts_chunk$set(class.source = "CSSoutput",
+                      eval = TRUE, echo = TRUE, include = TRUE,      
+                      fig.align='center', fig.show='asis',
+                      size='footnotesize')
+
+```
+
+
+```{r setup, include=FALSE}
+# reset R environment
+rm(list=ls(all=TRUE))
+graphics.off()
+
+################
+# install and load packages
+################
+#  if packages are not already installed, the function will install and activate them
+usePackage <- function(p) {
+  if (!is.element(p, installed.packages()[,1]))
+    install.packages(p, dep = TRUE, repos = "http://cran.us.r-project.org")
+  require(p, character.only = TRUE)
+}
+
+usePackage("haven") # load SPSS, ... data 
+usePackage("tidyverse") # data cleaning and summarizing
+usePackage("psych") # psychometric analysis (EFA)
+
+## psychometric analysis
+usePackage("moments") # skewness, kurtosis
+
+## outputs
+usePackage("stargazer") # create tables
+rm(usePackage)
+```
+
+```{r loaddata, include=FALSE}
+## change working directory
+setwd("data")
+## load data
+dat <- haven::read_spss(file = "ESS1-9e01_1.sav")
+
+
+## data preparation
+dat$cntry <- NULL
+
+# reverse coded items
+dat$imsmetn <- 5 - dat$imsmetn 
+dat$imdfetn <- 5 - dat$imdfetn
+dat$impcntr <- 5 - dat$impcntr
+
+
+## create mean scores
+# > Immigration enriching economy, culture, place to live
+sel_var <- c("imbgeco", "imueclt", "imwbcnt")
+dat$mean_imEnrich <- rowMeans(x = dat[, sel_var], na.rm = TRUE)
+# >
+sel_var <- c("imsmetn", "imdfetn", "impcntr")
+dat$mean_imAllow <- rowMeans(x = dat[, sel_var], na.rm = TRUE)
+# >
+sel_var <- str_detect(string = colnames(dat), pattern = "^trst")
+dat$mean_trst <- rowMeans(x = dat[, sel_var], na.rm = TRUE)
+# >
+sel_var <- str_detect(string = colnames(dat), pattern = "^stf")
+dat$mean_stf <- rowMeans(x = dat[, sel_var], na.rm = TRUE)
+dat$sd_stf <- dat %>%
+  select(matches(match = "^stf")) %>%
+  apply(.,1, sd, na.rm = TRUE)
+setwd("..")
+```
+
+
+
+
+
+
+
+
+
+
+
+# Introduction
+
+Migration 'mother of all political problems,' says German Interior Minister Horst Seehofer. Hort Seehofer's 2018 statement^[see <https://www.dw.com/en/migration-mother-of-all-political-problems-says-german-interior-minister-horst-seehofer/a-45378092>, retrieved 9 February 2022] after the protests in Chemnitz, which sees migration at the heart of society's disillusionment, shows how charged the debate about migration is in Germany. 
+
+
+
+# Background
+
+...
+
+
+# Methods
+
+## Hypothesis
+
+**Are different factors relevant to the perceived threat of migrants by people with a high or low left/right orientation?**
+
+The following factors have been identified as relevant in the literature: 
+
+
+
+# Results
+
+## mixed stuff (please remove this for your report!)
+
+First glimpse at the loaded data: 
+```{r}
+glimpse(dat)
+summary(dat)
+```
+
+
+Combining statistical tests like cor.test or t.test with the respective plot: 
+```{r}
+cor(dat$mean_stf, dat$mean_imEnrich, use = "complete")
+plot(dat$mean_stf, dat$mean_imEnrich)
+```
+
+Check the assumptions of every test procedure you are using!
+```{r}
+t.test(dat$mean_stf ~ dat$gndr)
+boxplot(dat$mean_stf ~ dat$gndr)
+```
+
+
+## Quoting (please remove this for your report!)
+<!-- https://blogdown-demo.rbind.io/2017/08/28/adding-citations-to-posts/ -->
+
+How to cite literature within an rmarkdown document: 
+
+
+1. Blah blah [see @rutkowski2013handbook, pp. 33-35; also @leeuw2012international, ch. 1].
+2. Blah blah [@rutkowski2013handbook, pp. 33-35].
+3. Blah blah [@rutkowski2013handbook; @leeuw2012international].
+4. Rutkowski et al. says blah [-@rutkowski2013handbook].
+5. @rutkowski2013handbook says blah.
+
+## data preperation 
+
+Aim to dichotomize the `lrscale` variable:
+
+```{r}
+dat$lrscale_scaled <- scale(x = dat$lrscale, center = TRUE, scale = TRUE)
+mean_upper <- mean(dat$lrscale_scaled[dat$lrscale_scaled > 1], na.rm = TRUE)
+mean_lower <- mean(dat$lrscale_scaled[dat$lrscale_scaled < -1], na.rm = TRUE)
+hist(dat$lrscale_scaled)
+# add vertical line
+abline(v=mean_upper, col = "red")
+abline(v=mean_lower, col = "red")
+# save subsets
+dat_upper <-dat %>%
+  filter(dat$lrscale_scaled > mean_upper)
+dat_lower <-dat %>%
+  filter(dat$lrscale_scaled < mean_lower)
+```
+
+
+## data analysis descriptive
+
+```{r}
+dat$lrscale_dummy <- ifelse(test = dat$lrscale_scaled > mean_upper, yes = 2, no =
+         ifelse(test = dat$lrscale_scaled < mean_lower, yes = 1, no = 0))
+table(dat$lrscale_dummy)
+```
+
+
+```{r}
+tmp_desc <- dat %>%
+  group_by(lrscale_dummy) %>%
+  summarise(N = n(),
+            meanEnrich = mean(mean_imEnrich, na.rm = TRUE),
+            sdEnrich = sd(mean_imEnrich, na.rm = TRUE),
+            meanAllow = mean(mean_imAllow, na.rm = TRUE),
+            sdAllow = sd(mean_imAllow, na.rm = TRUE),
+            meanStf = mean(mean_stf, na.rm = TRUE),
+            sdStf = sd(mean_stf, na.rm = TRUE),
+            meanTrst = mean(mean_trst, na.rm = TRUE),
+            sdTrst = sd(mean_trst, na.rm = TRUE))
+
+tmp_desc
+```
+
+Using the **stargazer** package you can create nice tables. You sometimes need to limit the number of digits using the function round(): 
+
+```{r, results='asis'}
+stargazer(round(x = tmp_desc, digits = 4), type = "html", summary = FALSE)
+stargazer(x = as.data.frame(dat[, str_subset(string = colnames(dat), pattern = "mean_")]), type = "html", summary = TRUE, digits = 2)
+
+knitr::kable(mtcars[1:2, 1:2], "html")
+
+```
+
+
+
+
+## data analysis main
+
+```{r}
+lm_upper <- lm(formula = mean_imEnrich ~ mean_trst + mean_stf + happy + agea + gndr, data = dat_upper)
+lm_lower <- lm(formula = mean_imEnrich ~ mean_trst + mean_stf + happy + agea + gndr, data = dat_lower)
+summary(lm_upper)
+summary(lm_lower)
+```
+
+Again we can use the **stargazer** package, which identifies `lm_upper` for example as an lm-object in R and creates a wonderfull table for the model results: 
+
+```{r, results='asis'}
+stargazer(lm_upper, type = "html")
+stargazer(lm_upper, type = "html")
+```
+
+```{r}
+ggplot(mpg, aes(displ, hwy, colour = class)) + 
+  geom_point()
+```
+
+
+
+## data analysis additional
+
+
+
+
+
+
+
+# Discussion
+
+
+
+# Appendix
+
+## Test for unidimensionality
+
+Here we could apply a self-wirtten function for example to check the reliability and amount of explained variance for the first factor: 
+
+```{r}
+corr_rel_EFA <- function(constructlist = NULL, constnum = NULL,
+                         data = NULL,
+                         nfacs = 1){
+  ### correlation measures:
+  # spearman
+  cor_mat <- cor(data[,constructlist[[constnum]]],
+                 use = "pairwise.complete.obs",
+                 method = "spearman")
+
+  ### reliability measures:
+  # Cronbachs
+  rel_cronbach <- psych::alpha(cor_mat)
+
+  ### EFA (PAF):
+  fit_efa <- fa(r = data[,constructlist[[constnum]]], nfactors = nfacs,
+                rotate = "Promax", fm = "pa", max.iter = 500)
+
+
+  ### return objects as list
+  return_list <- list(round(x = cor_mat, digits = 2),
+                      rel_cronbach,
+                      fit_efa
+  )
+  names(return_list) <- c("Cor: Spearman",
+                          "Reliability: Cronbach",
+                          "fit EFA (PAF)")
+
+  # > print
+  cat("mean inter-item-correlation (Spearman):",
+      round(x = mean(colMeans(x = cor_mat)), digits = 2), "\n\n")
+
+  cat("Cronbachs Alpha:",
+      round(x = rel_cronbach$total[[1]], digits = 2), "\n\n")
+
+  cat("EFA (PAF) variance accounted first factor:",
+      round(x = fit_efa$Vaccounted[2], digits = 2), "for", nfacs, "factors", "\n")
+  tmpKMO <- psych::KMO(cor_mat)
+  if(any(tmpKMO$MSAi < .6)){
+    cat("KMO criteria is to low (< .6) for:", "\n",
+        names(tmpKMO$MSAi[tmpKMO$MSAi < .6]), "\n",
+        "mean KMO:", round(x = tmpKMO$MSA, digits = 2), "\n")
+  }
+  #
+
+  return(return_list)
+}
+
+
+constructs_list <- list()
+(vars_tmp <-  c("imbgeco", "imueclt", "imwbcnt"))
+constructs_list[[1]] <- vars_tmp
+(vars_tmp <-  str_subset(string = colnames(dat), pattern = "^trst"))
+constructs_list[[2]] <- vars_tmp
+
+tmp <- corr_rel_EFA(constructlist = constructs_list, constnum = 1, data = dat, nfacs = 1)
+tmp
+tmp <- corr_rel_EFA(constructlist = constructs_list, constnum = 2, data = dat, nfacs = 2)
+tmp
+```
+
+
+That we have a possible 2 factor solution (but relative low eigenvalue for the second factor!) for the trust variables become clear if you look at the correlation plots: 
+```{r}
+psych::corPlot(dat[, constructs_list[[2]]],numbers=TRUE,stars=TRUE)
+psych::corPlot(dat[, c("trstprl", "trstplt", "trstprt", "trstep",  "trstun")],numbers=TRUE,stars=TRUE)
+efa_parallel <- fa.parallel(x = dat[, constructs_list[[2]]], fa = "fa",n.iter=50)
+efa_parallel
+```
+
+A parallel analysis even suggesting a 2-3 factor solution: 
+```{r}
+efa_parallel <- fa.parallel(x = dat[, constructs_list[[2]]], fa = "fa",n.iter=50)
+efa_parallel
+```
+
+
+# References

@@ -7,6 +7,9 @@ To participate in the workshop you should install R / R Studio:
 - [base R](https://cran.r-project.org/)
 - [R Studio (interface)](https://posit.co/)
 
+Further you should install Quarto: https://quarto.org/docs/get-started/
+
+
 
 ## Link to learning materials
 It is recommended to start reading the first section "Possible Learning Process"

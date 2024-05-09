@@ -1,0 +1,381 @@
+---
+title: "Exemplary data analysis"
+author: "Julius Fenn"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    html-math-method: katex
+bibliography: Library_subset.bib
+biblio-style: apalike
+link-citations: true
+---
+
+
+# Background Information
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. 
+
+This file contains the pre-processing step (clean, transform data), whereby the folder "XXX" the analysis step (test hypotheses and exploratory analyses), which follows the classical data-analysis pipeline [see @pengArtDataScience2016; @wickhamDataScienceImport2017].
+
+
+
+
+# Notes
+
+Remark: 
+
+```{r}
+## global variables
+cutOff <- 1 # cutoff value for building extreme groups
+```
+
+
+# get packages, raw data, functions
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: get raw data
+
+### install and load packages
+#  if packages are not already installed, the function will install and activate them
+usePackage <- function(p) {
+  if (!is.element(p, installed.packages()[,1]))
+    install.packages(p, dep = TRUE, repos = "http://cran.us.r-project.org")
+  require(p, character.only = TRUE)
+}
+
+usePackage("haven") # load SPSS, ... data 
+usePackage("tidyverse") # data cleaning and summarizing
+usePackage("psych") # psychometric analysis (EFA)
+
+## psychometric analysis
+usePackage("moments") # skewness, kurtosis
+
+## outputs
+usePackage("stargazer") # create tables
+usePackage("report") # get reports of statistical tests in APA7
+
+usePackage("lavaan") # for CFA
+
+rm(usePackage)
+
+
+### load data files
+## change working directory
+setwd("data")
+## load data
+dat <- haven::read_spss(file = "ESS1-9e01_1.sav")
+
+
+### load functions
+# print(getwd())
+setwd("../functions")
+for(i in 1:length(dir())){
+  # print(dir()[i])
+  source(dir()[i], encoding = "utf-8")
+}
+
+rm(i)
+```
+
+
+
+
+# data preperation
+
+compute mean scores
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: prepare raw data
+
+### data preparation
+dat$cntry <- NULL
+
+# reverse coded items
+dat$imsmetn <- 5 - dat$imsmetn 
+dat$imdfetn <- 5 - dat$imdfetn
+dat$impcntr <- 5 - dat$impcntr
+
+
+### create mean scores
+# !!! normally you would need to run multiple analysis to check if building mean scores make sense (EFAs, ...)
+
+# > Immigration bad or good for country's economy
+# > Country's cultural life undermined or enriched by immigrants
+# > Immigrants make country worse or better place to live
+sel_var <- c("imbgeco", "imueclt", "imwbcnt")
+dat$mean_imEnrich <- rowMeans(x = dat[, sel_var], na.rm = TRUE)
+# > Allow many/few immigrants of same race/ethnic group as majority
+# > Allow many/few immigrants of different race/ethnic group from majority
+# > Allow many/few immigrants from poorer countries outside Europe
+sel_var <- c("imsmetn", "imdfetn", "impcntr")
+dat$mean_imAllow <- rowMeans(x = dat[, sel_var], na.rm = TRUE)
+# > Trust
+sel_var <- str_detect(string = colnames(dat), pattern = "^trst")
+dat$mean_trst <- rowMeans(x = dat[, sel_var], na.rm = TRUE)
+# > Satisfaction (personally, government)
+sel_var <- str_detect(string = colnames(dat), pattern = "^stf")
+dat$mean_stf <- rowMeans(x = dat[, sel_var], na.rm = TRUE)
+dat$sd_stf <- dat %>%
+  select(matches(match = "^stf")) %>%
+  apply(.,1, sd, na.rm = TRUE)
+```
+
+
+## get extreme groups for `lrscale` variable
+
+Aim to get two extreme groups according to the `lrscale` (left, right scale) variable:
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: get extreme groups
+
+
+dat$lrscale_scaled <- scale(x = dat$lrscale, center = TRUE, scale = TRUE)
+mean_upper <- mean(dat$lrscale_scaled[dat$lrscale_scaled > cutOff], na.rm = TRUE)
+mean_lower <- mean(dat$lrscale_scaled[dat$lrscale_scaled < cutOff * -1], na.rm = TRUE)
+hist(dat$lrscale_scaled)
+# add vertical line
+abline(v=mean_upper, col = "red")
+abline(v=mean_lower, col = "red")
+# save subsets
+dat_upper <-dat %>%
+  filter(dat$lrscale_scaled > mean_upper)
+dat_lower <-dat %>%
+  filter(dat$lrscale_scaled < mean_lower)
+
+
+### get dummy
+dat$lrscale_dummy <- ifelse(test = dat$lrscale_scaled > mean_upper, yes = 2, no =
+         ifelse(test = dat$lrscale_scaled < mean_lower, yes = 1, no = 0))
+table(dat$lrscale_dummy)
+```
+
+
+
+# Introduction
+
+Migration 'mother of all political problems,' says German Interior Minister Horst Seehofer. Hort Seehofer's 2018 statement^[see <https://www.dw.com/en/migration-mother-of-all-political-problems-says-german-interior-minister-horst-seehofer/a-45378092>, retrieved 9 February 2022] after the protests in Chemnitz, which sees migration at the heart of society's disillusionment, shows how charged the debate about migration is in Germany. 
+
+
+
+# Background
+
+...
+
+
+# Quoting (please remove this for your report!)
+<!-- https://blogdown-demo.rbind.io/2017/08/28/adding-citations-to-posts/ -->
+
+How to cite literature within an markdown document: 
+
+1. Blah blah [see @newmanNetworksIntroduction2018, pp. 33-35; also @skrondalGeneralizedLatentVariable2004, ch. 1].
+2. Blah blah [@newmanNetworksIntroduction2018, pp. 33-35].
+3. Blah blah [@newmanNetworksIntroduction2018; @skrondalGeneralizedLatentVariable2004].
+4. Rutkowski et al. says blah [-@newmanNetworksIntroduction2018].
+5. @newmanNetworksIntroduction2018 says blah.
+
+# Methods
+
+## Hypothesis
+
+**Are different factors relevant to the perceived threat of migrants by people with a high or low left/right orientation?**
+
+The following sub-hypothesis could be derived from literature: 
+
+...
+
+
+# Results
+
+## Descriptive Statisticss 
+
+First glimpse at the loaded data: 
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: describe data
+
+glimpse(dat)
+summary(dat)
+```
+
+
+
+## Basic Inferential Statisticss 
+
+
+Combining statistical tests like cor.test or t.test with the respective plot, check the assumptions of every test procedure you are using:
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: correlations
+
+cor.test(dat$mean_stf, dat$mean_imEnrich, use = "complete")
+report::report(cor.test(dat$mean_stf, dat$mean_imEnrich, use = "complete"))
+plot(dat$mean_stf, dat$mean_imEnrich)
+```
+
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: t-test
+
+t.test(dat$mean_stf ~ dat$gndr)
+report::report(t.test(dat$mean_stf ~ dat$gndr))
+boxplot(dat$mean_stf ~ dat$gndr)
+```
+
+
+## analyses of extreme groups for lrscale variable
+
+
+### Descriptive Statisticss 
+
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: descriptive extreme group
+
+
+tmp_desc <- dat %>%
+  group_by(lrscale_dummy) %>%
+  summarise(N = n(),
+            meanEnrich = mean(mean_imEnrich, na.rm = TRUE),
+            sdEnrich = sd(mean_imEnrich, na.rm = TRUE),
+            meanAllow = mean(mean_imAllow, na.rm = TRUE),
+            sdAllow = sd(mean_imAllow, na.rm = TRUE),
+            meanStf = mean(mean_stf, na.rm = TRUE),
+            sdStf = sd(mean_stf, na.rm = TRUE),
+            meanTrst = mean(mean_trst, na.rm = TRUE),
+            sdTrst = sd(mean_trst, na.rm = TRUE))
+tmp_desc <- round(x = tmp_desc, digits = 2)
+
+tmp_desc
+```
+
+Using the **stargazer** package you can create nice tables. You sometimes need to limit the number of digits using the function round(): 
+
+```{r}
+#| echo: true
+#| warning: false
+#| results: asis
+#| label: descriptive extreme group use stargazer
+
+### set up summary dataset yourself
+stargazer(tmp_desc, type = "html", summary = FALSE)
+
+
+### using summary function within stargazer
+tmp_desc_stargazeer <- as.data.frame(dat[, str_subset(string = colnames(dat), pattern = "mean_")])
+tmp_desc_stargazeer <- na.omit(tmp_desc_stargazeer)
+stargazer(x =tmp_desc_stargazeer, type = "html", summary = TRUE, digits = 2)
+```
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| results: asis
+#| label: descriptive extreme group use stargazer, save as HTML
+
+#> output to html
+setwd("outputs")
+stargazer(tmp_desc, type = "html", summary = FALSE, out = "summaryTable.html")
+```
+
+
+
+
+### Basic Inferential Statisticss 
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: regression for low, high
+
+lm_lower <- lm(formula = mean_imEnrich ~ mean_trst + mean_stf + happy + agea + gndr, data = dat_lower)
+lm_upper <- lm(formula = mean_imEnrich ~ mean_trst + mean_stf + happy + agea + gndr, data = dat_upper)
+summary(lm_lower)
+summary(lm_upper)
+```
+
+Again we can use the **stargazer** package, which identifies `lm_upper` for example as an lm-object in R and creates a wonderful table for the model results: 
+
+```{r}
+#| echo: true
+#| warning: false
+#| results: asis
+#| label: regression for low, high using stargazer
+
+stargazer(lm_lower, type = "html")
+stargazer(lm_upper, type = "html")
+```
+
+
+
+# Appendix
+
+## Test for unidimensionality, CFA
+
+Here we could apply a self-written function for example to check the reliability and amount of explained variance for the first factor: 
+
+*get correlation plot, descriptive plot, EFA, CFA*
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: applying R functions
+
+regEx <- "^trst"
+nameScale <- "Trust Scale"
+nameVariable <- "mean_TrustItems"
+
+sum(str_detect(string = colnames(dat), pattern = regEx))
+
+tmp_dat <- na.omit(dat[,str_detect(string = colnames(dat), pattern = regEx)])
+
+
+tmp <- CFAstats(dataset = tmp_dat, regularExp = regEx, labelLatent = str_remove(string = nameVariable, pattern = "mean_"), 
+                showPlots = TRUE, 
+                computeEFA = TRUE, 
+                computeCFA = TRUE, 
+                computeCFAMplus = FALSE)
+```
+
+
+# Save final files
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: save files
+
+setwd("outputs")
+## save as .xlsx file
+xlsx::write.xlsx2(x = dat, file = "dat.xlsx")
+## save as .csv file
+write.csv2(x = dat, file = "dat.csv")
+## save as R object
+saveRDS(dat, file = "dat.rds")
+```
+
+
+# References
+
