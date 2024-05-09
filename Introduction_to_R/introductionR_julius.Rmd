@@ -62,7 +62,7 @@ usePackage("haven")
 
 usePackage("janitor")
 
-usePackage("emo")
+usePackage("emo") # Emojis in rmarkdown
 # devtools::install_github("hadley/emo")
 
 
