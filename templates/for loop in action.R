@@ -2,12 +2,21 @@ for(i in 1:5){
   print(i)
 }
 
+vec <- c("Hallo", "wie", "gehts?")
+for(i in vec){
+  print(i)
+}
 
-for(c in 1:3){
-  for(r in 1:5){
+df <- cars
+
+
+for(c in 1:2){
+  for(r in 1:50){
     cat("c:", c, "r:", r, "\n")
-    df[r,c]
-  }
+    if(df[r,c] >= 50){
+      print("ALARM")
+    }
+    }
 }
 
 
@@ -114,5 +123,33 @@ dnorm(x = max(abs(x)), mean = 0, sd = 1) * 100
 
 
 abline(v = mean(x), col = "red")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+library(ggplot2)
+?diamonds
+
+
 
 

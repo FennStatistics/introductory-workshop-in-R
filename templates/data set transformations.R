@@ -97,13 +97,6 @@ head(dat_reactionTime_wide_personID)
 dim(dat_reactionTime_wide_personID)
 colnames(dat_reactionTime_wide_personID)
 
-library(tidyr)
-
-# Convert data to wide format
-dat_wide <- spread(dat_reactionTime, key = BlockID, value = ReactionTime)
-
-# View the wide format data
-head(dat_wide)
 
 
 ### reaction time data:
@@ -129,7 +122,9 @@ dat_2 <- dat_2[sample(x = nrow(dat_2)), ]
 # Merge the two data sets by the ID column
 dat_merged <- merge(dat_1, dat_2, by = "ID")
 dim(dat_merged)
-dat_leftJoin <- left_join(x = dat_1, y = dat_2, by = c("ID" = "ID"))
+
+
+dat_leftJoin <- left_join(x = dat_1, y = dat_2, by = c("Vp" = "Vpn"))
 dim(dat_leftJoin)
 dat_rightJoin <- right_join(x = dat_1, y = dat_2, by = c("ID" = "ID"))
 dim(dat_rightJoin)
@@ -196,3 +191,4 @@ ggstatsplot::ggwithinstats(
   type = "parametric",
   title = "Parametric test Reaction Times within blocks"
 )
+

@@ -83,7 +83,6 @@ rm(i)
 
 
 
-
 # data preperation
 
 compute mean scores
@@ -234,8 +233,12 @@ plot(dat$mean_stf, dat$mean_imEnrich)
 #| label: t-test
 
 t.test(dat$mean_stf ~ dat$gndr)
+t.test(dat$mean_stf ~ dat$gndr, var.equal = TRUE)
 report::report(t.test(dat$mean_stf ~ dat$gndr))
 boxplot(dat$mean_stf ~ dat$gndr)
+
+p <- ggstatsplot::ggbetweenstats(data = dat, x = gndr, y = mean_stf)
+p + xlab(label = "Hallo")
 ```
 
 

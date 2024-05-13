@@ -4,7 +4,7 @@
 # authors: XXX
 # ==============================================================================
 rm(list=ls()) # clean environment
-# dev.off() # clean plots
+dev.off() # clean plots
 
 
 getwd() # points to your current working directory
