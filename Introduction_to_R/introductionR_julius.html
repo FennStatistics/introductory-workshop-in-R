@@ -3,7 +3,7 @@
   <head>
     <title>Journey through R</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Julius Fenn" />
+    <meta name="author" content="Miriam and Julius" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
@@ -32,7 +32,7 @@ class: center, middle, inverse, title-slide
 ## A motivating workshop
 ]
 .author[
-### Julius Fenn
+### Miriam and Julius
 ]
 .date[
 ### 10th, 11th of May, 2024
@@ -617,7 +617,7 @@ in the folder "templates" you find a template for...
 
 
 
-```r
+``` r
 summary(c(TRUE, TRUE, FALSE, TRUE))
 ```
 
@@ -628,13 +628,13 @@ summary(c(TRUE, TRUE, FALSE, TRUE))
 
 
 
-```r
+``` r
 summary(rnorm(n = 100, mean = 0, sd = 20))
 ```
 
 ```
 ##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -46.7983 -10.6856   0.9169   1.2328  15.0671  58.8352
+## -44.6090 -12.8948  -0.6117  -1.3852  14.1753  45.1584
 ```
 
 Important:
@@ -647,7 +647,7 @@ Important:
 ## Side-Note: Polymorphism?
 
 
-```r
+``` r
 methods(generic.function = "summary")[1:20]
 ```
 
@@ -667,7 +667,7 @@ methods(generic.function = "summary")[1:20]
 other important functions are: 
 
 
-```r
+``` r
 ?typeof
 ?class
 ?mode
@@ -688,7 +688,7 @@ other important functions are:
 *you could also use the R API: 
 
 
-```r
+``` r
 # sets the directory of location of this script as the current directory
 setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 ```
@@ -832,27 +832,27 @@ Is anyone lost?
 
 1
 
-```r
+``` r
 ?topic, help(topic)
 ```
 2
 
-```r
+``` r
 x &lt;- 5 (recommended), x = 5, 5 -&gt; x
 ```
 3
 
-```r
+``` r
 +, -, *, /, ^, &amp;, &amp;&amp;; see help("+")
 ```
 4
 
-```r
+``` r
 == , != , &gt;, &gt;= , &lt;, &lt;=; see help("=")
 ```
 5
 
-```r
+``` r
 # I am a comment
 ```
 ]
@@ -883,27 +883,27 @@ x &lt;- 5 (recommended), x = 5, 5 -&gt; x
 
 1
 
-```r
+``` r
 1; 2; 301L
 ```
 2
 
-```r
+``` r
 1.0; .141; 1.23e-3; NaN; Inf; -Inf
 ```
 3
 
-```r
+``` r
 TRUE; FALSE #(not T, F!)
 ```
 4
 
-```r
+``` r
 "hello"; "I'm a string"
 ```
 5
 
-```r
+``` r
 NA
 ```
 ]
@@ -924,7 +924,7 @@ Coercion: When you call a function with an argument of the wrong type, R will tr
 
 you define a vector x as follows
 
-```r
+``` r
 x &lt;- c(1, 2, 3, 4, 5)
 x
 ```
@@ -933,7 +933,7 @@ x
 ## [1] 1 2 3 4 5
 ```
 
-```r
+``` r
 typeof(x); class(x)
 ```
 
@@ -952,7 +952,7 @@ typeof(x); class(x)
 
 change the second element of the vector to the word “hat.”
 
-```r
+``` r
 x[2] &lt;- "hat"
 x
 ```
@@ -961,7 +961,7 @@ x
 ## [1] "1"   "hat" "3"   "4"   "5"
 ```
 
-```r
+``` r
 typeof(x); class(x)
 ```
 
@@ -996,7 +996,7 @@ Coercion:
 **R commands:**
 
 
-```r
+``` r
 x &lt;- 1
 is.numeric(x)
 ```
@@ -1005,7 +1005,7 @@ is.numeric(x)
 ## [1] TRUE
 ```
 
-```r
+``` r
 as.logical(x)
 ```
 
@@ -1013,7 +1013,7 @@ as.logical(x)
 ## [1] TRUE
 ```
 
-```r
+``` r
 x &lt;- c(FALSE, FALSE, TRUE)
 as.numeric(x)
 ```
@@ -1043,7 +1043,7 @@ In R, there are three ways to represent 'nothing', but the reason for the missin
 **R commands:**
 
 
-```r
+``` r
 c(3, NA)
 ```
 
@@ -1051,7 +1051,7 @@ c(3, NA)
 ## [1]  3 NA
 ```
 
-```r
+``` r
 c(3, 0/0)
 ```
 
@@ -1059,7 +1059,7 @@ c(3, 0/0)
 ## [1]   3 NaN
 ```
 
-```r
+``` r
 c(3, NULL)
 ```
 
@@ -1067,7 +1067,7 @@ c(3, NULL)
 ## [1] 3
 ```
 
-```r
+``` r
 max(3, NA)
 ```
 
@@ -1092,7 +1092,7 @@ Some mathematical operations can be performed with Inf and -Inf:
 **R commands:**
 
 
-```r
+``` r
 max(3, Inf)
 ```
 
@@ -1100,7 +1100,7 @@ max(3, Inf)
 ## [1] Inf
 ```
 
-```r
+``` r
 min(3, Inf)
 ```
 
@@ -1108,7 +1108,7 @@ min(3, Inf)
 ## [1] 3
 ```
 
-```r
+``` r
 c(Inf + Inf, (-Inf) * Inf, Inf - Inf)
 ```
 
@@ -1177,19 +1177,19 @@ complex data structures in R can be organized by their dimensionality and if all
 
 * 1d atomic vector
 
-```r
+``` r
 1:10; c(1,2,3,4,5,6,7,8,9,10)
 ```
 
 * 2d matrix
 
-```r
+``` r
 matrix(data = NA, nrow = 2, ncol = 3)
 ```
 
 * nd array
 
-```r
+``` r
 array(1:60, dim=c(3,4,5))
 ```
 ]
@@ -1199,13 +1199,13 @@ array(1:60, dim=c(3,4,5))
 
 * 1d list
 
-```r
+``` r
 list(1:10, letters)
 ```
 
 * 2d matrix data frame
 
-```r
+``` r
 data.frame(id = 1:26, 
            letters = letters, 
            constant = "Hello World")
@@ -1228,12 +1228,12 @@ often we have "simple" rectangular data, which are made of (values are associate
 * **rows**, which represents an instance of data in the data set (like a participant)
 
 
-```r
+``` r
 DT::datatable(dat_twins, options = list(pageLength = 5))
 ```
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-8f23eb3bcdf1e70938e7" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-8f23eb3bcdf1e70938e7">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.57599999999999],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"IDZP","targets":2},{"name":"GR","targets":3},{"name":"GES","targets":4},{"name":"OG","targets":5},{"name":"VG","targets":6},{"name":"CC","targets":7},{"name":"KU","targets":8},{"name":"IQ","targets":9},{"name":"KG","targets":10},{"name":"IQ.cat","targets":11}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-bdb68cd0c47b40c04562" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-bdb68cd0c47b40c04562">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.57599999999999],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"IDZP","targets":2},{"name":"GR","targets":3},{"name":"GES","targets":4},{"name":"OG","targets":5},{"name":"VG","targets":6},{"name":"CC","targets":7},{"name":"KU","targets":8},{"name":"IQ","targets":9},{"name":"KG","targets":10},{"name":"IQ.cat","targets":11}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 
 
@@ -1270,7 +1270,7 @@ Hypothesis: the size and shape of the human forebrain predict intelligence!
 the mighty correlation matrix:
 
 
-```r
+``` r
 round(x = cor(x = dat_twins[, c("VG", "CC", "KU", "KG", "IQ")], 
               method = "spearman"), digits = 2)
 ```
@@ -1330,7 +1330,7 @@ All objects can have arbitrary additional attributes, used to store metadata abo
 .pull-left[
 
 
-```r
+``` r
 dat &lt;- data.frame(id = 1:26, 
            letters = letters, 
            constant = "Hello World")
@@ -1352,7 +1352,7 @@ head(dat)
 .pull-right[
 
 
-```r
+``` r
 attr(x = dat, which = "names")
 ```
 
@@ -1360,7 +1360,7 @@ attr(x = dat, which = "names")
 ## [1] "id"       "letters"  "constant"
 ```
 
-```r
+``` r
 attributes(x = dat)
 ```
 
@@ -1391,17 +1391,17 @@ Hint: we have the following data structures:
 
 * 1d atomic vector
 
-```r
+``` r
 1:10; c(1,2,3,4,5,6,7,8,9,10)
 ```
 * 2d matrix
 
-```r
+``` r
 matrix(data = NA, nrow = 2, ncol = 3)
 ```
 * nd array
 
-```r
+``` r
 array(1:60, dim=c(3,4,5))
 ```
 ]
@@ -1411,13 +1411,13 @@ array(1:60, dim=c(3,4,5))
 
 * 1d list
 
-```r
+``` r
 list(1:10, letters)
 ```
 
 * 2d matrix data frame
 
-```r
+``` r
 data.frame(id = 1:26, 
            letters = letters, 
            constant = "Hello World")
@@ -1426,7 +1426,7 @@ data.frame(id = 1:26,
 
 If you want to save your data structures to an R object e.g. write: 
 
-```r
+``` r
 myFirstVector &lt;- 1:10
 ```
 
@@ -1492,7 +1492,7 @@ on different types of data!
 
 
 
-```r
+``` r
 # define an R Object
 x &lt;- c(2.1, 4.2, 3.3, 5.4)
 ```
@@ -1502,7 +1502,7 @@ x &lt;- c(2.1, 4.2, 3.3, 5.4)
 **Positive Integers:**
 
 
-```r
+``` r
 x[c(3, 1)]
 #&gt; [1] 3.3 2.1
 x[order(x)]
@@ -1524,7 +1524,7 @@ x[c(2.1, 2.9)]
 **Negative integers:** exclude elements at the specified positions
 
 
-```r
+``` r
 x[-c(3, 1)]
 #&gt; [1] 4.2 5.4
 ```
@@ -1532,7 +1532,7 @@ x[-c(3, 1)]
 **Logical vectors:** select elements where the corresponding logical value is TRUE
 
 
-```r
+``` r
 x[c(TRUE, TRUE, FALSE, FALSE)]
 #&gt; [1] 2.1 4.2
 x[x &gt; 3]
@@ -1547,7 +1547,7 @@ x[x &gt; 3]
 
 
 
-```r
+``` r
 # define an R Object
 x &lt;- c(2.1, 4.2, 3.3, 5.4)
 ```
@@ -1556,7 +1556,7 @@ x &lt;- c(2.1, 4.2, 3.3, 5.4)
 **Logical vectors:** select elements where the corresponding logical value is TRUE
 
 
-```r
+``` r
 x[x&gt;5]
 ```
 
@@ -1564,7 +1564,7 @@ x[x&gt;5]
 ## [1] 5.4
 ```
 
-```r
+``` r
 x&gt;5
 ```
 
@@ -1577,7 +1577,7 @@ x&gt;5
 **Character vectors:** return elements with matching names
 
 
-```r
+``` r
 (y &lt;- setNames(x, letters[1:4]))
 #&gt;   a   b   c   d 
 #&gt; 2.1 4.2 3.3 5.4
@@ -1609,7 +1609,7 @@ z[c("a", "d")]
 Setting up your matrix: 
 
 
-```r
+``` r
 # ?matrix
 a &lt;- matrix(data = 1:9, nrow = 3) # ncol, ...
 colnames(a) &lt;- c("A", "B", "C")
@@ -1632,7 +1632,7 @@ a
 
 
 
-```r
+``` r
 a &lt;- matrix(1:9, nrow = 3)
 colnames(a) &lt;- c("A", "B", "C")
 ```
@@ -1641,7 +1641,7 @@ colnames(a) &lt;- c("A", "B", "C")
 .pull-left[
 
 
-```r
+``` r
 a[1:2, ]
 #&gt;      A B C
 #&gt; [1,] 1 4 7
@@ -1660,7 +1660,7 @@ a[0, -2]
 more advanced: you can also subset higher-dimensional data structures with an integer matrix (or, if named, a character matrix). Each row in the matrix specifies the location of one value, and each column corresponds to a dimension in the array
 
 
-```r
+``` r
 vals &lt;- outer(1:5, 1:5, FUN = "paste", sep = ",")
 select &lt;- matrix(ncol = 2, byrow = TRUE, c(
   1, 1,
@@ -1682,7 +1682,7 @@ vals[select]
 Setting up your data frame:
 
 
-```r
+``` r
 # ?data.frame
 df &lt;- data.frame(x = 1:3, y = 3:1, z = letters[1:3]) # stringsAsFactors !
 df
@@ -1699,7 +1699,7 @@ df
 Important to note: there is a equivalent of data.frames in more "modern" R frameworks called "tibble" (has enhanced printing, ...): 
 
 
-```r
+``` r
 # ? tibble::tibble
 tibble::tibble(x = 1:3, y = 3:1, z = letters[1:3])
 ```
@@ -1726,7 +1726,7 @@ tibble::tibble(x = 1:3, y = 3:1, z = letters[1:3])
 The most important subsetting to get data of certain objects of observation:
 
 
-```r
+``` r
 df[df$x == 2, ]
 #&gt;   x y z
 #&gt; 2 2 2 b
@@ -1740,7 +1740,7 @@ df[c(1, 3), ]
 the dollar sign is a shorthand operator: "x$y" is roughly equivalent to "x[["y"]]"; often used to access variables in a data frame
 
 
-```r
+``` r
 df$x
 ```
 
@@ -1752,7 +1752,7 @@ df$x
 .pull-right[
 
 
-```r
+``` r
 # There are two ways to select columns from a data frame
 # Like a list
 df[c("x", "z")]
@@ -1778,7 +1778,7 @@ df[, c("x", "z")]
 Setting up your list:
 
 
-```r
+``` r
 # ?list
 x &lt;- list(1:3, "a", 4:6)
 x
@@ -1801,7 +1801,7 @@ x
 ## Subsetting - Lists II 
 
 
-```r
+``` r
 x
 ```
 
@@ -1858,7 +1858,7 @@ When extracting multiple (or even zero!) elements, you have to make a smaller tr
 Example with lists, which return the object inside the list, not a single element list
 
 
-```r
+``` r
 y &lt;- list(a = 1:2, b = letters[1:3])
 str(y[1])
 ```
@@ -1868,7 +1868,7 @@ str(y[1])
 ##  $ a: int [1:2] 1 2
 ```
 
-```r
+``` r
 str(y[[1]])
 ```
 
@@ -1884,12 +1884,12 @@ str(y[[1]])
 Do you remember our twin pair data set?
 
 
-```r
+``` r
 DT::datatable(dat_twins, options = list(pageLength = 5))
 ```
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-71d3dd4c434715ec6cfa" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-71d3dd4c434715ec6cfa">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.57599999999999],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"IDZP","targets":2},{"name":"GR","targets":3},{"name":"GES","targets":4},{"name":"OG","targets":5},{"name":"VG","targets":6},{"name":"CC","targets":7},{"name":"KU","targets":8},{"name":"IQ","targets":9},{"name":"KG","targets":10},{"name":"IQ.cat","targets":11}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-adf1c8952f8ee74d1c56" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-adf1c8952f8ee74d1c56">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.57599999999999],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"IDZP","targets":2},{"name":"GR","targets":3},{"name":"GES","targets":4},{"name":"OG","targets":5},{"name":"VG","targets":6},{"name":"CC","targets":7},{"name":"KU","targets":8},{"name":"IQ","targets":9},{"name":"KG","targets":10},{"name":"IQ.cat","targets":11}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 Three questions:
 * How do we get only the twins with IQ higher than 120?
@@ -1904,7 +1904,7 @@ Three questions:
 How do we get only the twins with IQ higher than 120?
 
 
-```r
+``` r
 dat_twins[dat_twins$IQ &gt; 120, ]
 ```
 
@@ -1915,7 +1915,7 @@ dat_twins[dat_twins$IQ &gt; 120, ]
 ## 20 20   10  1   1 1971.63 1160 7.67 58.5 124 72.576 above average
 ```
 
-```r
+``` r
 ## identical function
 subset(dat_twins, IQ &gt; 120)
 ```
@@ -1935,7 +1935,7 @@ subset(dat_twins, IQ &gt; 120)
 How do we get only the twins with IQ lower than 100 and body weight higher than 100?
 
 
-```r
+``` r
 dat_twins[dat_twins$IQ &lt; 100 &amp; dat_twins$KG &gt; 100, ] # ! only single logical operator
 ```
 
@@ -1956,7 +1956,7 @@ dat_twins[dat_twins$IQ &lt; 100 &amp; dat_twins$KG &gt; 100, ] # ! only single l
 How can we order the data set according to IQ?
 
 
-```r
+``` r
 order(dat_twins$IQ)
 ```
 
@@ -1964,7 +1964,7 @@ order(dat_twins$IQ)
 ##  [1] 16  3  4 14  2 13 15  1  8 12 17  5 11  6  7 19 18 20 10  9
 ```
 
-```r
+``` r
 head(dat_twins[order(dat_twins$IQ), ])
 ```
 
@@ -1978,7 +1978,7 @@ head(dat_twins[order(dat_twins$IQ), ])
 ## 13 13    7  2   1 2136.37 1067 6.32 57.2 93 83.916 below average
 ```
 
-```r
+``` r
 # dat_twins[, order(names(dat_twins))] # order data set alphabetically
 ```
 
@@ -2030,7 +2030,7 @@ Instead of p-hacking why not just starting a research program to solve finally t
 There are some new words to learn if you want to become a flow control master: 
 
 
-```r
+``` r
 # Control flow
 if - &amp;&amp;, || (short circuiting)
 for, while
@@ -2057,7 +2057,7 @@ Normally we want to combine if statements with loops (plus functions).
 **if statements** have the following form: 
 
 
-```r
+``` r
 ## abstract representation
 if (condition) true_action
 if (condition) true_action else false_action
@@ -2066,7 +2066,7 @@ if (condition) true_action else false_action
 in action:
 
 
-```r
+``` r
 x1 &lt;- if (TRUE) 1 else 2 # the experts write code like this!
 x1
 ```
@@ -2075,7 +2075,7 @@ x1
 ## [1] 1
 ```
 
-```r
+``` r
 x2 &lt;- if (FALSE) 1 else 2
 x2
 ```
@@ -2091,7 +2091,7 @@ x2
 
 
 
-```r
+``` r
 greet &lt;- function(name, birthday = FALSE) {
   paste0(
     "Hi ", name,
@@ -2109,7 +2109,7 @@ greet("Maria", FALSE)
 ## [1] "Hi Maria and you do not have BIRTHDAY"
 ```
 
-```r
+``` r
 greet("Jaime", TRUE)
 ```
 
@@ -2125,7 +2125,7 @@ greet("Jaime", TRUE)
 If statements can be arbitrarily complex:
 
 
-```r
+``` r
 x &lt;- 20
 
 if (x &gt; 30) {
@@ -2145,7 +2145,7 @@ if (x &gt; 30) {
 An important function is also the ifelse() function: 
 
 
-```r
+``` r
 x &lt;- 1:10
 ifelse(x %% 2 == 0, "even", "odd")
 ```
@@ -2173,7 +2173,7 @@ ifelse(x %% 2 == 0, "even", "odd")
 .pull-right[
 
 
-```r
+``` r
 for(i in 1:10) { # Head of for-loop
   x1 &lt;- i^2 # Code block
   print(x1) # Print results
@@ -2208,7 +2208,7 @@ Imagine we want to drawn for the prices of diamonds for every different quality 
 
 
 
-```r
+``` r
 # ? diamonds
 # How many cuts? 
 levels(diamonds$cut)
@@ -2218,7 +2218,7 @@ levels(diamonds$cut)
 ## [1] "Fair"      "Good"      "Very Good" "Premium"   "Ideal"
 ```
 
-```r
+``` r
 # Is there a difference in price?
 diamonds %&gt;%
   group_by(cut) %&gt;%
@@ -2244,7 +2244,7 @@ diamonds %&gt;%
 Imagine we want to drawn for the prices of diamonds for every different quality of the cut; data set with over 50.000 diamonds
 
 
-```r
+``` r
 for(c in levels(diamonds$cut)) {
   cat("quality of cut: ", c, "\n")
   tmp &lt;- diamonds$price[diamonds$cut == c]
@@ -2273,15 +2273,15 @@ for(c in levels(diamonds$cut)) {
 In the twin data set we have the variable "IDZP" (identifier of the twin pair)
 
 
-```r
+``` r
 DT::datatable(dat_twins, options = list(pageLength = 5))
 ```
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-a95ac20957b820973ccb" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-a95ac20957b820973ccb">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.57599999999999],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"IDZP","targets":2},{"name":"GR","targets":3},{"name":"GES","targets":4},{"name":"OG","targets":5},{"name":"VG","targets":6},{"name":"CC","targets":7},{"name":"KU","targets":8},{"name":"IQ","targets":9},{"name":"KG","targets":10},{"name":"IQ.cat","targets":11}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-a189cc620f4189477aa4" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a189cc620f4189477aa4">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.57599999999999],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"IDZP","targets":2},{"name":"GR","targets":3},{"name":"GES","targets":4},{"name":"OG","targets":5},{"name":"VG","targets":6},{"name":"CC","targets":7},{"name":"KU","targets":8},{"name":"IQ","targets":9},{"name":"KG","targets":10},{"name":"IQ.cat","targets":11}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 
-```r
+``` r
 table(dat_twins$IDZP)
 ```
 
@@ -2300,7 +2300,7 @@ table(dat_twins$IDZP)
 Compute the mean difference of IQ for every twin pair: 
 
 
-```r
+``` r
 mean_twinPairs &lt;- double(10) # empty vector made up of 0 to fill up
 h=1 # index variable
 for(t in levels(dat_twins$IDZP)) {
@@ -2356,7 +2356,7 @@ Otherwise it could get dark (at least your mood when writing code)!
 Also here are some new words to learn if you want to program your own function:
 
 
-```r
+``` r
 # Functions to do with functions
 function
 missing
@@ -2372,7 +2372,7 @@ return, invisible
 * The structure of a function is given by
 
 
-```r
+``` r
 function ( &lt;arglist&gt; ){ &lt;body&gt; }
 ```
 
@@ -2391,7 +2391,7 @@ All R functions are objects and consist of three parts:
 * environment() the 'map' of the location of the function's variables. If the environment isn't displayed, it means
 
 
-```r
+``` r
 f &lt;- function(x){
   square &lt;- x^2 # compute the square
   return(square) # return the value
@@ -2402,7 +2402,7 @@ f &lt;- function(x){
 .pull-left[
 
 
-```r
+``` r
 formals(f)
 ```
 
@@ -2410,7 +2410,7 @@ formals(f)
 ## $x
 ```
 
-```r
+``` r
 body(f) 
 ```
 
@@ -2426,7 +2426,7 @@ body(f)
 .pull-right[
 
 
-```r
+``` r
 environment(f)
 ```
 
@@ -2448,18 +2448,15 @@ Recommendation of Xie (chief software engineer of R):
 
 The user breaks our function: 
 
-```r
+``` r
 f
 ```
 
 ```
-## function(x){
-##   square &lt;- x^2 # compute the square
-##   return(square) # return the value
-## }
+## &lt;srcref: file "" chars 1:6 to 4:1&gt;
 ```
 
-```r
+``` r
 f(x = "I am a string!")
 ```
 
@@ -2475,7 +2472,7 @@ f(x = "I am a string!")
 If you writing functions it is good practice to control for the input:
 
 
-```r
+``` r
 f &lt;- function(x){
   if(is.numeric(x)){
     square &lt;- x^2 # compute the square
@@ -2508,14 +2505,14 @@ If you have a "character" argument like "sex = c("Male", "Female")" you can chec
 * match.arg matches arguments against a table of candidate values specified by choices
 
 
-```r
+``` r
 match.arg(arg, choices, several.ok = FALSE)
 ```
 
 * missing argument will be replaced with the first candidate
 
 
-```r
+``` r
 talk_about_sex &lt;- function(sex = c("Male", "Female", "Non-binary")) {
   match.arg(sex)
 }
@@ -2527,7 +2524,7 @@ talk_about_sex("F") # partial matching (not good practice)
 ## [1] "Female"
 ```
 
-```r
+``` r
 talk_about_sex()
 ```
 
@@ -2535,7 +2532,7 @@ talk_about_sex()
 ## [1] "Male"
 ```
 
-```r
+``` r
 talk_about_sex("W")
 ```
 
@@ -2556,7 +2553,7 @@ talk_about_sex("W")
 
 
 
-```r
+``` r
 myplot &lt;- function(x, y, mycol = 'red') {
   if (missing(y)) {
     y &lt;- x
@@ -2580,7 +2577,7 @@ myplot(x = 1:20, y = rnorm(20), mycol='darkgreen')
 Using the **Cairo** package you could save your graphics directly as files to your computer in great resolution:
 
 
-```r
+``` r
 ############################################################################
 ##### save_graphic()
 # save graphic object as png file
@@ -2615,7 +2612,7 @@ Using the **stargazer** package you could save your easily set up summary statis
 
 .scrollChunk[
 
-```r
+``` r
 ############################################################################
 ##### getDescriptives()
 # get multiple summary statistics to R console AND / OR to HTML
@@ -2778,7 +2775,7 @@ Chapter 11 in Munzert, S., Rubba, C., Meißner, P., &amp; Nyhuis, D. (2015). Aut
 ## Data Import Vocabulary
 
 
-```r
+``` r
 # Reading data
 data # loads specified data sets
 count.fields # counts the number of fields
@@ -2826,7 +2823,7 @@ These functions often have the following arguments:
 
 
 
-```r
+``` r
 # if no idea how data is structured
 head(readLines("data/tramo1998etal_twins.csv"))
 ```
@@ -2840,7 +2837,7 @@ head(readLines("data/tramo1998etal_twins.csv"))
 ## [6] "5,3,1,2,2264.25,1281,7.99,57.8,101,63.958"
 ```
 
-```r
+``` r
 # load csv2 (seperated by ",")
 dat_twins &lt;- read.csv2("data/tramo1998etal_twins.csv", header = TRUE, sep = ",")
 ```
@@ -2856,7 +2853,7 @@ if you want to import (or export) data, for example, from SPSS you could use the
 * SPSS: "read_sav()" reads .sav files; "write_sav()" writes .sav files.
 
 
-```r
+``` r
 # ?haven::read_spss
 
 haven::read_sav(
@@ -2877,7 +2874,7 @@ haven::read_sav(
 outside of the scope of the workshop are processes of data cleaning to get *tidy data*, but there is a useful function from the **janitor** R package to get the right naming convention for variables:
 
 
-```r
+``` r
 x &lt;- data.frame(caseID = 1, DOB = 2, Other = 3)
 # use camelCase variable names:
 janitor::clean_names(x, "lower_camel")
@@ -2904,7 +2901,7 @@ see: The State of Naming Conventions in R: https://scilifelab.github.io/courses/
 ## Data Export Vocabulary
 
 
-```r
+``` r
 # Output
 print, cat # `cat' performs much less conversion
 # than `print'
@@ -2937,7 +2934,7 @@ save # writes an external representation of
 the XLSX document file is the Microsoft Excel standard format file type for Excel2007 and above, which can be normally open by everyone
 
 
-```r
+``` r
 library(xlsx)
 xlsx::write.xlsx2(x = dat_twins, file = "dat_twings.xlsx", sheetName = "mytwins")
 ```
@@ -2952,7 +2949,7 @@ xlsx::write.xlsx2(x = dat_twins, file = "dat_twings.xlsx", sheetName = "mytwins"
 Save and load one object to a file
 
 
-```r
+``` r
 # Save an object to a file
 saveRDS(object, file = "my_data.rds")
 # Restore the object
@@ -2964,7 +2961,7 @@ readRDS(file = "my_data.rds")
 Save and read multiple objects to a file
 
 
-```r
+``` r
 # Save multiple objects
 save(data1, data2, file = "data.RData")
 # To load the data again
@@ -2975,7 +2972,7 @@ load("data.RData")
 Save your entire workspace
 
 
-```r
+``` r
 save.image(file = "my_work_space.RData")
 ```
 
@@ -3051,7 +3048,7 @@ usePackage("tidyverse")
 just write: 
 
 
-```r
+``` r
 install.packages("tidyverse")
 ```
 
@@ -3248,7 +3245,7 @@ and article: https://www.researchgate.net/publication/227580118_Generalizability
 In the world of base R functions we can apply great functions: 
 
 
-```r
+``` r
 # boxplot and summary contains identical information - 5 point summary statistics
 boxplot(dat_twins$IQ)
 summary(dat_twins$IQ)
@@ -3275,7 +3272,7 @@ it quite helps if you "google" the test procedure you want to apply with the let
 In the world of **tidyverse** we can apply even greater functions (! advanced): 
 
 
-```r
+``` r
 dat_twins %&gt;%
   group_by(IDZP) %&gt;%
   summarise(M=mean(IQ), SD=sd(IQ), difference=diff(IQ)) %&gt;%
@@ -3327,7 +3324,7 @@ Which hypothesis test are implemented in R?
 
 
 
-```r
+``` r
 apropos(what = "\\.test$") # Find Objects by (Partial) Name
 ```
 
@@ -3347,7 +3344,7 @@ apropos(what = "\\.test$") # Find Objects by (Partial) Name
 ## [37] "wilcox.test"
 ```
 
-```r
+``` r
 # library(afex)
 apropos("^aov") # ANOVAs
 ```
@@ -3356,7 +3353,7 @@ apropos("^aov") # ANOVAs
 ## [1] "aov"     "aov_4"   "aov_car" "aov_ez"
 ```
 
-```r
+``` r
 # many more!
 ```
 
@@ -3480,13 +3477,13 @@ article: Lakens, D., Scheel, A. M., &amp; Isager, P. M. (2018). Equivalence Test
 1 get an overview of your data:
 
 
-```r
+``` r
 data("sleep")
 DT::datatable(sleep, options = list(pageLength = 5))
 ```
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-ee870866d5a0ecbc6eea" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ee870866d5a0ecbc6eea">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],[0.7,-1.6,-0.2,-1.2,-0.1,3.4,3.7,0.8,0,2,1.9,0.8,1.1,0.1,-0.1,4.4,5.5,1.6,4.6,3.4],["1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2"],["1","2","3","4","5","6","7","8","9","10","1","2","3","4","5","6","7","8","9","10"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>extra<\/th>\n      <th>group<\/th>\n      <th>ID<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"extra","targets":1},{"name":"group","targets":2},{"name":"ID","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-6a4989cb8bc47908e7c3" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-6a4989cb8bc47908e7c3">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],[0.7,-1.6,-0.2,-1.2,-0.1,3.4,3.7,0.8,0,2,1.9,0.8,1.1,0.1,-0.1,4.4,5.5,1.6,4.6,3.4],["1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2"],["1","2","3","4","5","6","7","8","9","10","1","2","3","4","5","6","7","8","9","10"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>extra<\/th>\n      <th>group<\/th>\n      <th>ID<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"extra","targets":1},{"name":"group","targets":2},{"name":"ID","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 &gt; paired sample t-test is needed; consist of a sample of matched pairs of similar units (e.g. using Propensity Score Matching), or one group of units that has been tested twice 
 
@@ -3500,14 +3497,14 @@ DT::datatable(sleep, options = list(pageLength = 5))
 
 .pull-left[
 
-```r
+``` r
 ## grouped boxplot
 boxplot(sleep$extra ~ sleep$group)
 ```
 
 &lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-98-1.png" width="50%" /&gt;
 
-```r
+``` r
 ## compute mean deviations:
 sleep1 &lt;- with(sleep, extra[group == 2] - extra[group == 1])
 summary(sleep1)
@@ -3521,7 +3518,7 @@ summary(sleep1)
 
 .pull-right[
 
-```r
+``` r
 stripchart(sleep1, method = "stack", xlab = "hours",
            main = "Sleep prolongation (n = 10)")
 boxplot(sleep1, horizontal = TRUE, add = TRUE,
@@ -3541,7 +3538,7 @@ boxplot(sleep1, horizontal = TRUE, add = TRUE,
 template for adjusting the format of ggplot2 figures to APA style: 
 
 
-```r
+``` r
 ggplot_theme &lt;- theme(axis.title.x = element_blank(),
                       axis.title.y = element_text(size=12),
                       axis.text.x = element_text(size=10,hjust=0.5,vjust=0.5,face="plain", 
@@ -3565,7 +3562,7 @@ ggplot_theme &lt;- theme(axis.title.x = element_blank(),
 
 
 
-```r
+``` r
 # grouped boxplot
 ggplot(sleep, aes(x=group, y=extra)) + 
     geom_boxplot() + ggplot_theme
@@ -3588,7 +3585,7 @@ Using the type argument you can specify the statistical approach:
 * "bayes"
 
 
-```r
+``` r
 ## parametric t-test
 p1 &lt;- ggwithinstats(
   data = sleep,
@@ -3610,17 +3607,9 @@ p1 &lt;- ggwithinstats(
 2 compute summary statistics / visualize your data II - more sophisticated plots (**ggstatsplot**) II:
 
 
-```r
+``` r
 ## parametric t-test
 p1
-```
-
-```
-## Warning in min(x): kein nicht-fehlendes Argument für min; gebe Inf zurück
-```
-
-```
-## Warning in max(x): kein nicht-fehlendes Argument für max; gebe -Inf zurück
 ```
 
 &lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-103-1.png" width="40%" style="display: block; margin: auto;" /&gt;
@@ -3640,7 +3629,7 @@ p1
 
 
 
-```r
+``` r
 ## check outlier assumption
 boxplot(sleep1) # to check outlier assumption
 ```
@@ -3663,7 +3652,7 @@ Use Shapiro-Wilk normality test as described at: Normality Test in R.
 
 
 
-```r
+``` r
 # Shapiro-Wilk normality test for the differences
 shapiro.test(sleep1)
 ```
@@ -3689,7 +3678,7 @@ because of the  sample size sensitivity it is often better to visually check the
 drawing **Q-Q Plot**:
 
 
-```r
+``` r
 sleep1_sc &lt;- scale(sleep1) # z standardize mean differences
 
 qqnorm(sleep1_sc) # QQ Plot
@@ -3710,7 +3699,7 @@ because of the  sample size sensitivity it is often better to visually check the
 drawing **Histogram** and overlay normal distribution:
 
 
-```r
+``` r
 hist(sleep1_sc, freq = FALSE, xlim = c(-3,3))
 x&lt;-seq(-4,+4,by=0.02)
 curve(dnorm(x), add=TRUE)
@@ -3728,7 +3717,7 @@ curve(dnorm(x), add=TRUE)
 
 
 
-```r
+``` r
 ## Formula interface
 t.test(extra ~ group, data = sleep, paired = TRUE)
 ```
@@ -3766,7 +3755,7 @@ outputs:
 compute the Bayes factor: 
 
 
-```r
+``` r
 ## Traditional interface
 with(sleep, ttestBF(extra[group == 1], extra[group == 2], paired=TRUE))
 ```
@@ -3834,7 +3823,7 @@ The standardized mean difference effect size for within-subjects designs is refe
 
 .pull-left[
 
-```r
+``` r
 ## by hand:
 means &lt;- with(sleep, tapply(extra, group, mean)) # get group means
 md &lt;- means[1]-means[2] # get mean difference
@@ -3851,7 +3840,7 @@ sleep_wide &lt;- cbind(sleep$extra[sleep$group==1], sleep$extra[sleep$group==2])
 
 .pull-right[
 
-```r
+``` r
 ## by package "rstatix"
 sleep %&gt;% cohens_d(extra ~ group, paired = TRUE)
 ```
@@ -4045,7 +4034,7 @@ most advanced is **bibliometrix**, which allows to compute:
 
 
 
-```r
+``` r
 ## to run shiny app:
 library(bibliometrix)
 biblioshiny()
