@@ -22,7 +22,9 @@ Before participating in the workshop, please complete the following steps:
 - Review basic statistical concepts such as **mean, variance, standard deviation, hypothesis testing**, and **multiple linear regression**.
 - At best familiarize yourself with basic R programming concepts (objects, classes, data structures) by completing an introductory course such as [DataCamp's Free Introduction to R](https://www.datacamp.com/courses/free-introduction-to-r).
   + Tip: Students can access DataCamp for free via [GitHub Education Pack](https://education.github.com/pack).
-- (Optional) Browse through the recommended [learning materials](https://docs.google.com/document/d/1Z40Rkux_Ysq15VziCJJH21ca07ipwN52dA_LFYIsZ2g/edit?usp=sharing) for additional preparation.
+- (Optional) Browse through the recommended [learning materials (online document)](https://docs.google.com/document/d/1Z40Rkux_Ysq15VziCJJH21ca07ipwN52dA_LFYIsZ2g/edit?usp=sharing) for additional preparation.
+- (Optional) Browse through the recommended [learning materials (folder)](https://github.com/FennStatistics/introductory-workshop-in-R/tree/main/Learning%20Materials) for additional preparation.
+
 
 📢 **Important Note:**  
 This hands-on workshop assumes a basic familiarity with statistical thinking and programming logic. If you're new to R, don't worry — we'll start from the fundamentals! To get the most out of the workshop, it is highly recommended to review the preparation materials in advance.
