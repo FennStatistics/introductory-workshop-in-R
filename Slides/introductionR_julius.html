@@ -1,0 +1,4197 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Journey through R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Julius Fenn" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/htmltools-fill/fill.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+    <script src="libs/datatables-binding/datatables.js"></script>
+    <script src="libs/jquery/jquery-3.6.0.min.js"></script>
+    <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+    <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+    <link href="libs/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
+    <script src="libs/crosstalk/js/crosstalk.min.js"></script>
+    <link rel="stylesheet" href="subfiles/my-theme.css" type="text/css" />
+    <link rel="stylesheet" href="subfiles/my-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Journey through R
+]
+.subtitle[
+## A motivating workshop
+]
+.author[
+### Julius Fenn
+]
+.date[
+### 9th, 10th, 16th, 17th of May, 2025
+]
+
+---
+
+
+
+&lt;style type="text/css"&gt;
+.scrollChunk {
+  max-height: 450px;
+  overflow-y: auto;
+  background-color: inherit;
+}
+&lt;/style&gt;
+
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+
+## Workshop
+
+This workshop consists of three parts:
+
+1 Pep talk (*a speech which is intended to encourage someone to make more effort or feel more confident*)
+  + first some basics
+  
+2 Useful Software + Knowledge Management: How to enter the space shuttle and learn things?!
+  
+3 Introduction to R
+ + Overview
+ + Objects
+ + Data Structures
+ + ...
+ 
+4 Amazing Applications of R
+  + typical analyses sequences in action
+  + bibliometric analysis
+  
+5 Templates (R Markdown)
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 1: Pep talk
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 1: Pep talk - Some Basics
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Definition: What is statistics?
+
+- Statistics is the science of responsible data analysis.
+- Statistics is a cross-sectional discipline that is characterized by a combination of knowledge in
+  - Mathematics (abstraction, modeling, stochastics, numerics),
+  - Computer science (programming, scientific computing),
+  - Fields of application (life, natural or economic sciences, etc.).
+- Statistical modeling allows the description of stochastic phenomena and thus supports the finding of rational decisions under uncertainty.
+
+
+&lt;br&gt;
+
+Encyclopedia Britannica: Statistics is the art and science of gathering, analyzing and making inferences from data. Originally associated with numbers gathered for governments, the subject now includes large bodies of method and theory.
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## The theoretical master-mind: The Statistician
+
+**Statisticians:** theoretical driven, discussing terms like point estimates, margins of error, confidence intervals and are separated between  “Frequentists” and “Bayesians”
+  - The Frequentist approach to statistics (and testing) is a method which makes predictions on the underlying truths of the experiment, using only data from the current experiment.
+  - The Bayesian approach to statistics is a method that encodes past knowledge of similar experiments into a statistical device, known as prior. This prior is combined with current experiment data to make a conclusion on the test (knowledge accumulation).
+
+
+&lt;center&gt;
+&lt;img src="images/evolutionOfStatistics.jpg", height="250px"&gt;
+&lt;/center&gt;
+
+&lt;br&gt;
+&lt;a href="https://cxl.com/blog/bayesian-frequentist-ab-testing/" target="_blank"&gt;https://cxl.com/blog/bayesian-frequentist-ab-testing/&lt;/a&gt;
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## The modern (applied) statistician: The Data Scientist 
+
+**Data scientists:** *data analysis is an art*; a process of data ingest, data transformation, exploratory data analysis, model selection, model evaluation, and data storytelling
+
+&lt;center&gt;
+&lt;img src="images/peng_Epicycles.jpg", height="400px"&gt;
+&lt;/center&gt;
+
+
+&lt;br&gt;
+see book: Peng, R. D., &amp; Matsui, E. (2016). The Art of Data Science: A Guide for Anyone who Works with Data. Lulu.com. https://bookdown.org/rdpeng/artofdatascience/
+
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 1: Pep talk - The Real Talk
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Why learn programming?!
+
+
+(will I look like this cat?)
+
+&lt;center&gt;
+&lt;img src="https://media4.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif?cid=ecf05e47hmf8l7kqh12kn3rbuh885rmbgzgiyjan1n0v137g&amp;rid=giphy.gif&amp;ct=g", width="30%"&gt;
+&lt;/center&gt;
+
+
+&lt;br&gt;
+<svg aria-hidden="true" role="img" viewBox="0 0 384 512" style="height:1em;width:0.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M192 496C86 496 0 394 0 288C0 176 64 16 192 16s192 160 192 272c0 106-86 208-192 208zM154.8 134c6.5-6 7-16.1 1-22.6s-16.1-7-22.6-1c-23.9 21.8-41.1 52.7-52.3 84.2C69.7 226.1 64 259.7 64 288c0 8.8 7.2 16 16 16s16-7.2 16-16c0-24.5 5-54.4 15.1-82.8c10.1-28.5 25-54.1 43.7-71.2z"/></svg> <svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M253.3 35.1c6.1-11.8 1.5-26.3-10.2-32.4s-26.3-1.5-32.4 10.2L117.6 192H32c-17.7 0-32 14.3-32 32s14.3 32 32 32L83.9 463.5C91 492 116.6 512 146 512H430c29.4 0 55-20 62.1-48.5L544 256c17.7 0 32-14.3 32-32s-14.3-32-32-32H458.4L365.3 12.9C359.2 1.2 344.7-3.4 332.9 2.7s-16.3 20.6-10.2 32.4L404.3 192H171.7L253.3 35.1zM192 304v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16zm96-16c8.8 0 16 7.2 16 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16zm128 16v96c0 8.8-7.2 16-16 16s-16-7.2-16-16V304c0-8.8 7.2-16 16-16s16 7.2 16 16z"/></svg>: https://osf.io/ytb8q
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## arguable reason: to impress someone
+
+
+&lt;center&gt;
+&lt;img src="images/impressivePieChart.jpg", width="50%"&gt;
+&lt;/center&gt;
+
+&lt;br&gt;
+*Anyone wants to see impressive R Code in action?! &gt; "getMeARoom.R"*
+, often 💩, sometimes 😄
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;a href="https://stats.stackexchange.com/questions/423/what-is-your-favorite-data-analysis-cartoon" target="_blank"&gt;https://stats.stackexchange.com/questions/423/what-is-your-favorite-data-analysis-cartoon&lt;/a&gt;
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## better reason: to embrace the complexity of our world - prediction
+
+
+to appreciate uncertainty of our predictions (e.g. prediction paradox)
+&lt;center&gt;
+&lt;img src="images/appreciateUncertainty.jpg", height="250px"&gt;
+&lt;/center&gt;
+
+&gt; random variables, distributions, expectations, confidence intervall, variance,...
+
+
+&lt;br&gt;
+see book: Silver, N. (2015). The Signal and the Noise: Why So Many Predictions Fail--but Some Don’t. Penguin Publishing Group.
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## better reason: to embrace the complexity of our world - system theory
+
+&lt;center&gt;
+&lt;img src="images/Meadows_Fig31.jpg", height="200px"&gt;
+&lt;/center&gt;
+
+&lt;center&gt;
+&lt;img src="images/Meadows_Fig32.jpg", height="200px"&gt;
+&lt;/center&gt;
+
+&gt; computational modelling, simulation...
+
+
+
+&lt;br&gt;
+see book: Meadows, D. H. (2008). Thinking in Systems: A Primer. Chelsea Green Pub.
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## down-to-earth reason: to get a job! - where to study?
+
+- Göttingen: Master of Science (MSc) in Applied Statistics; https://www.uni-goettingen.de/en/421501.html
+- Bamberg:  Masterstudiengang Survey-Statistik; https://www.uni-bamberg.de/miss/
+- Trier: Master of Science (MSc) in Applied Statistics; https://www.uni-trier.de/universitaet/fachbereiche-faecher/fachbereich-iv/faecher/volkswirtschaftslehre/professuren/wirtschafts-und-sozialstatistik/studieren/applied-statistics-msc
+- Tübingen: Kognitionswissenschaft (MSc); https://uni-tuebingen.de/fakultaeten/mathematisch-naturwissenschaftliche-fakultaet/fachbereiche/informatik/studium/studiengaenge/kognitionswissenschaft/
+- Economics Master, ...
+
+
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 2: Useful Software + Knowledge Management
+
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 2: Useful Software
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## if you want to publish
+
+.pull-left[
+
+**Open Researcher and Contributer ID**
+
+&lt;center&gt;
+&lt;img src="images/orcid.jpg", height="150px"&gt;
+&lt;/center&gt;
+
+https://orcid.org/
+
+]
+
+.pull-right[
+**ResearchGate, GoogleScholar**
+
+&lt;center&gt;
+&lt;img src="images/researchGateGoogleScholar.jpg", height="150px"&gt;
+&lt;/center&gt;
+
+https://scholar.google.com/intl/de/scholar/citations.html
+https://www.researchgate.net/login
+
+]
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## if you want to promote your stuff
+
+.pull-left[
+
+**set up your own webpage**
+
+* Why not use R package blogdown: https://bookdown.org/yihui/blogdown/
+* or create your website with **Quarto**: https://www.marvinschmitt.com/blog/website-tutorial-quarto/
+* ...
+
+&lt;br&gt;
+
+**instant messaging program**
+
+* Discord
+* Slack
+* ...
+
+]
+
+.pull-right[
+**social media**
+
+* LinkedIn, Xing
+* X (Mastodon)
+
+
+]
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## bring colloboration to a next level
+
+.pull-left[
+
+**write your articles together**
+
+* Google Docs (invite people and create a google account)
+* (Microsoft: Microsoft 365 and OneDrive or SharePoint)
+* **overleaf**: https://de.overleaf.com/
+
+&lt;br&gt;
+
+**share responsibilities**
+
+* Taskade: https://www.taskade.com/
+* ...
+
+]
+
+.pull-right[
+**share your code**
+
+&lt;center&gt;
+&lt;img src="images/githublogo.jpg", height="150px"&gt;
+&lt;/center&gt;
+
+* **GitHub**: https://github.com/
+
+&lt;br&gt;
+
+**share your additional files (literature)**
+
+* Nextcloud: https://nextcloud.com/
+* Google Drive
+
+]
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## make your research transparent and reproducible
+
+.pull-left[
+
+**upload all your files**
+
+&lt;center&gt;
+&lt;img src="images/osflogo.jpg", height="150px"&gt;
+&lt;/center&gt;
+
+https://osf.io/
+
+&lt;br&gt;
+
+1. Register your research
+2. Share data, material, and code
+3. Publish preprint/share paper
+
+
+
+
+]
+
+.pull-right[
+**write all your scripts in annotated, reproducible documents**
+
+&lt;center&gt;
+&lt;img src="images/rmarkdownPic.jpg", height="150px"&gt;
+&lt;/center&gt;
+
+* **Quarto** (R Markdown)
+* use the R package **papaja**: https://github.com/crsh/papaja
+
+
+]
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## set up studies, statistical software [my favourites]
+
+.pull-left[
+
+**set up studies**
+
+* lab.js
+  + https://lab.js.org/
+  + Slack Channel: https://join.slack.com/t/nmbrcrnchrs/shared_invite/zt-1ukiirqar-fvuhI9FXE9xrIdVttY6TAQ
+* SoSci Survey: GUI based (but flexible. . . if you know PHP), easy to use
+  + Video Tutorials: https://www.soscisurvey.de/de/screencast
+
+]
+
+.pull-right[
+**statistical software**
+
+* R
+* JASP (Just Another Statistics Program): https://jasp-stats.org/
+  + SPSS-like GUI for data analysis with R (unflexible!)
+  + Includes Bayesian analysis, growing
+* Python
+  + Some similarities to R (interpreted, syntax), but more powerful
+  + Not customized for statistics, popular for machine learning
+* (Mplus)  
+
+
+&lt;br&gt;
+* Power Analysis: G*Power (or simulation studies): https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower
+
+* complex analyses - bwUniCluster 2.0: https://wiki.bwhpc.de/e/BwUniCluster2.0
+
+]
+
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## use A.I. tools [the future]
+
+**List of AI Tools for Research Workflow in Academia**: 
+https://docs.google.com/document/d/1mb4SWtqyi1iEGCn2uTnHkPHqW3UoQr8b0xv5_81a-4Y/edit?usp=sharing
+
+.pull-left[
+
+get state of the art tools for low cost / for free as a student: https://education.github.com/pack
+
+]
+
+.pull-right[
+
+I personally using the following AIs:
+
+* for programming within Visual Studio Code: https://github.com/features/copilot
+* summarizing articles: https://www.chatpdf.com/
+
+two conversational search engines:
+
+* providing sources to questions: https://www.perplexity.ai/
+* **ChatGPT**: https://chat.openai.com/
+
+
+for reviews:
+
+* (for literature reviews https://rayyan.ai/ and https://www.bibliometrix.org/home/)
+
+]
+
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 2: Knowledge Management
+
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Check out the collection of materials!
+
+
+see: https://docs.google.com/document/d/1Z40Rkux_Ysq15VziCJJH21ca07ipwN52dA_LFYIsZ2g/edit?usp=sharing
+
+&lt;br&gt;
+start reading: 
+- Possible Learning Process
+- Mixed -&gt; Knowledge management and learning
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Getting Things Done - workflow
+
+**workflow:**
+&lt;center&gt;
+&lt;img src="images/GTD_workflow.jpg", height="450px"&gt;
+&lt;/center&gt;
+
+
+&lt;br&gt;
+see book: Allen, D. (2015). Getting Things Done: The Art of Stress-Free Productivity. Penguin.
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Getting Things Done - projects
+
+**projects:**
+*a project is anything we want to do that requires more than one action step. It’s therefore a mechanism to remember that, when we finish that first action step, there will still be something more to do*
+
+
+1. Set up a project list, which is an index, in no particular order, of all your open loops (to dos).
+
+2. For every project define at least the first next action step (OR waiting for, or calendar action).
+
+3. The Projects list and project plans are typically reviewed in your GTD Weekly Review, ensuring each project has at least one current next action, waiting for, or calendar item.
+
+4. It’s fine to have multiple next actions on any given project, as long as they are parallel and not sequential actions.
+
+5. Projects are listed by the outcome you will achieve when you can mark it as done.
+  + Effective project names motivate you toward the outcome you wish to achieve, and give you clear direction about what you are trying to accomplish.
+  
+&lt;br&gt;
+&lt;br&gt;
+=&gt; that's how you set up a **learning plan**
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## How to learn - One Approach
+
+**Organize your knowledge as a "Zettelkasten":**
+&lt;center&gt;
+&lt;img src="images/Zettelkasten_Luhmann.jpg", height="150px"&gt;
+&lt;/center&gt;
+
+- use Anki: https://apps.ankiweb.net/
+- organize the "Zettel" by using Obsidian: https://obsidian.md/
+
+
+&lt;center&gt;
+&lt;img src="images/Obsidian_Example.jpg", height="150px"&gt;
+&lt;/center&gt;
+
+
+Check out YouTube Video SpiegelMining – Reverse Engineering von Spiegel-Online: https://www.youtube.com/watch?v=-YpwsdRKt8Q
+
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 3: Introduction to R
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - Overview
+
+*Setting up your first project*
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Main Literatur, use my templates
+
+
+* easy readable introduction R and statistics: Field, Andy, Jeremy Miles, and Zoë Field. Discovering Statistics Using R. SAGE, 2012.
+* Resource for improving coding skills and deepening (technical) understanding of R:
+  + Wickham, Hadley. Advanced R, Second Edition. CRC Press, 2019. https://adv-r.hadley.nz/.
+  + Jones, Owen, Robert Maillardet, and Andrew Robinson. Introduction to Scientific Programming and Simulation Using R, Second Edition. CRC Press, 2014. https://nyu-cdsc.github.io/learningr/assets/simulation.pdf.
+  
+  
+&lt;br&gt;
+plus collected materials / workshops...
+
+&lt;br&gt;
+
+**templates**
+
+in the folder "templates" you find a template for...
+
+* basic_R_file.R: a (not so) standard R file (a good start)
+* folder "templates" &gt;  "advanced_modular_R_file.qmd" file: a advanced Quarto file (“Let us see how high we can fly before the sun melts the wax in our wings.”)
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Introduction to R
+
+* R is a programming language and tool for statistical computing and data analysis
+* consist of basic functionalities (i.e., objects and functions) as well as packages that allow for robust and efficient coding
+* in R are multiple object-oriented programming (OOP) included like S3, R6, S4, ..., enables *polymorphism* (use the same function form for different types of input)
+
+
+
+``` r
+summary(c(TRUE, TRUE, FALSE, TRUE))
+```
+
+```
+##    Mode   FALSE    TRUE 
+## logical       1       3
+```
+
+
+
+``` r
+summary(rnorm(n = 100, mean = 0, sd = 20))
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -45.624 -14.762  -0.713  -1.834  12.569  38.307
+```
+
+Important:
+* Everything that exists is an object.
+* Everything that happens is a function call.
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Side-Note: Polymorphism?
+
+
+``` r
+methods(generic.function = "summary")[1:20]
+```
+
+```
+##  [1] "summary,ANY-method"              "summary,BFBayesFactor-method"   
+##  [3] "summary,BFBayesFactorTop-method" "summary,BFodds-method"          
+##  [5] "summary,BFprobability-method"    "summary,diagonalMatrix-method"  
+##  [7] "summary,sparseMatrix-method"     "summary.aareg"                  
+##  [9] "summary.afex_aov"                "summary.agnes"                  
+## [11] "summary.allFit"                  "summary.Anova.mlm"              
+## [13] "summary.aov"                     "summary.aovlist"                
+## [15] "summary.areg.boot"               "summary.aspell"                 
+## [17] "summary.bcnPowerTransform"       "summary.bcnPowerTransformlmer"  
+## [19] "summary.boot"                    "summary.cch"
+```
+
+other important functions are: 
+
+
+``` r
+?typeof
+?class
+?mode
+```
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## set your working directory
+
+* every time when starting R set your working directory (or better create an R Project*)
+
+&lt;br&gt;
+
+&lt;center&gt;
+&lt;img src="images/workingdir_pic.png", width="50%"&gt;
+&lt;/center&gt;
+
+*you could also use the R API: 
+
+
+``` r
+# sets the directory of location of this script as the current directory
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
+```
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## your workflow
+
+! **modular programming**
+
+&lt;br&gt;
+
+if using R projects: 
+* Create a project folder
+* In this folder, organize your file in subfolders (e.g., data)
+* All filepaths in your script(s) are specified relative to the folder’s top level
+* Thus, your working directory is always this top level
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Side-Note: modular programming?
+
+you separate your programs into separate functional units (modules). Each module does a well-defined task and the modules are called by one-another as needed. Typically, the state of each module is encapsulated and only supposed to be altered by the functions from that module.
+
+&lt;center&gt;
+&lt;img src="images/modular_programming.jpg", height=350px"&gt;
+&lt;/center&gt;
+
+
+&gt; Modular programming decomposes a large program into modules!
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Side-Note: modular programming - Importance
+
+without following the principle of modular programming (*or sometimes structured programming*) you cannot set up a typical data science project:
+
+
+&lt;center&gt;
+&lt;img src="images/dataAnalysisPipeline.jpg", height=350px"&gt;
+&lt;/center&gt;
+
+
+see in detail: https://r4ds.had.co.nz/introduction.html
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## RStudio Projects
+
+When using a project, RStudio will automatically set your working directory to the location of the project file.
+
+Additionally, RStudio will
+
+* load .RData files
+* load .RHistory files
+* open source files (scripts)
+* restore RStudio settings
+
+This will particularly benefit your workflow when collaborating with others/sharing your script, for example by using
+
+&lt;center&gt;
+&lt;img src="images/githublogo.jpg", width="30%", heigth="150px"&gt;
+&lt;/center&gt;
+
+[https://codehorizons.com/making-your-first-github-r-project/](https://codehorizons.com/making-your-first-github-r-project/)
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hands-on: set up a project!
+
+and remember the philosophy of R:
+
+**Everything that exists is an object.**
+
+**Everything that happens is a function call.**
+
+
+&lt;center&gt;
+&lt;img src="images/memeletsdothis.jpg", width="50%"&gt;
+&lt;/center&gt;
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - Objects
+
+*Using R as a sophisticated calculator*
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## ??????! I am lost
+
+
+Is anyone lost?
+
+&lt;br&gt;
+&lt;br&gt;
+
+
+&lt;center&gt;
+&lt;img src="https://media1.giphy.com/media/1kYx8tpKGbfee2drT7/giphy.gif?cid=790b7611d38e7d9633b5e62c5857c72dfa16e5b014d7e358&amp;rid=giphy.gif&amp;ct=g", width="70%"&gt;
+&lt;/center&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## the very basics
+
+
+.pull-left[
+**Explanation:**
+
+1 get help 
+
+2 assignments
+
+3 operators
+
+4 comparisons
+
+5 comments: everything that follows #
+
+&lt;br&gt;
+&gt; case sensitive: usage of CAPITAL and small letters matters!
+
+]
+
+.pull-right[
+**R commands:**
+
+1
+
+``` r
+?topic, help(topic)
+```
+2
+
+``` r
+x &lt;- 5 (recommended), x = 5, 5 -&gt; x
+```
+3
+
+``` r
++, -, *, /, ^, &amp;, &amp;&amp;; see help("+")
+```
+4
+
+``` r
+== , != , &gt;, &gt;= , &lt;, &lt;=; see help("=")
+```
+5
+
+``` r
+# I am a comment
+```
+]
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## basic data structures
+
+
+.pull-left[
+**Explanation:**
+
+1 integer
+
+2 double
+
+3 logical
+
+4 character
+
+5 missings
+]
+
+.pull-right[
+**R commands:**
+
+1
+
+``` r
+1; 2; 301L
+```
+2
+
+``` r
+1.0; .141; 1.23e-3; NaN; Inf; -Inf
+```
+3
+
+``` r
+TRUE; FALSE #(not T, F!)
+```
+4
+
+``` r
+"hello"; "I'm a string"
+```
+5
+
+``` r
+NA
+```
+]
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## basic data structures - construction &amp; coercion I
+
+
+.pull-left[
+**Explanation:**
+
+Coercion: When you call a function with an argument of the wrong type, R will try to coerce values to a different type so that the function will work. R will convert from more specific types to more general types.
+
+
+**R commands:**
+
+you define a vector x as follows
+
+``` r
+x &lt;- c(1, 2, 3, 4, 5)
+x
+```
+
+```
+## [1] 1 2 3 4 5
+```
+
+``` r
+typeof(x); class(x)
+```
+
+```
+## [1] "double"
+```
+
+```
+## [1] "numeric"
+```
+]
+
+.pull-right[
+**R commands:**
+
+
+change the second element of the vector to the word “hat.”
+
+``` r
+x[2] &lt;- "hat"
+x
+```
+
+```
+## [1] "1"   "hat" "3"   "4"   "5"
+```
+
+``` r
+typeof(x); class(x)
+```
+
+```
+## [1] "character"
+```
+
+```
+## [1] "character"
+```
+]
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## basic data structures - construction &amp; coercion II
+
+
+.pull-left[
+**Explanation:**
+
+Coercion: 
+* coerce to a type xxx by as.xxx()
+* check if xxx is a specific type by is.xxx()
+* when combining different data types, they will be coerced to the most flexible type
+* coercion often happens automatically
+
+]
+
+.pull-right[
+**R commands:**
+
+
+``` r
+x &lt;- 1
+is.numeric(x)
+```
+
+```
+## [1] TRUE
+```
+
+``` r
+as.logical(x)
+```
+
+```
+## [1] TRUE
+```
+
+``` r
+x &lt;- c(FALSE, FALSE, TRUE)
+as.numeric(x)
+```
+
+```
+## [1] 0 0 1
+```
+]
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## basic data structures - represent nothing
+
+
+.pull-left[
+**Explanation:**
+
+In R, there are three ways to represent 'nothing', but the reason for the missingness of the information can be distinguished:
+* NA: missing sample values, impossible coercion, . . .
+* NaN: undefined results in mathematical operation (e.g. log(-1), 1/0)
+* NULL: null pointer, i.e. pointer in empty/undefined memory
+]
+
+.pull-right[
+**R commands:**
+
+
+``` r
+c(3, NA)
+```
+
+```
+## [1]  3 NA
+```
+
+``` r
+c(3, 0/0)
+```
+
+```
+## [1]   3 NaN
+```
+
+``` r
+c(3, NULL)
+```
+
+```
+## [1] 3
+```
+
+``` r
+max(3, NA)
+```
+
+```
+## [1] NA
+```
+]
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## basic data structures - Infinity
+
+
+.pull-left[
+**Explanation:**
+
+Some mathematical operations can be performed with Inf and -Inf:
+]
+
+.pull-right[
+**R commands:**
+
+
+``` r
+max(3, Inf)
+```
+
+```
+## [1] Inf
+```
+
+``` r
+min(3, Inf)
+```
+
+```
+## [1] 3
+```
+
+``` r
+c(Inf + Inf, (-Inf) * Inf, Inf - Inf)
+```
+
+```
+## [1]  Inf -Inf  NaN
+```
+]
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hands-on: try out the basic data structures
+
+
+The bored people can open the R Reference Card 2.0 and try out more fancy stuff: https://cran.r-project.org/doc/contrib/Baggott-refcard-v2.pdf
+
+
+&lt;center&gt;
+&lt;img src="images/memeletsdothis.jpg", width="50%"&gt;
+&lt;/center&gt;
+
+&lt;br&gt;
+check out also the folder "additional scripts -&gt; Basic Vocabulary"
+
+
+
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - Data Structures
+
+*We are going to face the 10th dimension (wuuuuhu)*
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## ??????! I am not lost but thirsty
+
+
+Anyone needs a coffee / break?
+
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;center&gt;
+&lt;img src="https://i.giphy.com/media/lXCQNy6VTwmk0/giphy.webp", width="500" height="300"&gt;
+&lt;/center&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## complex data types
+
+
+complex data structures in R can be organized by their dimensionality and if all their contents are of the same type (homogeneous), or not (heterogeneous)
+
+.pull-left[
+**homogeneous:**
+
+* 1d atomic vector
+
+``` r
+1:10; c(1,2,3,4,5,6,7,8,9,10)
+```
+
+* 2d matrix
+
+``` r
+matrix(data = NA, nrow = 2, ncol = 3)
+```
+
+* nd array
+
+``` r
+array(1:60, dim=c(3,4,5))
+```
+]
+
+.pull-right[
+**heterogeneous:**
+
+* 1d list
+
+``` r
+list(1:10, letters)
+```
+
+* 2d matrix data frame
+
+``` r
+data.frame(id = 1:26, 
+           letters = letters, 
+           constant = "Hello World")
+```
+]
+
+
+&gt; we need depending on the issue we are facing different database paradigms! 
+
+check out Fireship YouTube Video: https://youtu.be/W2Z7fbCLSTw
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## complex data types - very rare in psychology (social science)
+
+often we have "simple" rectangular data, which are made of (values are associated with a variable and a observation):
+* **column**, which represents a variable (like ID)
+* **rows**, which represents an instance of data in the data set (like a participant)
+
+
+``` r
+DT::datatable(dat_twins, options = list(pageLength = 5))
+```
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-13181166e7e289d621b9" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-13181166e7e289d621b9">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.57599999999999],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"IDZP","targets":2},{"name":"GR","targets":3},{"name":"GES","targets":4},{"name":"OG","targets":5},{"name":"VG","targets":6},{"name":"CC","targets":7},{"name":"KU","targets":8},{"name":"IQ","targets":9},{"name":"KG","targets":10},{"name":"IQ.cat","targets":11}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## every data set should be accompanied by a codebook
+
+Sample size N = 20
+Variables (columns):
+* ID: Identifier of the individual person
+* IDZP: Identifier of the twin pair
+* GR: Birth order
+* GES: Sex (1 = male, 2 = female)
+* OG: Surface area of the cerebral cortex in cm2
+* VG: Volume of the forebrain in cm3
+* CC: Area of the corpus callosum in cm2
+* KU: Circumference of head in cm
+* IQ: Intelligence quotient
+* KG: Body weight in kg
+* additionally IQ.cat: grouped intelligence quotient in 3 groups
+
+
+Study: https://n.neurology.org/content/50/5/1246
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Side-Note: the most scientific study ever
+
+
+Hypothesis: the size and shape of the human forebrain predict intelligence!
+
+&lt;br&gt;
+the mighty correlation matrix:
+
+
+``` r
+round(x = cor(x = dat_twins[, c("VG", "CC", "KU", "KG", "IQ")], 
+              method = "spearman"), digits = 2)
+```
+
+```
+##      VG   CC   KU   KG   IQ
+## VG 1.00 0.80 0.63 0.36 0.11
+## CC 0.80 1.00 0.59 0.13 0.34
+## KU 0.63 0.59 1.00 0.22 0.21
+## KG 0.36 0.13 0.22 1.00 0.07
+## IQ 0.11 0.34 0.21 0.07 1.00
+```
+
+&gt; What is your opinion?
+
+* Spearman correlation coefficient only maps monotone relationships; r_SP &gt; 0, if in tendency x large -&gt; also y large and vice versa; indicate a monotonic relationship in the same direction (not linear relationship!)
+  + to be applied especially when the data are not normally distributed, the scales have unequal answering options, for very small sample sizes (or better use concordance measures)
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## complex data types - the SQL side of the story
+
+
+for huge data sets you could use, for example SQL (Structured Query Language), which is a domain-specific language used in programming and designed for managing data held in a relational database management system; check out: https://www.dbis.informatik.uni-goettingen.de/Mondial/  
+
+&gt; multiple relational databases are matched by a primary key / multiple primary keys
+
+and complex data bases can be depicted for example as entity relationship models: 
+
+
+&lt;center&gt;
+&lt;img src="images/ERMstudent.jpg", height="300px"&gt;
+&lt;/center&gt;
+
+there are multiple database paradigms out there: https://www.youtube.com/watch?v=W2Z7fbCLSTw
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## complex data types - add attributes
+
+
+All objects can have arbitrary additional attributes, used to store metadata about the object
+
+* can be thought of as a named list (with unique names); other frequently encountered attributes: "dimnames", "names", "class"(!)
+* can be accessed individually with attr() or all at once (as a list) with attributes()
+* arrays are simply vectors with a "dim"-attribute.
+* factor is a vector with attribute levels
+
+
+
+
+
+.pull-left[
+
+
+``` r
+dat &lt;- data.frame(id = 1:26, 
+           letters = letters, 
+           constant = "Hello World")
+head(dat)
+```
+
+```
+##   id letters    constant
+## 1  1       a Hello World
+## 2  2       b Hello World
+## 3  3       c Hello World
+## 4  4       d Hello World
+## 5  5       e Hello World
+## 6  6       f Hello World
+```
+
+]
+
+.pull-right[
+
+
+``` r
+attr(x = dat, which = "names")
+```
+
+```
+## [1] "id"       "letters"  "constant"
+```
+
+``` r
+attributes(x = dat)
+```
+
+```
+## $names
+## [1] "id"       "letters"  "constant"
+## 
+## $class
+## [1] "data.frame"
+## 
+## $row.names
+##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+## [26] 26
+```
+
+]
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hands-on: try out the different data structures
+
+Hint: we have the following data structures: 
+
+.pull-left[
+**homogeneous:**
+
+* 1d atomic vector
+
+``` r
+1:10; c(1,2,3,4,5,6,7,8,9,10)
+```
+* 2d matrix
+
+``` r
+matrix(data = NA, nrow = 2, ncol = 3)
+```
+* nd array
+
+``` r
+array(1:60, dim=c(3,4,5))
+```
+]
+
+.pull-right[
+**heterogeneous:**
+
+* 1d list
+
+``` r
+list(1:10, letters)
+```
+
+* 2d matrix data frame
+
+``` r
+data.frame(id = 1:26, 
+           letters = letters, 
+           constant = "Hello World")
+```
+]
+
+If you want to save your data structures to an R object e.g. write: 
+
+``` r
+myFirstVector &lt;- 1:10
+```
+
+
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - Subsetting
+
+*From the 10th dimension down to spaceship earth again.*
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## ??????! When you had to debug your first error messages
+
+
+recommended TV shows: I'm a Celebrity … Get Me Out of Here! (also valuable: Get the F*ck out of my House)
+
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;center&gt;
+&lt;img src="https://i.giphy.com/media/JIX9t2j0ZTN9S/giphy.webp", width="400" height="300"&gt;
+&lt;/center&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Theory
+
+* there are three subsetting operators: [, [[, and $
+* the three types of subsetting:
+  + Positive integers return elements at the specified positions.
+  + Logical vectors select elements where the corresponding
+  + logical value is TRUE; application of logical expressions.
+* character vectors to return elements with matching names.
+* important differences in behavior of different objects (e.g., vectors, lists, factors, matrices, and data frames)
+* more advanced subsetting, in particular in combination with complex logical expressions, can be done using the functions subset() and which().
+* (the default drop=TRUE simplifies the data type of the result.)
+
+
+&lt;br&gt;
+you "only" need to learn the behavior of 
+
+* Positive Integers
+* Negative integers
+* Logical vectors
+* Character vectors
+
+on different types of data!
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Atomic Vector I
+
+
+
+``` r
+# define an R Object
+x &lt;- c(2.1, 4.2, 3.3, 5.4)
+```
+
+
+.pull-left[
+**Positive Integers:**
+
+
+``` r
+x[c(3, 1)]
+#&gt; [1] 3.3 2.1
+x[order(x)]
+#&gt; [1] 2.1 3.3 4.2 5.4
+
+# Duplicate indices will duplicate values
+x[c(1, 1)]
+#&gt; [1] 2.1 2.1
+
+# Real numbers are silently truncated to integers
+x[c(2.1, 2.9)]
+#&gt; [1] 4.2 4.2
+```
+
+
+]
+
+.pull-right[
+**Negative integers:** exclude elements at the specified positions
+
+
+``` r
+x[-c(3, 1)]
+#&gt; [1] 4.2 5.4
+```
+
+**Logical vectors:** select elements where the corresponding logical value is TRUE
+
+
+``` r
+x[c(TRUE, TRUE, FALSE, FALSE)]
+#&gt; [1] 2.1 4.2
+x[x &gt; 3]
+#&gt; [1] 4.2 3.3 5.4
+```
+]
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Atomic Vector II
+
+
+
+``` r
+# define an R Object
+x &lt;- c(2.1, 4.2, 3.3, 5.4)
+```
+
+.pull-left[
+**Logical vectors:** select elements where the corresponding logical value is TRUE
+
+
+``` r
+x[x&gt;5]
+```
+
+```
+## [1] 5.4
+```
+
+``` r
+x&gt;5
+```
+
+```
+## [1] FALSE FALSE FALSE  TRUE
+```
+]
+
+.pull-right[
+**Character vectors:** return elements with matching names
+
+
+``` r
+(y &lt;- setNames(x, letters[1:4]))
+#&gt;   a   b   c   d 
+#&gt; 2.1 4.2 3.3 5.4
+y[c("d", "c", "a")]
+#&gt;   d   c   a 
+#&gt; 5.4 3.3 2.1
+
+# Like integer indices, you can repeat indices
+y[c("a", "a", "a")]
+#&gt;   a   a   a 
+#&gt; 2.1 2.1 2.1
+
+# names are always matched exactly
+z &lt;- c(abc = 1, def = 2)
+z[c("a", "d")]
+#&gt; &lt;NA&gt; &lt;NA&gt; 
+#&gt;   NA   NA
+```
+]
+
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Matrices I
+
+Setting up your matrix: 
+
+
+``` r
+# ?matrix
+a &lt;- matrix(data = 1:9, nrow = 3) # ncol, ...
+colnames(a) &lt;- c("A", "B", "C")
+a
+```
+
+```
+##      A B C
+## [1,] 1 4 7
+## [2,] 2 5 8
+## [3,] 3 6 9
+```
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Matrices II
+
+
+
+``` r
+a &lt;- matrix(1:9, nrow = 3)
+colnames(a) &lt;- c("A", "B", "C")
+```
+
+
+.pull-left[
+
+
+``` r
+a[1:2, ]
+#&gt;      A B C
+#&gt; [1,] 1 4 7
+#&gt; [2,] 2 5 8
+a[c(TRUE, FALSE, TRUE), c("B", "A")]
+#&gt;      B A
+#&gt; [1,] 4 1
+#&gt; [2,] 6 3
+a[0, -2]
+#&gt;      A C
+```
+
+]
+
+.pull-right[
+more advanced: you can also subset higher-dimensional data structures with an integer matrix (or, if named, a character matrix). Each row in the matrix specifies the location of one value, and each column corresponds to a dimension in the array
+
+
+``` r
+vals &lt;- outer(1:5, 1:5, FUN = "paste", sep = ",")
+select &lt;- matrix(ncol = 2, byrow = TRUE, c(
+  1, 1,
+  3, 1,
+  2, 4
+))
+vals[select]
+#&gt; [1] "1,1" "3,1" "2,4"
+```
+
+]
+ 
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Data frames I 
+
+Setting up your data frame:
+
+
+``` r
+# ?data.frame
+df &lt;- data.frame(x = 1:3, y = 3:1, z = letters[1:3]) # stringsAsFactors !
+df
+```
+
+```
+##   x y z
+## 1 1 3 a
+## 2 2 2 b
+## 3 3 1 c
+```
+
+
+Important to note: there is a equivalent of data.frames in more "modern" R frameworks called "tibble" (has enhanced printing, ...): 
+
+
+``` r
+# ? tibble::tibble
+tibble::tibble(x = 1:3, y = 3:1, z = letters[1:3])
+```
+
+```
+## # A tibble: 3 × 3
+##       x     y z    
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;
+## 1     1     3 a    
+## 2     2     2 b    
+## 3     3     1 c
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Data frames II 
+
+
+
+.pull-left[
+
+The most important subsetting to get data of certain objects of observation:
+
+
+``` r
+df[df$x == 2, ]
+#&gt;   x y z
+#&gt; 2 2 2 b
+df[c(1, 3), ]
+#&gt;   x y z
+#&gt; 1 1 3 a
+#&gt; 3 3 1 c
+```
+
+
+the dollar sign is a shorthand operator: "x$y" is roughly equivalent to "x[["y"]]"; often used to access variables in a data frame
+
+
+``` r
+df$x
+```
+
+```
+## [1] 1 2 3
+```
+]
+
+.pull-right[
+
+
+``` r
+# There are two ways to select columns from a data frame
+# Like a list
+df[c("x", "z")]
+#&gt;   x z
+#&gt; 1 1 a
+#&gt; 2 2 b
+#&gt; 3 3 c
+# Like a matrix
+df[, c("x", "z")]
+#&gt;   x z
+#&gt; 1 1 a
+#&gt; 2 2 b
+#&gt; 3 3 c
+```
+
+]
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Lists I 
+
+Setting up your list:
+
+
+``` r
+# ?list
+x &lt;- list(1:3, "a", 4:6)
+x
+```
+
+```
+## [[1]]
+## [1] 1 2 3
+## 
+## [[2]]
+## [1] "a"
+## 
+## [[3]]
+## [1] 4 5 6
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Lists II 
+
+
+``` r
+x
+```
+
+```
+## [[1]]
+## [1] 1 2 3
+## 
+## [[2]]
+## [1] "a"
+## 
+## [[3]]
+## [1] 4 5 6
+```
+
+is equivalent to the following representation: 
+
+
+&lt;center&gt;
+&lt;img src="images/listTrain1.jpg"&gt;
+&lt;/center&gt;
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - Lists III 
+
+When extracting a single element, you have two options: you can create a smaller train, i.e., fewer carriages, or you can extract the contents of a particular carriage. This is the difference between [ and [[:
+
+
+&lt;center&gt;
+&lt;img src="images/listTrain2.jpg", height="150px"&gt;
+&lt;/center&gt;
+
+
+
+When extracting multiple (or even zero!) elements, you have to make a smaller train:
+
+&lt;center&gt;
+&lt;img src="images/listTrain3.jpg", height="250px"&gt;
+&lt;/center&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - simplifying vs. preserving
+
+* **simplifying subsets** simplest possible data structure, that can represent the output
+* **preserving subsets** keeps the structure of the output the same as the input (better for programming)
+
+&lt;br&gt;
+Example with lists, which return the object inside the list, not a single element list
+
+
+``` r
+y &lt;- list(a = 1:2, b = letters[1:3])
+str(y[1])
+```
+
+```
+## List of 1
+##  $ a: int [1:2] 1 2
+```
+
+``` r
+str(y[[1]])
+```
+
+```
+##  int [1:2] 1 2
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - data frames most useful I 
+
+Do you remember our twin pair data set?
+
+
+``` r
+DT::datatable(dat_twins, options = list(pageLength = 5))
+```
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-54e386bf7f4dd7f3f385" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-54e386bf7f4dd7f3f385">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.57599999999999],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"IDZP","targets":2},{"name":"GR","targets":3},{"name":"GES","targets":4},{"name":"OG","targets":5},{"name":"VG","targets":6},{"name":"CC","targets":7},{"name":"KU","targets":8},{"name":"IQ","targets":9},{"name":"KG","targets":10},{"name":"IQ.cat","targets":11}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+
+Three questions:
+* How do we get only the twins with IQ higher than 120?
+* How do we get only the twins with IQ lower than 100 and body weight higher than 100?
+* How can we order the data set according to IQ?
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - data frames most useful II 
+
+How do we get only the twins with IQ higher than 120?
+
+
+``` r
+dat_twins[dat_twins$IQ &gt; 120, ]
+```
+
+```
+##    ID IDZP GR GES      OG   VG   CC   KU  IQ     KG        IQ.cat
+## 9   9    5  1   2 1743.04 1034 6.48 53.1 127 62.143 above average
+## 10 10    5  2   2 1709.30 1070 6.43 54.8 126 83.009 above average
+## 20 20   10  1   1 1971.63 1160 7.67 58.5 124 72.576 above average
+```
+
+``` r
+## identical function
+subset(dat_twins, IQ &gt; 120)
+```
+
+```
+##    ID IDZP GR GES      OG   VG   CC   KU  IQ     KG        IQ.cat
+## 9   9    5  1   2 1743.04 1034 6.48 53.1 127 62.143 above average
+## 10 10    5  2   2 1709.30 1070 6.43 54.8 126 83.009 above average
+## 20 20   10  1   1 1971.63 1160 7.67 58.5 124 72.576 above average
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - data frames most useful III 
+
+How do we get only the twins with IQ lower than 100 and body weight higher than 100?
+
+
+``` r
+dat_twins[dat_twins$IQ &lt; 100 &amp; dat_twins$KG &gt; 100, ] # ! only single logical operator
+```
+
+```
+##   ID IDZP GR GES      OG   VG   CC   KU IQ      KG        IQ.cat
+## 8  8    4  2   2 1850.64 1079 6.84 55.3 96 107.503 below average
+```
+
+&gt; such expressions could be of any complexity
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - data frames most useful IV
+
+How can we order the data set according to IQ?
+
+
+``` r
+order(dat_twins$IQ)
+```
+
+```
+##  [1] 16  3  4 14  2 13 15  1  8 12 17  5 11  6  7 19 18 20 10  9
+```
+
+``` r
+head(dat_twins[order(dat_twins$IQ), ])
+```
+
+```
+##    ID IDZP GR GES      OG   VG   CC   KU IQ     KG        IQ.cat
+## 16 16    8  1   1 2154.67 1439 7.62 57.2 85 99.792 below average
+## 3   3    2  1   2 1902.36 1035 6.22 53.0 87 64.184 below average
+## 4   4    2  2   2 1860.24 1027 5.80 52.9 87 58.514 below average
+## 14 14    7  1   1 2018.92 1104 6.32 57.2 88 79.380 below average
+## 2   2    1  2   2 1684.89  963 5.73 54.2 89 58.968 below average
+## 13 13    7  2   1 2136.37 1067 6.32 57.2 93 83.916 below average
+```
+
+``` r
+# dat_twins[, order(names(dat_twins))] # order data set alphabetically
+```
+
+&gt; ordering according to the primary key (ID variable) is often necessary before matching data
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - Flow control
+
+*That's how adults play Looping Louie!*
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## ??????! Before running circles we need a break right?!
+
+Time to learn p-hacking for experts (in German we say "T-Test rechnen bis die Tasten glühen")
+&lt;br&gt;
+&lt;br&gt;
+
+
+.pull-left[
+
+&lt;center&gt;
+&lt;img src="images/pHackingComic.jpg", height="400px"&gt;
+&lt;/center&gt;
+
+]
+
+.pull-right[
+
+Instead of p-hacking why not just starting a research program to solve finally this paradox:
+
+&lt;center&gt;
+&lt;img src="https://i.giphy.com/media/xCBE0RPfYsyWI/giphy.webp", width="400" height="300"&gt;
+&lt;/center&gt;
+]
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Flow control - vocabulary
+
+There are some new words to learn if you want to become a flow control master: 
+
+
+``` r
+# Control flow
+if - &amp;&amp;, || (short circuiting)
+for, while
+next, break
+switch
+ifelse
+
+# Debugging
+stop
+warning
+message
+```
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Flow control - if statement I
+
+Normally we want to combine if statements with loops (plus functions).
+
+&lt;br&gt;
+**if statements** have the following form: 
+
+
+``` r
+## abstract representation
+if (condition) true_action
+if (condition) true_action else false_action
+```
+
+in action:
+
+
+``` r
+x1 &lt;- if (TRUE) 1 else 2 # the experts write code like this!
+x1
+```
+
+```
+## [1] 1
+```
+
+``` r
+x2 &lt;- if (FALSE) 1 else 2
+x2
+```
+
+```
+## [1] 2
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Flow control - if statement II
+
+
+
+``` r
+greet &lt;- function(name, birthday = FALSE) {
+  paste0(
+    "Hi ", name,
+    if (birthday) { # but I prefer this way of writing code
+      " and HAPPY BIRTHDAY"
+    } else{
+      " and you do not have BIRTHDAY"
+    }
+  )
+}
+greet("Maria", FALSE)
+```
+
+```
+## [1] "Hi Maria and you do not have BIRTHDAY"
+```
+
+``` r
+greet("Jaime", TRUE)
+```
+
+```
+## [1] "Hi Jaime and HAPPY BIRTHDAY"
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Flow control - if statement III
+
+If statements can be arbitrarily complex:
+
+
+``` r
+x &lt;- 20
+
+if (x &gt; 30) {
+  print("x &gt; 30")
+} else if (x &lt;= 30 &amp;&amp; x &gt; 20) {
+  print("x &lt;= 30 &amp;&amp; x &gt; 20")
+} else{
+  print("everything else")
+}
+```
+
+```
+## [1] "everything else"
+```
+
+
+An important function is also the ifelse() function: 
+
+
+``` r
+x &lt;- 1:10
+ifelse(x %% 2 == 0, "even", "odd")
+```
+
+```
+##  [1] "odd"  "even" "odd"  "even" "odd"  "even" "odd"  "even" "odd"  "even"
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Flow control - For Loop
+
+
+
+.pull-left[
+
+&lt;center&gt;
+&lt;img src="images/forLoopIdea.jpg", height="500px"&gt;
+&lt;/center&gt;
+
+]
+
+.pull-right[
+
+
+``` r
+for(i in 1:10) { # Head of for-loop
+  x1 &lt;- i^2 # Code block
+  print(x1) # Print results
+}
+```
+
+```
+## [1] 1
+## [1] 4
+## [1] 9
+## [1] 16
+## [1] 25
+## [1] 36
+## [1] 49
+## [1] 64
+## [1] 81
+## [1] 100
+```
+
+]
+
+see multiple examples: https://statisticsglobe.com/for-loop-in-r
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Flow control - Why Awesome?! I 
+
+Imagine we want to drawn for the prices of diamonds for every different quality of the cut; data set with over 50.000 diamonds
+
+
+
+``` r
+# ? diamonds
+# How many cuts? 
+levels(diamonds$cut)
+```
+
+```
+## [1] "Fair"      "Good"      "Very Good" "Premium"   "Ideal"
+```
+
+``` r
+# Is there a difference in price?
+diamonds %&gt;%
+  group_by(cut) %&gt;%
+  summarize(mean(price))
+```
+
+```
+## # A tibble: 5 × 2
+##   cut       `mean(price)`
+##   &lt;ord&gt;             &lt;dbl&gt;
+## 1 Fair              4359.
+## 2 Good              3929.
+## 3 Very Good         3982.
+## 4 Premium           4584.
+## 5 Ideal             3458.
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Flow control - Why Awesome?! II
+
+Imagine we want to drawn for the prices of diamonds for every different quality of the cut; data set with over 50.000 diamonds
+
+
+``` r
+for(c in levels(diamonds$cut)) {
+  cat("quality of cut: ", c, "\n")
+  tmp &lt;- diamonds$price[diamonds$cut == c]
+  cat("    &gt; # of diamonds: ", length(tmp), "\n")
+  cat("    &gt; skewness: ", moments::skewness(tmp), "\n")
+  cat("    &gt; kurtosis: ", moments::kurtosis(tmp), "\n")
+  hist(tmp, main = c, xlab = "price")
+  abline(v = mean(tmp), col = "red") # add mean
+  
+  if(length(tmp) &lt; 5000){
+    message("Oh no there are not even 5000 diamonds.")
+  }
+}
+```
+
+
+&gt; by using print() or cat() you can print additional information in the console
+
+&gt; by adding if() statements you can implement a complex logical structure in your for loop
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - for loop useful example I  
+
+In the twin data set we have the variable "IDZP" (identifier of the twin pair)
+
+
+``` r
+DT::datatable(dat_twins, options = list(pageLength = 5))
+```
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-653aca4b449e80ce2909" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-653aca4b449e80ce2909">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["1","1","2","2","3","3","4","4","5","5","6","6","7","7","8","8","9","9","10","10"],["1","2","1","2","1","2","1","2","1","2","2","1","2","1","2","1","1","2","2","1"],["2","2","2","2","2","2","2","2","2","2","1","1","1","1","1","1","1","1","1","1"],[1913.88,1684.89,1902.36,1860.24,2264.25,2216.4,1866.99,1850.64,1743.04,1709.3,1689.6,1806.31,2136.37,2018.92,1966.81,2154.67,1767.56,1827.92,1773.83,1971.63],[1005,963,1035,1027,1281,1272,1051,1079,1034,1070,1173,1079,1067,1104,1347,1439,1029,1100,1204,1160],[6.08,5.73,6.22,5.8,7.99,8.42,7.44,6.84,6.48,6.43,7.99,8.76,6.32,6.32,7.6,7.62,6.03,6.59,7.52,7.67],[54.7,54.2,53,52.9,57.8,56.9,56.6,55.3,53.1,54.8,57.2,57.2,57.2,57.2,55.8,57.2,57.2,56.5,59.2,58.5],[96,89,87,87,101,103,103,96,127,126,101,96,93,88,94,85,97,114,113,124],[57.607,58.968,64.184,58.514,63.958,61.69,133.358,107.503,62.143,83.009,61.236,61.236,83.916,79.38,97.524,99.792,81.648,88.452,79.38,72.57599999999999],["below average","below average","below average","below average","medium","medium","medium","below average","above average","above average","medium","below average","below average","below average","below average","below average","below average","above average","medium","above average"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>IDZP<\/th>\n      <th>GR<\/th>\n      <th>GES<\/th>\n      <th>OG<\/th>\n      <th>VG<\/th>\n      <th>CC<\/th>\n      <th>KU<\/th>\n      <th>IQ<\/th>\n      <th>KG<\/th>\n      <th>IQ.cat<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9,10]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"ID","targets":1},{"name":"IDZP","targets":2},{"name":"GR","targets":3},{"name":"GES","targets":4},{"name":"OG","targets":5},{"name":"VG","targets":6},{"name":"CC","targets":7},{"name":"KU","targets":8},{"name":"IQ","targets":9},{"name":"KG","targets":10},{"name":"IQ.cat","targets":11}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+
+
+``` r
+table(dat_twins$IDZP)
+```
+
+```
+## 
+##  1  2  3  4  5  6  7  8  9 10 
+##  2  2  2  2  2  2  2  2  2  2
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Subsetting - for loop useful example II
+
+Compute the mean difference of IQ for every twin pair: 
+
+
+``` r
+mean_twinPairs &lt;- double(10) # empty vector made up of 0 to fill up
+h=1 # index variable
+for(t in levels(dat_twins$IDZP)) {
+  # cat("twin pair: ", t, "\n")
+  tmp &lt;- dat_twins$IQ[dat_twins$IDZP == t]
+  # cat("    &gt; IQ values: ", tmp, "\n")
+
+  mean_twinPairs[h] &lt;- diff(tmp)
+  h=h+1 # increase index variable by 1
+}
+
+mean_twinPairs
+```
+
+```
+##  [1] -7  0  2 -7 -1 -5 -5 -9 17 11
+```
+
+
+
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - Writing Functions
+
+*Statisticians are lazy as hell, that's why we write code only once!*
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## ?!!! Never get completely lost anymore
+
+Otherwise it could get dark (at least your mood when writing code)!
+
+
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;center&gt;
+&lt;img src="https://i.giphy.com/media/bPCwGUF2sKjyE/giphy.webp", width="400" height="300"&gt;
+&lt;/center&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - vocabulary
+
+Also here are some new words to learn if you want to program your own function:
+
+
+``` r
+# Functions to do with functions
+function
+missing
+return, invisible
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - Theory I
+
+* R, at its heart, is a functional programming language. This means that it provides many tools for the creation and manipulation of functions.
+* The structure of a function is given by
+
+
+``` r
+function ( &lt;arglist&gt; ){ &lt;body&gt; }
+```
+
+* the keyword function indicates the beginning of a function
+* arguments &lt;arglist&gt; are defined by comma-separated key-value-pairs
+* &lt;body&gt; is a block of R commands which are executed by the function
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - Theory II
+
+All R functions are objects and consist of three parts:
+* body() the code inside the function.
+* formals() the list of arguments which controls how you can call the function.
+* environment() the 'map' of the location of the function's variables. If the environment isn't displayed, it means
+
+
+``` r
+f &lt;- function(x){
+  square &lt;- x^2 # compute the square
+  return(square) # return the value
+}
+```
+
+
+.pull-left[
+
+
+``` r
+formals(f)
+```
+
+```
+## $x
+```
+
+``` r
+body(f) 
+```
+
+```
+## {
+##     square &lt;- x^2
+##     return(square)
+## }
+```
+
+]
+
+.pull-right[
+
+
+``` r
+environment(f)
+```
+
+```
+## &lt;environment: R_GlobalEnv&gt;
+```
+
+]
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - Human Interaction is Incoming I
+
+Recommendation of Xie (chief software engineer of R): 
+
+&gt; Avoid the commands that require human interaction: human input can be highly unpredictable; e.g., we do not know for sure which file the user will choose if we pop up a dialog box asking the user to choose a data file...
+
+
+The user breaks our function: 
+
+``` r
+f
+```
+
+```
+## &lt;srcref: file "" chars 1:6 to 4:1&gt;
+```
+
+``` r
+f(x = "I am a string!")
+```
+
+```
+## Error in x^2: nicht-numerisches Argument für binären Operator
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - Human Interaction is Incoming II
+
+If you writing functions it is good practice to control for the input:
+
+
+``` r
+f &lt;- function(x){
+  if(is.numeric(x)){
+    square &lt;- x^2 # compute the square
+    return(square) # return the value
+  }else{
+    message("You should provide a numeric value / numeric vector.")
+    return(NULL)
+  }
+
+}
+
+f(x = "I am a string!")
+```
+
+```
+## You should provide a numeric value / numeric vector.
+```
+
+```
+## NULL
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - Human Interaction is Incoming III
+
+If you have a "character" argument like "sex = c("Male", "Female")" you can check the provided values by: 
+
+* match.arg matches arguments against a table of candidate values specified by choices
+
+
+``` r
+match.arg(arg, choices, several.ok = FALSE)
+```
+
+* missing argument will be replaced with the first candidate
+
+
+``` r
+talk_about_sex &lt;- function(sex = c("Male", "Female", "Non-binary")) {
+  match.arg(sex)
+}
+
+talk_about_sex("F") # partial matching (not good practice)
+```
+
+```
+## [1] "Female"
+```
+
+``` r
+talk_about_sex()
+```
+
+```
+## [1] "Male"
+```
+
+``` r
+talk_about_sex("W")
+```
+
+```
+## Error in match.arg(sex): 'arg' should be one of "Male", "Female", "Non-binary"
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - Function Arguments
+
+* formals() the list of **arguments** which controls how you can call the function.
+  + Function arguments in R can have default values.
+  + They can be also defined in terms of other arguments.
+  + You can determine if an argument was supplied or not with the missing() function.
+
+
+
+``` r
+myplot &lt;- function(x, y, mycol = 'red') {
+  if (missing(y)) {
+    y &lt;- x
+    x &lt;- 1:length(y)
+    }
+  plot(x, y, col = mycol)
+}
+par(mar = c(4, 4, .1, .1))
+myplot(x = 1:20)
+myplot(x = 1:20, y = rnorm(20), mycol='darkgreen')
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-81-1.png" width="20%" /&gt;&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-81-2.png" width="20%" /&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - examples I  
+
+Using the **Cairo** package you could save your graphics directly as files to your computer in great resolution:
+
+
+``` r
+############################################################################
+##### save_graphic()
+# save graphic object as png file
+############################################################################
+save_graphic &lt;- function(filename){
+  tmp &lt;- paste(filename, ".png", sep = "")
+  Cairo::Cairo(file=tmp,
+               type="png",
+               units="px",
+               width=2500,
+               height=1700,
+               pointsize=44, # text size is artifically shrunked when saved 
+               dpi= "auto",
+               bg = "white")
+}
+
+dev.off()
+save_graphic(filename = "myFirstPlot")
+plot(cars$speed, cars$dist)
+dev.off()
+```
+
+(also possible to use for example ggsave() from the **ggplot2** package)
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Writing Functions - examples II  
+
+Using the **stargazer** package you could save your easily set up summary statistics in the APA 7 format:
+
+.scrollChunk[
+
+``` r
+############################################################################
+##### getDescriptives()
+# get multiple summary statistics to R console AND / OR to HTML
+############################################################################
+### functionals:
+# dataset = dat_twins
+# variables = c("IQ", "KG")
+# nameAPAtable = "myFirstTable"
+getDescriptives &lt;- function(dataset = NULL,
+                            variables = NULL,
+                            nameAPAtable = NULL){
+  x &lt;- dataset[, variables]
+  ## table
+  tmp_descriptives &lt;- sapply(x, function(x) c(
+    "Mean"= mean(x, na.rm=TRUE),
+    "SD" = sd(x, na.rm=TRUE),
+    "Median" = median(x, na.rm=TRUE),
+    "CoeffofVariation" = sd(x, na.rm=TRUE)/mean(x, na.rm=TRUE),
+    "Minimum" = min(x, na.rm=TRUE),
+    "Maximun" = max(x, na.rm=TRUE),
+    "Lower Quantile" = as.numeric(quantile(x,0, na.rm=TRUE)),
+    "Upper Quantile" = as.numeric(quantile(x,1, na.rm=TRUE)),
+    "Skewness" = moments::skewness(x = x, na.rm=TRUE),
+    "Kurtosis(-3)" = moments::kurtosis(x = x, na.rm=TRUE) -3,
+    "KS-Test" = ks.test(x = x, y = "pnorm", mean(x, na.rm=TRUE), sd(x, na.rm=TRUE))$p.value
+  )
+  )
+  tmp_descriptives &lt;- round(x = tmp_descriptives, digits = 2)
+  ## as APA 7 table in HTML using stargazer
+  ## round digits
+  out_tmp &lt;- round(x = t(tmp_descriptives), digits = 2)
+  if(!is.null(nameAPAtable)){
+    notNeeded &lt;- capture.output(stargazer(out_tmp, type = "html", summary = FALSE,
+                                          out = paste0(nameAPAtable, ".html")))
+  }
+  return(tmp_descriptives)
+}
+
+
+
+getDescriptives(dataset = dat_twins, 
+                variables = c("IQ", "KG"), 
+                nameAPAtable = "myFirstTable")
+```
+]
+
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - File and Data Management
+
+*Of all the things I've lost, I miss my mind the most. (Mark Twain)*
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## ! we are now on track for our first sophisticated program
+
+The management of your files, your data, your code is key. Keep on riding... 
+
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;center&gt;
+&lt;img src="https://media2.giphy.com/media/cfuL5gqFDreXxkWQ4o/giphy.gif?cid=ecf05e47841a4c59de844460f9bcebc6ccbd30748a6b65f8", width="400" height="300"&gt;
+&lt;/center&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## organize your program in modules I
+
+.pull-left[
+
+at best use R projects and separate your programs / code / files into separate functional units (modules) / folders: 
+* Create a project folder
+* In this folder, organize your file in subfolders (e.g., data)
+* All file paths in your script(s) are specified relative to the folder’s top level
+
+&lt;center&gt;
+&lt;img src="images/modular_programming.jpg", height=250px"&gt;
+&lt;/center&gt;
+
+
+]
+
+.pull-right[
+
+check out the folder "templates"
+
+&lt;center&gt;
+&lt;img src="images/projectTemplate.jpg", height=250px"&gt;
+&lt;/center&gt;
+
+&gt; click on the R Project file "templates" to open the project
+
+]
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## organize your program in modules II
+
+.pull-left[
+
+check out the folder "additional scripts -&gt; project template"
+
+&lt;center&gt;
+&lt;img src="images/projectTemplate.jpg", height=250px"&gt;
+&lt;/center&gt;
+
+&gt; click on the R Project file "templates" to open the project
+
+]
+
+.pull-right[
+
+* code snippets: R Code you do not need at the moment, but maybe in future
+* data: your data files and **codebook** (provides information on the structure, contents, and layout of a data file)
+* functions: functions you have written
+* *advanced_modular_R_file_files: can be ignored (output from advanced_modular_R_file.qmd)*
+* advanced_modular_R_file.qmd:  an Quarto template, which allows you to create documents that serve as a neat record of your analysis combining codes and texts
+
+]
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Side-Note: the lazy expert
+
+managing many data files and multiple outputs experts use the following R functions: 
+
+&lt;center&gt;
+&lt;img src="images/fileManagementR.jpg", height=450px"&gt;
+&lt;/center&gt;
+
+Chapter 11 in Munzert, S., Rubba, C., Meißner, P., &amp; Nyhuis, D. (2015). Automated Data Collection with R: A Practical Guide to Web Scraping and Text Mining. John Wiley &amp; Sons.
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Data Import and Export 
+
+* Data Import and Export can be a frustrating task and can take far more time than the statistical analysis itself (sometimes about 80% of an analysis project)
+* majority of the data will be given in the format of spreadsheet-like data (rectangular data)
+* it is often easier to import badly formatted data than explain what a "good" format is)
+* R is not particularly well suited to manipulations of large-scale data) or relational databases (! but possible)
+  + more than a (few) hundred megabytes in size can cause R to run out of memory (depending on your RAM)
+* in practice, you will be often faced with data corrections and updates), e.g. by a project management
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Data Import Vocabulary
+
+
+``` r
+# Reading data
+data # loads specified data sets
+count.fields # counts the number of fields
+read.table # Reads a file in table format
+read.fwf # Read a table of fixed width formatted data
+load # Reload 'RData' datasets
+library(foreign) # Read Data Stored by Minitab, SAS, SPSS, ...
+
+# Files and directories
+setwd, getwd # set and get current working directory
+dir # names of files or directories in a directory
+dirname # returns the directory name
+file.path # reads path to a file from components
+normalizePath # convert file paths to canonical form
+file.choose # choose a file interactively
+download.file # download a file from the Internet
+
+# low-level interface to the computer's file system:
+file.copy, file.create, file.remove, file.rename, dir.create, file.exists, file.info
+```
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Data Import - spreadsheet-like data I
+
+To read spreadsheet-like data you can use functions like 
+* read.table() 
+* and variations like read.csv(), ...
+
+These functions often have the following arguments:
+* fileEncoding: use latin1 for data produced in Windows, and utf-8 for data from Unix
+* header: names of variables (columns) and observations (rows)
+* sep: field separator vs. record separator
+* quote: protecting separators appearing in strings
+* na.strings: which string (or number) represents missing values?
+* skip: number of lines skipped before beginning to read data
+* ...
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Data Import - spreadsheet-like data II
+
+**Example:**
+
+
+
+``` r
+# if no idea how data is structured
+head(readLines("data/tramo1998etal_twins.csv"))
+```
+
+```
+## [1] "ID,IDZP,GR,GES,OG,VG,CC,KU,IQ,KG"         
+## [2] "1,1,1,2,1913.88,1005,6.08,54.7,96,57.607" 
+## [3] "2,1,2,2,1684.89,963,5.73,54.2,89,58.968"  
+## [4] "3,2,1,2,1902.36,1035,6.22,53,87,64.184"   
+## [5] "4,2,2,2,1860.24,1027,5.8,52.9,87,58.514"  
+## [6] "5,3,1,2,2264.25,1281,7.99,57.8,101,63.958"
+```
+
+``` r
+# load csv2 (seperated by ",")
+dat_twins &lt;- read.csv2("data/tramo1998etal_twins.csv", header = TRUE, sep = ",")
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Data Import - from other statistical softwares
+
+if you want to import (or export) data, for example, from SPSS you could use the **haven** R package: 
+
+* SPSS: "read_sav()" reads .sav files; "write_sav()" writes .sav files.
+
+
+``` r
+# ?haven::read_spss
+
+haven::read_sav(
+  file,
+  encoding = NULL,
+  user_na = FALSE,
+  col_select = NULL,
+  skip = 0,
+  n_max = Inf,
+  .name_repair = "unique"
+)
+```
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Side-Note: naming convention
+
+outside of the scope of the workshop are processes of data cleaning to get *tidy data*, but there is a useful function from the **janitor** R package to get the right naming convention for variables:
+
+
+``` r
+x &lt;- data.frame(caseID = 1, DOB = 2, Other = 3)
+# use camelCase variable names:
+janitor::clean_names(x, "lower_camel")
+```
+
+```
+##   caseId dob other
+## 1      1   2     3
+```
+
+and possible convention (use one!): 
+
+* **lowerCamelCase** for functions: single word names consist of lower case letters and in names consisting of more than one word all, except the first word, are capitalized as in "colMeans" or "suppressPackageStartupMessage"
+* **period.separated** for functions or parameters: all letters are lower case and multiple words are separated by a period. This naming convention is unique to R and used
+in many core functions such as "as.numeric" or "read.table"
+
+&lt;br&gt;
+see: The State of Naming Conventions in R: https://scilifelab.github.io/courses/r_programming/1703/files/Rnaming.pdf
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Data Export Vocabulary
+
+
+``` r
+# Output
+print, cat # `cat' performs much less conversion
+# than `print'
+dput # Writes an ASCII text representation of
+# an R object to a file
+sink, capture.output # Evaluates its arguments with the output
+# being returned as a character string or
+# sent to a file.
+
+# Writing data
+write # The data (usually a matrix) are written
+# to file
+write.table, write.csv # converts the object to a data frame and
+# prints it to a file
+save # writes an external representation of
+# R objects
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Data Export - fundamentals and example
+
+* exporting results from R is usually a less contentious task than importing
+* normally a .txt (text) or .csv file will be the most convenient interchange vehicle with "write.table" or "write.csv"
+  + **foreign**::write.foreign enables the export of a data set to another statistical software (e.g. SPSS, SAS, ..)
+  + **haven**::write_ also enables the export of a data set to another statistical software 
+  
+&lt;br&gt; 
+the XLSX document file is the Microsoft Excel standard format file type for Excel2007 and above, which can be normally open by everyone
+
+
+``` r
+library(xlsx)
+xlsx::write.xlsx2(x = dat_twins, file = "dat_twings.xlsx", sheetName = "mytwins")
+```
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Data Import and Export - the R Data Format: RDS and RDATA 
+
+Save and load one object to a file
+
+
+``` r
+# Save an object to a file
+saveRDS(object, file = "my_data.rds")
+# Restore the object
+readRDS(file = "my_data.rds")
+```
+
+
+
+Save and read multiple objects to a file
+
+
+``` r
+# Save multiple objects
+save(data1, data2, file = "data.RData")
+# To load the data again
+load("data.RData")
+```
+
+
+Save your entire workspace
+
+
+``` r
+save.image(file = "my_work_space.RData")
+```
+
+
+see: http://www.sthda.com/english/wiki/saving-data-into-r-data-format-rds-and-rdata
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 3: Introduction to R - Adding Packages
+
+*Statisticians are lazy as hell, that's why we add packages to avoid writing any code!*
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## !! Smart kids let the computer do the job
+
+
+But please do not pet my cat!!!
+&lt;br&gt;
+
+&lt;center&gt;
+&lt;img src="https://media4.giphy.com/media/d7nd6bdypnYjGT1jP3/giphy.gif?cid=ecf05e47scl4l1loifczg8vwcos4wex8tttk74cypq1tejk2&amp;rid=giphy.gif&amp;ct=g", width="400" height="300"&gt;
+&lt;/center&gt;
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## add packages
+
+* the R community’s package development means it has the most prewritten functionality of any data analysis software
+
+
+New packages are installed via
+````markdown
+install.packages('package_name') # mind the quotes
+````
+and need to be loaded at the beginning of each session (when using them):
+````markdown
+library(package_name) # no quotes necessary
+````
+cool kidz use functions: 
+````markdown
+usePackage &lt;- function(p) {
+  if (!is.element(p, installed.packages()[,1]))
+    install.packages(p, dep = TRUE)
+  require(p, character.only = TRUE)
+}
+usePackage("tidyverse")
+````
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## The (art) gallery of the most impressionistic packages I - **tidyverse**
+
+
+**tidyverse** is a collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures: https://www.tidyverse.org/
+
+&lt;center&gt;
+&lt;img src="images/rmarkdownPic.jpg", width="50%"&gt;
+&lt;/center&gt;
+
+just write: 
+
+
+``` r
+install.packages("tidyverse")
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## The (art) gallery of the most impressionistic packages II - **tidyverse**
+
+
+Which packages are included in tidyverse?
+see: https://www.tidyverse.org/packages/
+
+
+Using these collection of R package you have everything to analyze the complete data analysis pipeline:
+&lt;center&gt;
+&lt;img src="images/dataAnalysisPipeline.jpg", height=250px"&gt;
+&lt;/center&gt;
+
+&lt;br&gt;
+great introductory book: Wickham, H., &amp; Grolemund, G. (2017). R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. O’Reilly Media, Inc. https://r4ds.had.co.nz/
+
+&gt; if you confronted in the future with hughe datasets (&gt;&gt; 100mb) then it could be reasonable to teach yourself the R package **data.table**; e.g. watch: https://www.youtube.com/watch?v=SfrjF5YSj0Y 
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## The (art) gallery of the most impressionistic packages III - **psych**
+
+
+Psychometric theory in one central package in R called **psych**: [https://personality-project.org/r/book/](https://personality-project.org/r/book/)
+
+&lt;br&gt;
+&lt;br&gt;
+*Psychometrics is that area of psychology that specializes in how to measure what we talk and think about (focused on problems in measurement)*
+
+&lt;br&gt;
+&lt;br&gt;
+What is possible in R?!
+
+check out: Mair, P. (2018). Modern Psychometrics with R. Springer International Publishing. https://doi.org/10.1007/978-3-319-93177-7
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## The (art) gallery of the most impressionistic packages IV - entering the world of hypothesis tests
+
+
+**Statistical hypothesis test** is a method of statistical inference used to decide whether the data at hand sufficiently support a particular hypothesis; allows us to make probabilistic statements about population parameters. 
+
+&lt;br&gt;
+Set of great R packages: 
+* **afex**: convenience functions for analyzing factorial experiments using ANOVA or mixed models (multiple wrapper functions)
+* **ggstatsplot**: extension of **ggplot2** package for creating graphics with details from statistical tests included in the information-rich plots themselves
+* **BayesFactor**: enables the computation of Bayes factors in standard designs, such as one- and two- sample designs, ANOVA designs, and regression (any evidence for the H0 out there?!)
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## The (art) gallery of the most impressionistic packages V - entering the world of regression models
+
+
+**Regression models** provide a function that describes the relationship between one or more independent variables and a response, dependent, or target variable of any type (binary, numeric, ...)
+
+
+&lt;br&gt;
+Set of great R packages: 
+* **lme4**: analyze grouped data and complex hierarchical structures using mixed-effects models
+  + **lmerTest**: provides p-values in type I, II or III anova and summary tables for lmer model fits
+* **nlme**: fits a nonlinear mixed-effects model 
+
+&lt;br&gt;
+* **blme**: Bayesian Linear Mixed-Effects Models
+
+
+&lt;br&gt;
+&lt;br&gt;
+great starting book: Fox, J. (2016). Applied Regression Analysis and Generalized Linear Models. SAGE Publications.
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## The (art) gallery of the most impressionistic packages VI - entering the world of dynamic documents
+
+
+**Dynamic analysis documents** combine code, rendered output (such as figures), and text using the **rmarkdown** package
+
+* R Markdown allows you to create documents that serve as a neat record of your analysis
+*  enables reproducible research (appendix to a paper, upload it to an online repository, keep as a personal record, ...)
+* Quarto file (.qmd); when you knit the Quarto file, the Markdown formatting and the R code are evaluated, and an output file (HTML, PDF, etc) is produced
+* R Markdown makes use of *Markdown* syntax
+
+
+&lt;br&gt;
+&lt;br&gt;
+great introductiory book: Xie, Y., Allaire, J. J., &amp; Grolemund, G. (2018). R Markdown: The Definitive Guide. Chapman and Hall/CRC. https://doi.org/10.1201/9781138359444
+
+great book to get an overview: Xie, Y. (2017). Dynamic Documents with R and knitr. Chapman and Hall/CRC, https://duhi23.github.io/Analisis-de-datos/Yihue.pdf
+
+check out also the file "additional scripts -&gt; rmarkdown package"
+
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 4: Amazing Applications of R
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Rriding a bycle for the first time was also difficult? wasn't it?
+
+
+If you replace pain by pleasure (or better joy) you get what I mean...
+
+&lt;br&gt;
+
+&lt;center&gt;
+&lt;img src="https://i.giphy.com/media/saAZVlxwMPOW4/giphy.webp", width="400" height="300"&gt;
+&lt;/center&gt;
+
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 4: Amazing Applications of R - analyses sequences
+
+
+ *&lt;font size="5"&gt;The most important skill for the applied statistician (some people call such a person "data scientist") is to learn sequences of analyses and the assumptions and relationships of different statistical models (quote by J.F.).&lt;/font&gt;* 
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Motivation to learn the dependencies between different statistical models / frameworks I
+
+
+**A story of the six blind men and the elephant.**
+
+Six blind men were discussing exactly what they believed an elephant to be, since each had heard how strange the creature was, yet none had ever seen one before. So the blind men agreed to find an elephant and discover what the animal was really like...
+
+
+&lt;center&gt;
+&lt;img src="images/storyElephant.jpg", height="300px"&gt;
+&lt;/center&gt;
+
+
+from http://www.1000ventures.com/business_guide/crosscuttings/knowing_people_perceptions_elephant.html
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Motivation to learn the dependencies between different statistical models / frameworks II
+
+
+**concept of Generalizability Theory:**
+
+
+
+&lt;center&gt;
+&lt;img src="images/GeneralizabilityTheory.jpg", width="500px"&gt;
+&lt;/center&gt;
+
+
+Sources of variability of results: 
+
+* persons
+* items (there is a potential universe of possible items for the query of individual knowledge areas)
+* statistical models
+* time point of measurement
+
+&lt;br&gt;
+&lt;br&gt;
+recommended book: Shadish, W. R., Cook, T. D., &amp; Campbell, D. T. (2002). Experimental and quasi-experimental designs for generalized causal inference. Houghton, Mifflin and Company.
+
+and article: https://www.researchgate.net/publication/227580118_Generalizability_Theory_Overview
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## descriptive summary statistics I - base R functions
+
+In the world of base R functions we can apply great functions: 
+
+
+``` r
+# boxplot and summary contains identical information - 5 point summary statistics
+boxplot(dat_twins$IQ)
+summary(dat_twins$IQ)
+
+# boxplot can be grouped by any non-numeric variable
+boxplot(dat_twins$CC ~ dat_twins$IQ.cat)
+
+# super useful are correlation matrices, coupled with the function pairs
+cor(x = dat_twins[, c("VG", "CC", "KU", "KG", "IQ")], 
+              method = "pearson")
+pairs(dat_twins[, c("VG", "CC", "KU", "KG", "IQ")])
+```
+
+
+many more... 
+
+&lt;br&gt;
+it quite helps if you "google" the test procedure you want to apply with the letter R, e.g. "unpaired t test AND R" to get an overview of possible useful summary statistics
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## descriptive summary statistics II - tidyverse universe
+
+In the world of **tidyverse** we can apply even greater functions (! advanced): 
+
+
+``` r
+dat_twins %&gt;%
+  group_by(IDZP) %&gt;%
+  summarise(M=mean(IQ), SD=sd(IQ), difference=diff(IQ)) %&gt;%
+  print(n=3)
+```
+
+```
+## # A tibble: 10 × 4
+##    IDZP     M    SD difference
+##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;int&gt;
+## 1     1  92.5  4.95         -7
+## 2     2  87    0             0
+## 3     3 102    1.41          2
+## # ℹ 7 more rows
+```
+
+* by using group_by() the unit of analysis from the complete data set to individual groups is changed
+* together group_by() and summarise() provide one of the tools that you’ll use most commonly when working with grouped summaries
+* the "%&gt;% are called pipes, which link multiple operations from top-to-bottom
+
+&lt;br&gt;
+great introductory book: Wickham, H., &amp; Grolemund, G. (2017). R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. O’Reilly Media, Inc. https://r4ds.had.co.nz/
+
+
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests I - decision tree
+
+Which hypothesis test should I use?
+
+&lt;center&gt;
+&lt;img src="images/decisionTreeHypothesisTest.jpg", height="450px"&gt;
+&lt;/center&gt;
+
+
+see: https://www.utwente.nl/en/bms/m-store/step-by-step-guide/statistical-tests/choice-test-2/
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests II - in R
+
+Which hypothesis test are implemented in R?
+
+
+
+``` r
+apropos(what = "\\.test$") # Find Objects by (Partial) Name
+```
+
+```
+##  [1] "agostino.test"        "ansari.test"          "anscombe.test"       
+##  [4] "bartlett.test"        "binom.test"           "bonett.test"         
+##  [7] "Box.test"             "chisq.test"           "chisq.test"          
+## [10] "cor.test"             "fisher.test"          "fisher.test"         
+## [13] "fligner.test"         "friedman.test"        "jarque.test"         
+## [16] "kruskal.test"         "ks.test"              "mantelhaen.test"     
+## [19] "mauchly.test"         "mcnemar.test"         "mood.test"           
+## [22] "oneway.test"          "pairwise.prop.test"   "pairwise.t.test"     
+## [25] "pairwise.wilcox.test" "poisson.test"         "power.anova.test"    
+## [28] "power.prop.test"      "power.t.test"         "PP.test"             
+## [31] "prop.test"            "prop.trend.test"      "quade.test"          
+## [34] "shapiro.test"         "t.test"               "var.test"            
+## [37] "wilcox.test"
+```
+
+``` r
+# library(afex)
+apropos("^aov") # ANOVAs
+```
+
+```
+## [1] "aov"     "aov_4"   "aov_car" "aov_ez"
+```
+
+``` r
+# many more!
+```
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests III - example t-Tests
+
+
+**in general**: The goal of hypothesis testing is to test a hypothesis about the population using a sample; there are two hypotheses:
+
+* Null hypothesis `\(H_0\)`: hypothesis to be tested (contains "critical" assumption).
+* Alternative hypothesis `\(H_1\)`: Opposite to the null hypothesis
+
+
+&lt;br&gt;
+! Decision rule of classical significance tests (frequentist perspective!): Reject the `\(H_0\)` only if it is very unlikely to be true.
+
+&lt;br&gt;
+&lt;br&gt;
+**t-Test**: statistical hypothesis test in which the test statistic follows a Student's t-distribution under the null hypothesis; most common application is to test whether the means of two populations are different
+
+
+for relative equal variances:
+$$
+t = \frac{\overline{X}_1 - \overline{X}_2}{S_p* \sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}
+$$
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests IV - always consider non-parametric tests
+**parametric tests:**
+
+* information about the distribution of the population is known and is based on a fixed set of parameters
+
+&lt;br&gt;
+**non-parametric tests:**
+
+* information about the distribution of a population is unknown, and the parameters are not fixed
+  +  no requirement for any distribution of the population in the non-parametric test (also known as distribution-free testing)
+* usually performed when the independent variables are non-metric or central assumptions are violated (e.g. normality)
+
+
+&lt;center&gt;
+&lt;img src="images/parametric_nonparametric.jpg", height="210px"&gt;
+&lt;/center&gt;
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## jumping to outer space for a second! 
+
+*Embrace yourself we will enter the top floor of crazy tower for a second!*
+
+
+&lt;center&gt;
+&lt;img src="images/topFloor.jpg", height="400px"&gt;
+&lt;/center&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bayesian Hypothesis Testing
+
+
+**frequentist hypothesis testing:**
+
+* focuses on null hypothesis significance testing (*NHST*), whereby p-values can only reject the null hypothesis
+  + whether to reject a hypothesis, accept it as true (! categorical decision) or to withhold judgement because no decision can be made (if we assuming insufficient power)
+  + relative strength of an effect can be made by *effect sizes*
+
+&lt;br&gt;
+**bayesian hypothesis testing:**
+
+* Bayes factor can state evidence for both the null and the alternative hypothesis, making confirmation of hypotheses possible
+ + Bayes factor is the ratio of the likelihood of one particular hypothesis to the likelihood of another. It can be interpreted as a measure of the strength of evidence in favor of one theory among two competing theories
+
+&gt; you could use the statistic program JASP to compute Baysian Hypothesis Tests: https://jasp-stats.org/
+ 
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bayesian vs. Frequentist Hypothesis Testing
+
+&lt;center&gt;
+&lt;img src="images/BayesianFrequentist.jpg", height="450px"&gt;
+&lt;/center&gt;
+
+
+&lt;br&gt;
+slide from MIT: https://math.mit.edu/~dav/05.dir/class17-slides-all.pdf
+ 
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Fancy ways to formulate informative hypotheses
+
+Three common types of hypotheses anchored to a point-value of interest of a parameter (! smallest effect size of interest): 
+
+&lt;center&gt;
+&lt;img src="images/formulateHypothesisFancy.jpg", height="350px"&gt;
+&lt;/center&gt;
+
+&lt;br&gt;
+see in more detail: 
+book online: https://michael-franke.github.io/intro-data-analysis/
+
+article: Lakens, D., Scheel, A. M., &amp; Isager, P. M. (2018). Equivalence Testing for Psychological Research: A Tutorial. Advances in Methods and Practices in Psychological Science, 1(2), 259–269. https://doi.org/10.1177/2515245918770963
+
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests V - steps of sequences
+
+1 get an overview of your data:
+
+
+``` r
+data("sleep")
+DT::datatable(sleep, options = list(pageLength = 5))
+```
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-bb37cbddbb36a51e872a" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-bb37cbddbb36a51e872a">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],[0.7,-1.6,-0.2,-1.2,-0.1,3.4,3.7,0.8,0,2,1.9,0.8,1.1,0.1,-0.1,4.4,5.5,1.6,4.6,3.4],["1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2"],["1","2","3","4","5","6","7","8","9","10","1","2","3","4","5","6","7","8","9","10"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>extra<\/th>\n      <th>group<\/th>\n      <th>ID<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"extra","targets":1},{"name":"group","targets":2},{"name":"ID","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+
+&gt; paired sample t-test is needed; consist of a sample of matched pairs of similar units (e.g. using Propensity Score Matching), or one group of units that has been tested twice 
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data I - simple plots:
+
+.pull-left[
+
+``` r
+## grouped boxplot
+boxplot(sleep$extra ~ sleep$group)
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-98-1.png" width="50%" /&gt;
+
+``` r
+## compute mean deviations:
+sleep1 &lt;- with(sleep, extra[group == 2] - extra[group == 1])
+summary(sleep1)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    1.05    1.30    1.58    1.70    4.60
+```
+]
+
+.pull-right[
+
+``` r
+stripchart(sleep1, method = "stack", xlab = "hours",
+           main = "Sleep prolongation (n = 10)")
+boxplot(sleep1, horizontal = TRUE, add = TRUE,
+        at = .6, pars = list(boxwex = 0.5, staplewex = 0.25))
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-99-1.png" width="50%" /&gt;
+]
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data II - more sophisticated plots (**ggplot2**) I: 
+
+template for adjusting the format of ggplot2 figures to APA style: 
+
+
+``` r
+ggplot_theme &lt;- theme(axis.title.x = element_blank(),
+                      axis.title.y = element_text(size=12),
+                      axis.text.x = element_text(size=10,hjust=0.5,vjust=0.5,face="plain", 
+                                                 colour = "black"),
+                      axis.text.y = element_text(size=12,face="plain", colour = "black"),
+                      panel.border = element_blank(),
+                      axis.line = element_line(colour = "black"),
+                      panel.grid.major = element_blank(),
+                      panel.grid.minor = element_blank(),
+                      panel.background = element_blank(),
+                      legend.position="none")  # no legend
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data II - more sophisticated plots (**ggplot2**) II: 
+
+
+
+``` r
+# grouped boxplot
+ggplot(sleep, aes(x=group, y=extra)) + 
+    geom_boxplot() + ggplot_theme
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-101-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data II - more sophisticated plots (**ggstatsplot**) I:  
+
+Using the type argument you can specify the statistical approach: 
+
+* "parametric"
+* "nonparametric"
+* "robust"
+* "bayes"
+
+
+``` r
+## parametric t-test
+p1 &lt;- ggwithinstats(
+  data = sleep,
+  x = group,
+  y = extra,
+  type = "p",
+  effsize.type = "d",
+  conf.level = 0.95,
+  title = "Parametric test"
+)
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VI - steps of sequences
+
+2 compute summary statistics / visualize your data II - more sophisticated plots (**ggstatsplot**) II:
+
+
+``` r
+## parametric t-test
+p1
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-103-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VII - steps of sequences
+
+3 check the assumptions of the paired sample t-test:
+
+1. Independence: Each observation should be independent of every other observation.
+
+2. Normality: The differences between the pairs should be approximately normally distributed.
+  + No Extreme Outliers: There should be no extreme outliers in the differences.
+  + Remark: quite often in practice, if `\(n &gt;&gt; 30\)` this assumption is not checked
+
+
+
+``` r
+## check outlier assumption
+boxplot(sleep1) # to check outlier assumption
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-104-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VII - steps of sequences
+
+3 check the assumptions of the paired sample t-test:
+
+applying Kolmogorov-Smirnov OR Shapiro-Wilk-Test to check normality; sample size sensitive: tests become more sensitive to minimal deviations from the normal distribution as sample size increases 
+
+
+Use Shapiro-Wilk normality test as described at: Normality Test in R.
+* Null hypothesis: the data are normally distributed
+* Alternative hypothesis: the data are not normally distributed
+
+
+
+``` r
+# Shapiro-Wilk normality test for the differences
+shapiro.test(sleep1)
+```
+
+```
+## 
+## 	Shapiro-Wilk normality test
+## 
+## data:  sleep1
+## W = 0.82987, p-value = 0.03334
+```
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VII - steps of sequences
+
+3 check the assumptions of the paired sample t-test:
+
+because of the  sample size sensitivity it is often better to visually check the assumption of normality:
+
+drawing **Q-Q Plot**:
+
+
+``` r
+sleep1_sc &lt;- scale(sleep1) # z standardize mean differences
+
+qqnorm(sleep1_sc) # QQ Plot
+qqline(sleep1_sc) # vertical line
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-106-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VII - steps of sequences
+
+3 check the assumptions of the paired sample t-test:
+
+because of the  sample size sensitivity it is often better to visually check the assumption of normality:
+
+drawing **Histogram** and overlay normal distribution:
+
+
+``` r
+hist(sleep1_sc, freq = FALSE, xlim = c(-3,3))
+x&lt;-seq(-4,+4,by=0.02)
+curve(dnorm(x), add=TRUE)
+```
+
+&lt;img src="introductionR_julius_files/figure-html/unnamed-chunk-107-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VII - steps of sequences
+
+4 compute paired sample t-test:
+
+
+
+``` r
+## Formula interface
+t.test(extra ~ group, data = sleep, paired = TRUE)
+```
+
+```
+## 
+## 	Paired t-test
+## 
+## data:  extra by group
+## t = -4.0621, df = 9, p-value = 0.002833
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  -2.4598858 -0.7001142
+## sample estimates:
+## mean difference 
+##           -1.58
+```
+
+outputs: 
+
+* t is the t-test statistic value
+* df is the degrees of freedom
+* p-value is the significance level of the t-test
+* conf.int is the confidence interval (conf.int) of the mean differences at 95%
+* sample estimates is the mean differences between pairs
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VII - steps of sequences
+
+4 compute paired sample t-test:
+
+compute the Bayes factor: 
+
+
+``` r
+## Traditional interface
+with(sleep, ttestBF(extra[group == 1], extra[group == 2], paired=TRUE))
+```
+
+```
+## Bayes factor analysis
+## --------------
+## [1] Alt., r=0.707 : 17.25888 ±0%
+## 
+## Against denominator:
+##   Null, mu = 0 
+## ---
+## Bayes factor type: BFoneSample, JZS
+```
+
+&gt; Bayse factor of 17.25888
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VII - steps of sequences
+
+4 compute paired sample t-test:
+
+evaluate the Bayes factor: 
+
+&gt; Bayse factor of 17.25888
+
+
+&lt;center&gt;
+&lt;img src="images/BayseFactorsEvidence.jpg", height="250px"&gt;
+&lt;/center&gt;
+
+
+copied from: https://www.statlect.com/fundamentals-of-statistics/Jeffreys-scale
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VIII - steps of sequences - missing parts
+
+We have forgot to run a **power analysis**
+
+
+&lt;center&gt;
+&lt;img src="images/gPowerPostHoc.jpg", height="300px"&gt;
+&lt;/center&gt;
+
+
+if you want to install / use / read more about G*Power: https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## hypothesis tests VIII - steps of sequences - missing parts
+
+We have forgot to compute a appropriate **effect size**
+
+The standardized mean difference effect size for within-subjects designs is referred to as Cohen’s `\(d_z\)`, which can be computed as: 
+
+
+.pull-left[
+
+``` r
+## by hand:
+means &lt;- with(sleep, tapply(extra, group, mean)) # get group means
+md &lt;- means[1]-means[2] # get mean difference
+sleep_wide &lt;- cbind(sleep$extra[sleep$group==1], sleep$extra[sleep$group==2])
+
+(md / sqrt(sum(((sleep_wide[,1] - sleep_wide[,2])-md)^2) / (10-1))) # (d_z &lt;- md / sd(sleep_wide[,1] - sleep_wide[,2])) # using sd
+```
+
+```
+##         1 
+## -1.284558
+```
+]
+
+.pull-right[
+
+``` r
+## by package "rstatix"
+sleep %&gt;% cohens_d(extra ~ group, paired = TRUE)
+```
+
+```
+## # A tibble: 1 × 7
+##   .y.   group1 group2 effsize    n1    n2 magnitude
+## * &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;ord&gt;    
+## 1 extra 1      2        -1.28    10    10 large
+```
+]
+
+
+see: Lakens, D. (2013). Calculating and reporting effect sizes to facilitate cumulative science: A practical primer for t-tests and ANOVAs. Frontiers in Psychology, 4. https://www.frontiersin.org/articles/10.3389/fpsyg.2013.00863
+
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## multiple linear regression - assumptions
+
+Assumption of a linear regression (A. 8 is normally never taught!):
+
+&lt;center&gt;
+&lt;img src="images/assumptionsLinearModel.jpg", heigth="500px"&gt;
+&lt;/center&gt;
+
+
+
+&gt; All models are wrong, but some are useful" - George Box. The aphorism acknowledges that statistical models always fall short of the complexities of reality but can still be useful nonetheless. 
+
+
+
+&lt;!-- *********** HEADING ************** --&gt;
+---
+class: heading,middle
+
+
+Part 4: Amazing Applications of R - Bibliometrix
+
+*Why read literature if you can use R?!*
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - types
+
+
+.pull-left[
+**systematic reviews**: search available literature for evidence with which to address a research question
+]
+
+.pull-right[
+**meta-analyses**: quantitatively assess statistical evidence found through systematic reviews -&gt; dependent on good systematic review
+]
+
+**goals**:
+* integrate past literature
+* critically analyse the existing literature
+* identify issues central to a field
+
+**center often on one single area**:
+* summarize / list findings of individual primary studies
+  + .. methods used to carry out research
+  + .. theories meant to explain the same or related phenomena
+  + .. practices programs, treatments, .. being used in applied context
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - search strategies
+
+different modes should be used concurrently and used search strategies should be made explicit
+
+&lt;center&gt;
+&lt;img src="images/searchStrategies.jpg", height="450px"&gt;
+&lt;/center&gt;
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - main concern of literature retrieval
+
+return all of the studies relevant to the review (‘recall’) without retrieving irrelevant studies (‘precision’)
+
+**Recall**:
+* expresses (as a percentage) the ratio of relevant documents retrieved to all those in a collection that should be retrieved
+* pure fiction: if we could identify all existing relevant documents in order to count them, we could retrieve them all, and so recall would always be 100 percent
+
+
+**Precision**:
+* expresses (as a percentage) the ratio of documents retrieved and judged relevant to all those actually retrieved
+* measures how many irrelevant documents-false positives-one must go through to find the true positives or hits
+
+&lt;br&gt;
+-&gt; trade-off: high recall leads to degrading precision
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - main concern of literature retrieval II 
+
+&lt;center&gt;
+&lt;img src="images/STMreport.jpg", height="450px"&gt;
+&lt;/center&gt;
+
+
+see: https://www.stm-assoc.org/2018_10_04_STM_Report_2018.pdf
+
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - main concern of literature retrieval III 
+
+**solution: need for high recall !!!**
+
+&lt;br&gt;
+* „there is no way of ascertaining whether the set of located studies is representative of the full set of existing studies on the topic, the best protection against an unrepresentative set is to locate as many of the existing studies as is possible“
+* „The point is to avoid missing a useful paper that lies outside one’s regular purview, thereby ensuring that one’s habitual channels of communication will not bias the results of studies obtained by the search... history of science and scholarship is full of examples of mutually relevant specialties that were unaware of each other for years because their members construed their own literatures too narrowly and failed to ask what other researchers did“
+
+
+&lt;br&gt;
+&lt;br&gt;
+recommended book: Cooper, Hedges und Valentine (2009): The handbook of research synthesis and meta-analysis. Second Edition.
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - traditional methods 
+
+Traditional methods often include (from my perspective) manual literature searches in arbitrary databases without clear inclusion criteria. Results of the research are often gathered in Excel.
+
+&lt;br&gt;
+however, there are immensely important procedures in the traditional approach:
+
+&lt;center&gt;
+&lt;img src="images/searchStrategiesTraditional.jpg", height="350px"&gt;
+&lt;/center&gt;
+
+
+&lt;br&gt;
+How to use Google Scholar: https://www.wur.nl/en/article/How-to-use-Google-Scholar.htm
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - definition, databases 
+
+The branch of library science concerned with the application of mathematical and statistical analysis to bibliography; the statistical analysis of books, articles, or other publications the use of statistical methods to analyse books, articles and other publications by means of 
+* simple descriptive measures
+* complex indices
+* network theory
+
+&lt;br&gt;
+&lt;br&gt;
+there are three principal databases (increasing number of sources, but lower data quality):
+* Web of Science: www.webofknowledge.com
+* Scopus: https://www.scopus.com/
+* Google Scholar: https://scholar.google.com/
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - working process
+
+1. download found sources as plain text from www.webofknowledge.com (when multiples times collect single txt-files with unique name in a folder)
+2. use the ShinyApp of the R-package **bibliometrix** to check the found sources for possible errors and visualize your sources
+3. use the R-package **litsearchr** to identify further search terms
+4. use the R-package **scholar** to further investigate the publications of key authors
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Bibliometrix - bibliometrix package
+
+most advanced is **bibliometrix**, which allows to compute: 
+
+* descriptive statistics
+* Bibliographic coupling: occurs when two works reference a common third work in their bibliographies (helpful to detect connections between research groups, ...)
+* Co-citation: frequency with which two documents are cited together by other documents (helpful in detecting a shift in paradigms and schools of thought - using betweenness, ...)
+* ...
+
+
+
+``` r
+## to run shiny app:
+library(bibliometrix)
+biblioshiny()
+```
+
+also check out the webpage: https://www.bibliometrix.org/home/
+
+
+
+&lt;!-- *********** NEW SLIDE ************** --&gt;
+---
+## Who wants to learn statistics and programming now? - Thank you for your attention :-)!
+
+
+The final slide is reserved for Bob Ross!
+&lt;br&gt;
+
+&lt;center&gt;
+&lt;img src="https://media0.giphy.com/media/B4OVvY3CVNN0Q/giphy.gif?cid=ecf05e47axiata7fc4y4j5m779ltm6aezwj1nudqznamk4ou", width="500" height="350"&gt;
+&lt;/center&gt;
+
+
+To relax you can watch Bob Ross motivating painting videos: https://www.youtube.com/watch?v=2lBQUqzcbEg
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"ratio": "16:9",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

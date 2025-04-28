@@ -2,6 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-grant participation
+
 getMeARoom.R
 getMeARoom.rds
+
+**/zz_internal
