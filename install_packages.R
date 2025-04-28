@@ -46,3 +46,6 @@ usePackage("rstatix")
 usePackage("janitor")
 
 usePackage("emo") # Emojis in rmarkdown
+
+usePackage("bibliometrix") # bibliometrics analyses
+

@@ -1,6 +1,14 @@
-# Workshop Preparation Checklist
+# Showcases
 
-To get the most out of our workshop on Large Language Models, please complete the following preparation steps.
+The showcases should just exemplify what is possible with R (when using the  [Quarto](https://quarto.org/)) framework.
+
+Three showcases:
+
+- A
+- B
+- C
+
+!!! will be written out later...
 
 ---
 

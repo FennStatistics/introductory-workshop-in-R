@@ -15,6 +15,7 @@ Before participating in the workshop, please complete the following steps:
 
 **Install**:
 - Install **R** and **RStudio**: [Download Here](https://posit.co/download/rstudio-desktop/)
+    + after installing R and RStudio, install all the necessary R packages for the workshops by running the script in an .R file: [install R packages](https://github.com/FennStatistics/introductory-workshop-in-R/blob/main/install_packages.R)
 - Install the multi-language, next generation version of R Markdown [Quarto](https://quarto.org/)
 
 **Prepare yourself**:
