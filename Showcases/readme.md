@@ -4,7 +4,7 @@ These showcases demonstrate what is possible with R. The first example (`getMeAR
 
 ## Examples
 
-### 1. getMeARoom.R
+### 1. getMeARoom.R (code not uploaded)
 
 This script scrapes rental listings from a shared flat website, cleans and prepares the data, and applies a **hedonic price model** to explore how features like size and number of flatmates influence rent prices. It includes data visualization, regression analysis, and interactive exploration of outliers.
 
