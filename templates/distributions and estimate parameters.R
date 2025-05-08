@@ -12,14 +12,16 @@ barplot(height = table(d1+d2))
 ########### see: http://rstudio-pubs-static.s3.amazonaws.com/240670_37c5f4ada9a5402ab5474bb66514e667.html
 
 # MLE for Binomial Distribution
-y <-c(0,1,0,1,0,1,0,1,0,1)
+y <- c(0,1,0,1,0,1,0,1,0,1)
 
 sum(y) / length(x = y)
 
 #############
-x <- 5
+x <- 5 # 5 out of 10
+N <- 10
+
 p <- seq(0, 0.99, 0.01)
-out <- choose(n = 10, k = x)* p^x * (1-p)^(10-x)
+out <- choose(n = N, k = x)* p^x * (1-p)^(10-x)
 plot(out)
 abline(v = which(out == max(out)), col = "red")
 p[which(out == max(out))]

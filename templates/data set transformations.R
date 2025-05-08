@@ -7,9 +7,9 @@ rm(list=ls()) # clean environment
 # dev.off() # clean plots
 
 
-getwd() # points to your current working directory
 # sets the directory of location of this script as the current directory
-# setwd(dirname(rstudioapi::getSourceEditorContext()$path)) # not needed if you use an R project!
+setwd(dirname(rstudioapi::getSourceEditorContext()$path)) # not needed if you use an R project!
+getwd() # get your current working directory
 
 
 ############################################################################
@@ -44,34 +44,32 @@ rm(usePackage)
 # mean differences between blocks in reaction time and error rate
 
 set.seed(123)
-# Set the number of persons and blocks
 num_persons <- 10
 num_blocks <- 5
 
-# Create an empty data frame to store the data
-dat_reactionTime <- data.frame(PersonID = integer(),
-                      BlockID = integer(),
-                      ReactionTime = numeric(),
-                      Error = logical(),
-                      stringsAsFactors = FALSE)
+# Generate random intercepts and slopes for each person
+person_intercepts <- rnorm(num_persons, mean = 10, sd = 2)   # baseline RT
+person_slopes <- rnorm(num_persons, mean = 2, sd = 2)         # allow negative slopes
 
-# Simulate the data
+# Create data frame
+dat_reactionTime <- data.frame()
+
 for (person in 1:num_persons) {
   for (block in 1:num_blocks) {
-    # Simulate reaction time with mean differences between blocks
-    mean_rt <- 10 + block * 2
-    reaction_time <- rnorm(n = 1, mean = mean_rt, sd = 1)
+    # Person-specific mean RT depending on their slope
+    mean_rt <- person_intercepts[person] + person_slopes[person] * block
+    reaction_time <- rnorm(1, mean = mean_rt, sd = 1)
 
-    # Simulate error rate with mean differences between blocks
+    # Simulate errors
     mean_error <- 0.1 + block * 0.02
-    error <- rbinom(n = 1, size = 1, prob = mean_error)
+    error <- rbinom(1, 1, prob = mean_error)
 
-    # Add the data to the data frame
-    dat_reactionTime <- rbind(dat_reactionTime, data.frame(PersonID = person,
-                                         BlockID = block,
-                                         ReactionTime = reaction_time,
-                                         Error = error,
-                                         stringsAsFactors = FALSE))
+    dat_reactionTime <- rbind(dat_reactionTime, data.frame(
+      PersonID = person,
+      BlockID = block,
+      ReactionTime = reaction_time,
+      Error = error
+    ))
   }
 }
 
@@ -99,22 +97,22 @@ colnames(dat_reactionTime_wide_personID)
 
 
 
-### reaction time data:
+### survey data:
 # simulate two data sets, which can be matched by a unique ID, which contains multiple likert scales.
 # The rows of the data sets should not match
 # Simulate the first data set
 
 # https://r4ds.had.co.nz/relational-data.html?q=left_join#relational-data
 dat_1 <- data.frame(ID = 1:12,
-                        Likert1 = sample(1:5, 12, replace = TRUE),
-                        Likert2 = sample(1:5, 12, replace = TRUE),
-                        Likert3 = sample(1:5, 12, replace = TRUE))
+                    Likert1 = sample(1:5, 12, replace = TRUE),
+                    Likert2 = sample(1:5, 12, replace = TRUE),
+                    Likert3 = sample(1:5, 12, replace = TRUE))
 
 # Simulate the second data set
 dat_2 <- data.frame(ID = 1:10,
-                        Likert4 = sample(1:5, 10, replace = TRUE),
-                        Likert5 = sample(1:5, 10, replace = TRUE),
-                        Likert6 = sample(1:5, 10, replace = TRUE))
+                    Likert4 = sample(1:5, 10, replace = TRUE),
+                    Likert5 = sample(1:5, 10, replace = TRUE),
+                    Likert6 = sample(1:5, 10, replace = TRUE))
 
 # Randomly shuffle the rows of the second data set
 dat_2 <- dat_2[sample(x = nrow(dat_2)), ]
@@ -124,7 +122,7 @@ dat_merged <- merge(dat_1, dat_2, by = "ID")
 dim(dat_merged)
 
 
-dat_leftJoin <- left_join(x = dat_1, y = dat_2, by = c("Vp" = "Vpn"))
+dat_leftJoin <- left_join(x = dat_1, y = dat_2, by = c("ID" = "ID"))
 dim(dat_leftJoin)
 dat_rightJoin <- right_join(x = dat_1, y = dat_2, by = c("ID" = "ID"))
 dim(dat_rightJoin)
@@ -136,15 +134,52 @@ dim(dat_fullJoin)
 dat_fullJoin
 
 
-############################################################################
-# analyses - reaction time data
-############################################################################
-psych::corPlot(r = cor(dat_merged[,
-                                  str_subset(string = colnames(dat_merged), pattern = "^Likert")]))
 
 ############################################################################
 # analyses - reaction time data
 ############################################################################
+
+################
+# plot data and mixed model
+################
+# plot data:
+dat_reactionTime$PersonID <- factor(dat_reactionTime$PersonID)
+
+ggplot(dat_reactionTime, aes(x = BlockID, y = ReactionTime, col = PersonID)) +
+  geom_line(linewidth = 1, alpha = 0.7) +
+  labs(
+    title = "Reaction Time Across Blocks by Participant",
+    x = "Block Number",
+    y = "Reaction Time (s)"
+  ) +
+  theme_classic(base_size = 14) +
+  theme(
+    plot.title = element_text(
+      face = "bold", size = 16, hjust = 0.5
+    ),
+    axis.title.x = element_text(
+      face = "bold", size = 14, margin = margin(t = 10)
+    ),
+    axis.title.y = element_text(
+      face = "bold", size = 14, margin = margin(r = 10)
+    ),
+    axis.text = element_text(size = 12),
+    panel.grid = element_blank(),
+    axis.line = element_line(size = 0.8),
+    plot.margin = margin(15, 15, 15, 15)
+  )
+
+
+# Fit the linear mixed-effects model
+model <- lme4::lmer(
+  ReactionTime ~ BlockID + (1 + BlockID | PersonID),
+  data = dat_reactionTime,
+  REML = FALSE
+)
+
+# Summary of the model
+summary(model)
+lme4::ranef(object = model)
 
 ################
 # mean differences
@@ -168,22 +203,19 @@ rowMeans(x = dat_reactionTime_wide_blockID[, str_subset(string = colnames(dat_re
 ################
 # hypothesis test - ANOVA
 ################
-library(afex)
-
 # Perform ANOVA
 m1 <- afex::aov_car(formula = ReactionTime ~ BlockID + Error(PersonID/BlockID), data=dat_reactionTime)
 m1
 
 
 m1a <- afex::aov_ez(id = "PersonID", dv = "ReactionTime", data = dat_reactionTime,
-       within = c("BlockID"))
+                    within = c("BlockID"))
 m1a
 
 
 
 
 # simple function call with the defaults
-library(ggstatsplot)
 ggstatsplot::ggwithinstats(
   data = dat_reactionTime,
   x = BlockID,
@@ -192,3 +224,13 @@ ggstatsplot::ggwithinstats(
   title = "Parametric test Reaction Times within blocks"
 )
 
+
+
+############################################################################
+# analyses - survey data
+############################################################################
+psych::corPlot(r = cor(dat_merged[,
+                                  str_subset(string = colnames(dat_merged), pattern = "^Likert")]))
+
+psych::fa.parallel(x = dat_merged[,
+                                  str_subset(string = colnames(dat_merged), pattern = "^Likert")])

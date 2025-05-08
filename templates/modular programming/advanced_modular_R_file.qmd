@@ -1,6 +1,7 @@
 ---
 title: "Exemplary data analysis"
 author: "Julius Fenn"
+date: "`r Sys.Date()`"
 format:
   html:
     toc: true
@@ -16,7 +17,7 @@ link-citations: true
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. 
 
-This file contains the pre-processing step (clean, transform data), whereby the folder "XXX" the analysis step (test hypotheses and exploratory analyses), which follows the classical data-analysis pipeline [see @pengArtDataScience2016; @wickhamDataScienceImport2017].
+This file contains the pre-processing step (clean, transform data), and the analysis step (test hypotheses and exploratory analyses). In larger projects you would split this file into multiple subfiles like data processing and data analyses steps, which follows the classical data-analysis pipeline [see @pengArtDataScience2016; @wickhamDataScienceImport2017].
 
 
 

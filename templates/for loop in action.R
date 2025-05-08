@@ -9,7 +9,6 @@ for(i in vec){
 
 df <- cars
 
-
 for(c in 1:2){
   for(r in 1:50){
     cat("c:", c, "r:", r, "\n")
@@ -42,9 +41,65 @@ for(r in 1:nrow(df)){
 
 
 
+x < 0
+any(x < 0)
+all(x < 0)
+
+which(x = x < 0)
+
+x <- c(800, 1200, 670)
+if(any(x < 0)){
+  print("Problem")
+}else if(any(x < 600)){
+  print("kleiner 600")
+}else{
+  print("kein Problem")
+}
+
+x <- c(800, 1200, 570)
+if(any(x < 0)){
+  print("Problem")
+}
+
+if(any(x < 600)){
+  print("kleiner 600")
+}
 
 
 
+
+
+
+
+
+
+
+for(i in 1:10) { # Head of for-loop
+  x1 <- i^2 # Code block
+  if(x1 > 20){
+    print(x1) # Print results
+  }
+
+}
+
+
+
+
+
+
+
+x <- 1:10
+x %% 2
+
+ifelse(test = x %% 2 == 0, yes = "even", no = "odd")
+
+
+
+
+
+
+
+#####################################
 
 ?iris
 df <- iris
@@ -62,7 +117,7 @@ for(c in 1:4) {
   tmp_pvalue <- unlist(summary(aov_out))[9]
 
   if (tmp_pvalue < (.01 / 4) ) {
-    # print(aov_out)
+    print(aov_out)
     print(c)
   }
 }
@@ -107,49 +162,23 @@ for(i in vec_colnames){
 
 
 ####### while loop
-x <- rnorm(n = 10, mean = 0, sd = 1)
+N <- 10
+x <- rnorm(n = N, mean = 0, sd = 1) # inital start
 counter = 1
 while( abs(x = mean(x)) <= 1){
-  x <- rnorm(n = 10, mean = 0, sd = 1)
+  x <- rnorm(n = N, mean = 0, sd = 1)
   counter = counter + 1
   # hist(x)
   print(mean(x))
 }
 counter
+
 hist(x)
-summary(x)
-dnorm(x = max(abs(x)), mean = 0, sd = 1) * 100
-
-
-
 abline(v = mean(x), col = "red")
 
+summary(x)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-library(ggplot2)
-?diamonds
-
-
-
-
+sd_mean <- 1 / sqrt(N)
+prob_extreme_mean <- 2 * pnorm(q = -1, mean = 0, sd = sd_mean)
+prob_extreme_mean  # chance that the sample mean exceeds ±1

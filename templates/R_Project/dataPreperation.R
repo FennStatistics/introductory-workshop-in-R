@@ -1,15 +1,15 @@
 # ==============================================================================
-# R-Code - my first R Script
+# R-Code - my first R Script for data preparation
 # date of creation: XXX
 # authors: XXX
 # ==============================================================================
 rm(list=ls()) # clean environment
-dev.off() # clean plots
+# dev.off() # clean plots
 
-
-getwd() # points to your current working directory
+# !!! within a project not needed
 # sets the directory of location of this script as the current directory
 # setwd(dirname(rstudioapi::getSourceEditorContext()$path)) # not needed if you use an R project!
+getwd() # get your current working directory
 
 
 ############################################################################
@@ -29,53 +29,35 @@ usePackage <- function(p) {
 # options(repos="https://CRAN.R-project.org")
 
 usePackage("tidyverse")
-usePackage("psych")
+usePackage("haven") # ... to load data
 
 rm(usePackage)
 
-################
-# load packages
-################
-set.seed(123)
-size <- 100
-dat <- data.frame(score = rnorm(n = size, mean = 5, sd = 1),
-                  group = factor(x = rbinom(n = size, size = 1, prob = .3)),
-                  letters = sample(x = letters, size = size, replace = TRUE))
-levels(dat$group) <- c("young", "old")
 
-rm(size)
+################
+# load data
+################
+setwd("data")
+dir()
+dat <- read.csv(file = "tramo1998etal_twins.csv")
+setwd("..")
 
 ############################################################################
-# analyses
+# prepare data
 ############################################################################
+head(dat)
 
-################
-# check out data structures
-################
-typeof(dat$score)
-class(dat$score)
+dat$GES <- factor(dat$GES, levels = c(2, 1), labels = c("female", "male"))
 
-typeof(dat)
-class(dat)
-
-
-################
-# descriptive
-################
-table(dat$group)
-
-summary(dat$score)
-boxplot(dat$score)
-psych::describe(x = dat[, c("score")])
-
+head(dat)
 
 
 
 ################
-# inferential
+# save data
 ################
-boxplot(dat$score ~ dat$group)
-t.test(dat$score ~ dat$group)
-
-
-
+setwd("outputs")
+dir()
+saveRDS(object = dat, file = "tramo1998etal_twins_clean.rds")
+dir()
+setwd("..")
