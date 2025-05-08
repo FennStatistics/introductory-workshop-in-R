@@ -2,6 +2,11 @@
 
 The slides were written using RMarkdown (specifically the [xaringan](https://bookdown.org/yihui/rmarkdown/xaringan.html) presentation framework).
 
+## PDF
+
+I have "printed" my dynamic slides to a PDF, which you could download to make some notes: `slides Journey through R`
+
+
 ## Files and Folders
 
 ### 1. `introductionR_julius.Rmd`
