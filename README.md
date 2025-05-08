@@ -37,7 +37,7 @@ Feel free to reach out to me with any questions, ideas, or feedback: julius.fenn
 ## 📍 Location and Registration
 
 📍 **Wo?**  
-Psychologie 1098, Kollegiengebäude I, Platz der Universität 3, Freiburg
+Hörsaal 1098, Kollegiengebäude I im Erdgeschoß, Platz der Universität 3, Freiburg
 
 📅 **Wann?**  
 - Freitag, 09. Mai, 16 – 20 Uhr  
