@@ -1,0 +1,290 @@
+---
+title: "Explorative Analysis - item wrenexp"
+subtitle: "“How worried are you that energy may be too expensive for many people in [country]?"
+author: "Julius Fenn"
+date: "3.3.2024"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 3
+    number_sections: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+  word_document:
+    toc: yes
+    toc_depth: '3'
+---
+
+
+```{css, echo=FALSE}
+.CSSoutput {
+  background-color: white;
+  border: 1px solid black;
+}
+```
+```{r setup chunks, include=FALSE}
+knitr::opts_chunk$set(class.source = "CSSoutput",
+                      eval = TRUE, echo = TRUE, include = TRUE,      
+                      fig.align='center', fig.show='asis',
+                      size='footnotesize')
+
+```
+
+
+```{r setup, include=FALSE}
+# reset R environment
+rm(list=ls(all=TRUE))
+graphics.off()
+
+################
+# install and load packages
+################
+#  if packages are not already installed, the function will install and activate them
+usePackage <- function(p) {
+  if (!is.element(p, installed.packages()[,1]))
+    install.packages(p, dep = TRUE, repos = "http://cran.us.r-project.org")
+  require(p, character.only = TRUE)
+}
+
+
+
+
+usePackage("haven") # load SPSS, ... data 
+usePackage("tidyverse") # data cleaning and summarizing
+usePackage("psych") # psychometric analysis (EFA)
+
+## psychometric analysis
+usePackage("moments") # skewness, kurtosis
+
+## outputs
+usePackage("stargazer") # create tables
+
+usePackage("ggstatsplot")
+
+usePackage("MASS")
+
+
+
+rm(usePackage)
+```
+
+```{r loaddata, include=FALSE}
+## change working directory
+setwd("data")
+## load data
+dat <- haven::read_spss(file = "ESS-Data-Wizard-subset-2023-04-26.sav")
+
+
+## data preparation
+
+
+# reverse coded items
+
+
+
+## create mean scores
+
+setwd("..")
+```
+
+
+
+
+
+# Results
+
+## Descriptive statistics
+
+*overview data:*
+```{r}
+head(dat)
+dim(dat)
+```
+
+*variable of interest (wrenexp):*
+
+distribution variable:
+```{r}
+attr(x = dat$wrenexp, which = "label")
+attr(x = dat$wrenexp, which = "labels")
+
+
+
+barplot(table(dat$wrenexp))
+round(x = table(dat$wrenexp) / nrow(dat) * 100, digits = 2)
+```
+
+mean differences over countries: 
+
+
+```{r}
+tmp <- dat %>%
+  group_by(cntry) %>%
+  summarise(N = n(), mean = mean(x = wrenexp, na.rm = TRUE))
+tmp[order(tmp$mean),]
+
+
+boxplot(dat$wrenexp ~ dat$cntry)
+
+
+tmp <- dat
+tmp$wrenexp <- as.numeric(tmp$wrenexp)
+tmp <- tmp[tmp$cntry %in% c("AT", "CH", "CZ", "DE", " ES", "FR"),] # only for subset of countries
+
+p <- ggbetweenstats(data = tmp,
+  x    = cntry,
+  y    = wrenexp,
+  type = "p" # parametric
+)
+p
+```
+### swiss specific
+
+```{r}
+dat_CH <- dat
+dat_CH <- dat_CH[dat_CH$cntry == "CH",]
+
+barplot(table(dat_CH$wrenexp))
+round(x = table(dat_CH$wrenexp) / nrow(dat_CH) * 100, digits = 2)
+summary(dat_CH$wrenexp)
+
+
+sum(dat_CH$wrenexp >= 4, na.rm = TRUE) / nrow(dat_CH)
+```
+
+> only about 12% are Very worried  or extremely worried 
+
+## (stepwise) logistic regression
+
+see: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/zusammenhaenge/lreg.html
+stepwise procedure see: http://www.sthda.com/english/articles/36-classification-methods-essentials/150-stepwise-logistic-regression-essentials-in-r/
+
+```{r}
+dat_logistic <- dat
+dat_logistic <- dat_logistic[dat_logistic$cntry == "CH",]
+dat_logistic <- dat_logistic[, colSums(x = is.na(dat_logistic)) != nrow(dat_logistic)]
+dat_logistic <- dat_logistic[, colSums(x = is.na(dat_logistic)) < 1000]
+dat_logistic <- dat_logistic[!is.na(dat_logistic$wrenexp), ]
+
+dat_logistic$wrenexp_dummy <- ifelse(test = dat_logistic$wrenexp >= 4, yes = 1, no = 0) 
+table(dat_logistic$wrenexp_dummy)
+
+dat_logistic <- dat_logistic %>%
+  dplyr::select(netusoft:impfun, wrenexp_dummy, wrenexp)
+
+dat_logistic <- dat_logistic %>%
+  dplyr::select(!c(netustm, prtvtfch, badge))
+
+
+
+var_IVs <- colnames(dat_logistic)[1:20]
+dat_logistic_out <- dat_logistic[, c("wrenexp_dummy", var_IVs, "wrenexp")]
+dat_logistic_out <- na.omit(dat_logistic_out)
+
+m <- glm(wrenexp_dummy ~., data = dat_logistic_out[, 1:20], family = binomial)
+summary(m)
+
+step.model <- m %>% stepAIC(trace = FALSE)
+summary(step.model)
+coef(step.model) 
+# to interpret the params: 
+ exp(coef(step.model)) - 1
+ 
+ 
+# trstlgl
+# Trust in the legal system
+# Value 	Category
+# 0 	No trust at all
+# 1 	1
+# 2 	2
+# 3 	3
+# 4 	4
+# 5 	5
+# 6 	6
+# 7 	7
+# 8 	8
+# 9 	9
+# 10 	Complete trust
+ dat_logistic_out %>%
+   group_by(trstlgl) %>%
+   summarise(N = n(), mean = mean(x = wrenexp), sd = sd(x = wrenexp))
+ 
+# if "Trust in the legal system" increases by one unit the probability to be "Very worried" or "Extremely worried" about energy prices decreases by around 10%
+ 
+
+# psppsgva 
+# Political system allows people to have a say in what government does
+# Value 	Category
+# 1 	Not at all
+# 2 	Very little
+# 3 	Some
+# 4 	A lot
+# 5 	A great deal
+  dat_logistic_out %>%
+   group_by(psppsgva) %>%
+   summarise(N = n(), mean = mean(x = wrenexp), sd = sd(x = wrenexp))
+  
+# if "Political system allows people to have a say in what government" increases by one unit the probability to be "Very worried" or "Extremely worried" about energy prices decreases by 28%
+```
+
+
+## (stepwise) ordinal logistic regression
+
+ordinal logistic regression see: https://stats.oarc.ucla.edu/r/dae/ordinal-logistic-regression/
+stepwise procedure see: http://www.sthda.com/english/articles/36-classification-methods-essentials/150-stepwise-logistic-regression-essentials-in-r/
+
+
+```{r}
+# dat_logistic <- dat
+# dat_logistic <- dat_logistic[dat_logistic$cntry == "CH",]
+# dat_logistic <- dat_logistic[, colSums(x = is.na(dat_logistic)) != nrow(dat_logistic)]
+# dat_logistic <- dat_logistic[, colSums(x = is.na(dat_logistic)) < 1000]
+# dat_logistic <- dat_logistic[!is.na(dat_logistic$wrenexp), ]
+# 
+# dat_logistic <- dat_logistic %>%
+#   dplyr::select(netusoft:impfun)
+# 
+# dat_logistic <- dat_logistic %>%
+#   dplyr::select(!c(netustm, prtvtfch, badge))
+# 
+# 
+# dat_logistic$wrenexp <- factor(dat_logistic$wrenexp, order = TRUE)
+# 
+# 
+# var_IVs <- colnames(dat_logistic)[1:20]
+# dat_logistic_out <- dat_logistic[, c("wrenexp", var_IVs)]
+# dat_logistic_out <- na.omit(dat_logistic_out)
+# 
+# m <- polr(formula = wrenexp ~ ., data = dat_logistic_out, Hess=TRUE)
+# summary(m)
+# 
+# step.model <- m %>% stepAIC(trace = FALSE)
+# coef(step.model)
+# 
+# 
+# 
+# ## get labels of all significant parameters
+# for(n in names(coef(step.model))){
+#   print(n)
+#   print(attr(x = dat[[n]], which = "label"))
+#     print(attr(x = dat[[n]], which = "labels"))
+#   cat("\n")
+# }
+```
+
+
+### swiss specific
+
+mean differences between parties
+
+```{r}
+dat_CH <- dat
+dat_CH <- dat_CH[dat_CH$cntry == "CH",]
+
+
+tmp <- dat_CH %>%
+  group_by(prtvtfch) %>%
+  summarise(N = n(), mean = mean(x = wrenexp, na.rm = TRUE))
+tmp[order(tmp$mean),]
+```

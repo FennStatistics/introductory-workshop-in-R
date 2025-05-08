@@ -45,7 +45,8 @@ usePackage("rstatix")
 
 usePackage("janitor")
 
-usePackage("emo") # Emojis in rmarkdown
+## führt folgendes in R aus, evtl. habt ihr aber kein devtools installiert, dann erste Zeile "einkommentieren"
+# install.packages("devtools")
+devtools::install_github("hadley/emo")
 
 usePackage("bibliometrix") # bibliometrics analyses
-
