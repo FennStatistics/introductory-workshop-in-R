@@ -111,14 +111,19 @@ summary(aov_out)
 
 unlist(summary(aov_out))[9] < .01
 
-c <- 1
+
+list_sig_AOV <- list()
+c <- 1; index = 1
 for(c in 1:4) {
   aov_out <- aov(formula = df[,c] ~ df$Species)
   tmp_pvalue <- unlist(summary(aov_out))[9]
 
-  if (tmp_pvalue < (.01 / 4) ) {
-    print(aov_out)
+  if (tmp_pvalue < (.01 / 6) ) {
     print(c)
+    print(aov_out)
+
+    list_sig_AOV[[index]] <- aov_out
+    index = index + 1
   }
 }
 
