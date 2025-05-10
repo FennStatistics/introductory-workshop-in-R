@@ -232,3 +232,64 @@ emmeans_result$contrasts
 
 
 
+############################################################################
+# hands on
+############################################################################
+
+#############
+# Basic examples to demonstrate slides content
+#############
+
+# 1. Help in R
+?mean        # Get help on the 'mean' function
+help("sum")  # Equivalent alternative
+
+# 2. Assignments
+x <- 10      # recommended assignment
+10 -> y      # reverse assignment
+z = 5        # allowed, but less common
+
+# 3. Operators and comparisons
+a <- 2 + 3    # arithmetic
+b <- 5 ^ 2    # exponentiation
+c <- a > b    # comparison
+c             # FALSE
+
+# 4. Comments
+# This is a comment explaining the next line:
+sum(1:5)  # adds 1 through 5
+
+# 5. Data types
+typeof(42L)         # integer
+typeof(3.14)        # double
+typeof(TRUE)        # logical
+typeof("text")      # character
+is.na(NA)           # TRUE
+
+# Coercion
+v <- c(1, 2, 3)          # numeric vector
+typeof(v); class(v)      # return "double", "numeric"
+v[2] <- "hat"            # coerces entire vector to character
+typeof(v); class(v)      # both return "character"
+
+# Representing missing or undefined values
+c(3, NA)     # NA: missing value
+c(3, 0/0)    # NaN: not a number
+c(3, NULL)   # NULL is ignored in vector
+
+# Data structures
+v1 <- 1:5                           # 1D atomic vector
+m1 <- matrix(data = rnorm(n=6), 2, 3)   # 2D matrix with 2 rows and 3 columns filled with 6 random standard normal distributed values
+a1 <- array(1:24, dim = c(2,3,4))   # 3D array, 2*3*4=24
+
+# Heterogeneous structures
+l1 <- list(1:3, letters[1:3])       # 1D list
+
+
+df1 <- data.frame(id = 1:3, name = letters[1:3])  # 2D data frame
+str(df1)
+typeof(df1); class(df1)
+
+methods(generic.function = "summary")
+summary(m1)
+summary(df1)
