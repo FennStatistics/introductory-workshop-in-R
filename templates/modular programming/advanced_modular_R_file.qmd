@@ -24,6 +24,19 @@ This file contains the pre-processing step (clean, transform data), and the anal
 
 # Notes
 
+
+dsffdsfdsfds dsf
+fds
+fds
+fds
+fds
+
+```{r}
+# hier rechne 
+1+1
+```
+
+
 Remark: 
 
 ```{r}

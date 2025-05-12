@@ -1,3 +1,7 @@
+getwd()
+
+
+
 # ==============================================================================
 # R-Code - my first R Script for data preparation
 # date of creation: XXX

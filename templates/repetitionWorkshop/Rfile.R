@@ -38,9 +38,6 @@ rm(usePackage)
 ################
 # load data
 ################
-
-
-
 # library(readr) # loaded as a dependency of tidyverse
 setwd("data")
 # if you have no idea how data is structured
@@ -75,7 +72,7 @@ dat_twins$GES
 factor(x = dat_twins$GES, levels = c(1, 2), labels = c("male", "female"))
 
 dat_twins$GES <- factor(x = dat_twins$GES, levels = c(1, 2), labels = c("male", "female"))
-
+dat_twins$GES
 
 boxplot(dat_twins$IQ ~ dat_twins$GES)
 
@@ -91,7 +88,13 @@ factor(dat_twins$GR, ordered = TRUE)
 ################
 # compute new variables
 ################
-dat_twins$IQ.cat <- cut(x = dat_twins$IQ, breaks = 3, labels = c("below average", "medium", "above average"))
+dat_twins$Unsinn <- 1
+dat_twins$Unsinn <- NULL
+
+
+
+dat_twins$IQ.cat <- cut(x = dat_twins$IQ, breaks = 3,
+                        labels = c("below average", "medium", "above average"))
 dat_twins$IQ.cat
 dat_twins$IQ.cat <- factor(dat_twins$IQ.cat, ordered = TRUE)
 dat_twins$IQ.cat
@@ -156,8 +159,17 @@ summary(lm2)
 
 ### now Polymorphism :-)....
 summary(dat_twins)
+summary(lm1)
+
+class(dat_twins)
+class(lm1)
+
+methods(generic.function = "summary")
+
+plot(1:5)
 plot(lm1)
 
+methods(generic.function = "plot")
 
 
 ################
@@ -174,14 +186,9 @@ psych::corPlot(r = cor(x = dat_twins[, c("VG", "CC", "KU", "KG", "IQ")],
                         method = "pearson"))
 
 cor.test(dat_twins$CC, dat_twins$VG)
-
+report::report(cor.test(dat_twins$CC, dat_twins$VG))
 
 cor.test(dat_twins$CC, dat_twins$IQ)
-
-
-
-
-
 
 
 
@@ -248,7 +255,7 @@ help("sum")  # Equivalent alternative
 x <- 10      # recommended assignment
 10 -> y      # reverse assignment
 z = 5        # allowed, but less common
-
+z == 5
 # 3. Operators and comparisons
 a <- 2 + 3    # arithmetic
 b <- 5 ^ 2    # exponentiation
@@ -264,7 +271,10 @@ typeof(42L)         # integer
 typeof(3.14)        # double
 typeof(TRUE)        # logical
 typeof("text")      # character
-is.na(NA)           # TRUE
+is.na(NA)# TRUE
+
+vec_char <- as.character(c(1,2))
+is.character(vec_char)
 
 # Coercion
 v <- c(1, 2, 3)          # numeric vector
@@ -293,3 +303,238 @@ typeof(df1); class(df1)
 methods(generic.function = "summary")
 summary(m1)
 summary(df1)
+
+
+a <- 1
+typeof(a)
+class(a)
+
+class(lm1)
+typeof(lm1)
+
+
+
+
+
+
+
+
+dat_twins
+dim(dat_twins)
+nrow(dat_twins)
+ncol(dat_twins)
+
+# Zeile x Spalte
+dat_twins[1, 4] <- 3
+dat_twins[1, ]
+
+dat_twins$GES
+dat_twins$GES == 2
+
+dat_twins$GES[dat_twins$GES == 2] <- 3
+
+
+dat_twins$IQ
+dat_twins$IQ > 120
+
+dat_twins[ , c("ID", "CC")]
+
+dat_twins[dat_twins$IQ > 120, ]
+
+dat_twins$IQ > 120
+sum(dat_twins$IQ > 120)
+
+as.numeric(dat_twins$IQ > 120)
+
+
+dat_twins_male <- dat_twins[dat_twins$GES == 1, c("CC", "IQ")]
+
+
+
+#####################
+
+
+
+
+
+x <- list(1:3, "a", 4:6)
+x
+x[[1]]
+x[[2]]
+x[[3]][2] <- "Hallo Welt"
+x[[3]]
+
+
+x[[2]] <- list(1:10, letters)
+
+
+x[[2]][[2]][2]
+x
+names(x) <- c("AA", "BB", "CC")
+
+x[[1]]
+x$AA
+
+attributes(x)
+attributes(dat_twins)
+
+
+##################
+dat_twins[dat_twins$IQ > 120, ]
+dat_twins_subset <- dat_twins[dat_twins$IQ > 120, ]
+dat_twins_subset$ID <- dat_twins_subset$ID + 1000
+dat_twins_subset
+
+
+
+
+
+
+
+
+
+
+
+x <- 22
+if (TRUE) {
+  print("x > 30")
+} else if (x <= 30 && x > 20) {
+  print("x <= 30 && x > 20 -- 21-30")
+} else{
+  print("everything else")
+}
+
+
+
+global_control_noDataSimulation = TRUE
+
+
+if(global_control_noDataSimulation){
+  sim_vec <- rnorm(n = 10000000)
+  # .....
+  print("HALLO")
+}
+
+
+
+
+
+
+
+mean(x = c(1,3,5,NA), na.rm = TRUE)
+
+
+
+
+###############
+
+greet <- function(name, birthday = FALSE) {
+  paste0(
+    "Hi ", name,
+    if (birthday) { # but I prefer this way of writing code
+      " and HAPPY BIRTHDAY"
+    } else{
+      " and you do not have BIRTHDAY"
+    }
+  )
+}
+greet("Maria", FALSE)
+
+
+
+
+#####################################
+
+help("+")
+
+
+for(i in 1:10) { # Head of for-loop
+  x1 <- i^2 # Code block
+
+  cat("i:", i, "\n")
+  print(i %% 2)
+  if(i %% 2 == 0){
+    print(x1) # Print results
+
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+f <- function(x, y=5){
+  square <- x^2 + y # compute the square + y
+  return(square) # return the value
+}
+
+f(x = 5)
+
+formals(f)
+body(f)
+
+?psych::fa.parallel
+
+?mean
+
+?psych::fa()
+
+?psych::cor.plot
+
+
+?corPlot(Thurstone,main="9 cognitive variables from Thurstone")
+
+
+
+
+devtools::session_info()
+
+library(psych)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+library(afex)
+library(car)
+
+
+afex::aov_ez(id = )
+
+
+
+
+
+
+
+library(ggplot2)
+data(package = "ggplot2")

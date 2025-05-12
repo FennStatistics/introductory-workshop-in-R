@@ -142,7 +142,7 @@ summary(aov_out)
 
 set.seed(seed = 123)
 for(i in 1:10000){
-  vec_select <- sample(x = 1:150, size = 30)
+  vec_select <- sample(x = 1:150, size = 50)
   df_subset <- df[vec_select,]
   aov_out <- aov(formula = Sepal.Length ~ Species,
                  data = df_subset)
