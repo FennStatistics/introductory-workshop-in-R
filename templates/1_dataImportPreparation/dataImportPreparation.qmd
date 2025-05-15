@@ -1,0 +1,318 @@
+---
+title: "Import, prepare, clean data"
+author: "Julius Fenn"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    html-math-method: katex
+bibliography: Library_subset.bib
+biblio-style: apalike
+link-citations: true
+---
+
+
+# Background Information
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This file contains the pre-processing step (clean, prepare and transform data). File are split into multiple subfiles like data processing and data analyses steps, which follows the classical data-analysis pipeline [see @pengArtDataScience2016; @wickhamDataScienceImport2017].
+
+
+# Global Variables
+
+```{r}
+cutOff <- 1 # cutoff value for building extreme groups
+```
+
+
+
+# get packages, raw data, functions
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: get raw data
+
+### install and load packages
+#  if packages are not already installed, the function will install and activate them
+usePackage <- function(p) {
+  if (!is.element(p, installed.packages()[,1]))
+    install.packages(p, dep = TRUE, repos = "http://cran.us.r-project.org")
+  require(p, character.only = TRUE)
+}
+
+usePackage("haven")       # Import SPSS and other formats
+usePackage("tidyverse")   # Data manipulation
+usePackage("psych")       # Psychometric analyses
+usePackage("moments")     # Descriptive stats: skewness, kurtosis
+usePackage("stargazer")   # Output formatting
+usePackage("report")      # APA style reports
+usePackage("mice")        # Get missing data patterns
+usePackage("DT")          # dynamic tables
+usePackage("writexl")     # write data to .xlsx file
+
+rm(usePackage)
+
+
+### load data files
+## change working directory
+setwd("data")
+## load data
+dat_SPSS <- haven::read_spss(file = "ESS1-9e01_1.sav")
+
+
+### load functions
+# print(getwd())
+setwd("../functions")
+for(i in 1:length(dir())){
+  # print(dir()[i])
+  source(dir()[i], encoding = "utf-8")
+}
+
+rm(i)
+```
+
+
+
+# SPSS data (survey)
+
+
+## get an overview of your data
+
+```{r}
+# Basic structural info
+dim(dat_SPSS)             # Dimensions (rows, columns)
+nrow(dat_SPSS)            # Number of rows
+ncol(dat_SPSS)            # Number of columns
+colnames(dat_SPSS)        # Variable names
+
+# Quick view of data structure
+dplyr::glimpse(dat_SPSS)  # Compact variable summary
+str(dat_SPSS)             # Structure of the object
+head(dat_SPSS)            # First few rows
+tail(dat_SPSS)            # Last few rows
+```
+
+self-written functions:
+
+```{r}
+missing_summary(dat_SPSS)          # Count of missing values for each variable
+summary_numeric_vars(dat_SPSS)     # Summary statistics (min, max, mean, etc.) for numeric variables
+variable_types(dat_SPSS)           # Data type/class of each variable
+unique_values(dat_SPSS)            # Number of unique values in each variable
+```
+
+
+using the `mice` package to investigate the missing data patterns:
+
+```{r}
+vars_containingMissingValues <- missing_summary(dat_SPSS) 
+vars_containingMissingValues <- names(vars_containingMissingValues)[vars_containingMissingValues >= 20]
+
+# Visualize the pattern of missing data
+md_table <- mice::md.pattern(dat_SPSS[, vars_containingMissingValues])         # Table showing patterns of missing data
+```
+
+
+## get subset your data
+
+get names of subset of variables you would like to keep:
+
+```{r}
+### Scale (?!)
+# imbgeco	Immigration bad or good for country's economy	
+#> All rounds: Would you say it is generally bad or good for [country]'s economy that people come to live here from other countries?
+# imueclt	Country's cultural life undermined or enriched by immigrants
+#> All rounds: And, using this card, would you say that [country]'s cultural life is generally undermined or enriched by people coming to live here from other countries?
+# imwbcnt	Immigrants make country worse or better place to live
+#> All rounds: Is [country] made a worse or a better place to live by people coming to live here from other countries?
+sel_var_MigEnrich <- c("imbgeco", "imueclt", "imwbcnt")
+
+# imsmetn	Allow many/few immigrants of same race/ethnic group as majority
+#> Now, using this card, to what extent do you think [country] should allow people of the same race or ethnic group as most [country]'s people to come and live here?
+# imdfetn	Allow many/few immigrants of different race/ethnic group from majority
+#> All rounds: How about people of a different race or ethnic group from most [country] people?
+# impcntr	Allow many/few immigrants from poorer countries outside Europe
+#> All rounds: How about people from the poorer countries outside Europe?
+sel_var_MigAllow <- c("imsmetn", "imdfetn", "impcntr")
+
+# trstprl	Trust in country's parliament	All rounds: Using this card, please tell me on a score of 0-10 how much you personally trust each of the institutions I read out. 0 means you do not trust an institution at all, and 10 means you have complete trust. Firstly... ...[country]'s parliament?
+# trstlgl	Trust in the legal system
+# trstplc	Trust in the police
+# trstplt	Trust in politicians
+# trstprt	Trust in political parties
+# trstep	Trust in the European Parliament	
+# trstun	Trust in the United Nations
+sel_var_Trust <-  str_subset(string = colnames(dat_SPSS), pattern = "^trst")
+
+### Single Items
+# lrscale	Placement on left right scale
+#> All rounds: In politics people sometimes talk of 'left' and 'right'. Using this card, where would you place yourself on this scale, where 0 means the left and 10 means the right?
+# stflife	How satisfied with life as a whole
+#> All rounds: All things considered, how satisfied are you with your life as a whole nowadays? Please answer using this card, where 0 means extremely dissatisfied and 10 means extremely satisfied.
+# rlgdgr	How religious are you
+#> All rounds: Regardless of whether you belong to a particular religion, how religious would you say you are?
+# Gender
+sel_var_SingleItems <-  c("lrscale", "stflife", "rlgdgr", "gndr")
+```
+
+
+get subset:
+
+```{r}
+dim(dat_SPSS)
+dat_SPSS_subset <- dat_SPSS[, c(sel_var_MigEnrich, sel_var_MigAllow, sel_var_Trust, sel_var_SingleItems)]
+dim(dat_SPSS_subset)
+```
+any missing values?
+
+```{r}
+md_table <- mice::md.pattern(dat_SPSS_subset)         # Table showing patterns of missing data
+```
+
+
+
+
+## data preperation
+
+### update basic data structure
+
+```{r}
+glimpse(dat_SPSS_subset)
+```
+
+
+```{r}
+is.factor(x = dat_SPSS_subset$gndr)
+dat_SPSS_subset$gndr <- factor(x = dat_SPSS_subset$gndr, levels = c(1, 2), labels = c("Male", "Female"))
+```
+
+
+### check for reverse coded items
+
+within single scales:
+
+```{r}
+psych::cor.plot(r = cor(dat_SPSS_subset[,sel_var_MigEnrich], use =  "pairwise.complete.obs"))
+psych::cor.plot(r = cor(dat_SPSS_subset[,sel_var_MigAllow], use =  "pairwise.complete.obs"))
+psych::cor.plot(r = cor(dat_SPSS_subset[,sel_var_Trust], use =  "pairwise.complete.obs"))
+```
+single scales seems not to be reverse coded, but between scales:
+
+```{r}
+psych::cor.plot(r = cor(dat_SPSS_subset[, c("stflife", sel_var_MigEnrich, sel_var_MigAllow)], use =  "pairwise.complete.obs"))
+
+attributes(x = dat_SPSS_subset$imbgeco)
+attributes(x = dat_SPSS_subset$imsmetn)
+
+# reverse coded items
+dat_SPSS_subset$imsmetn <- 5 - dat_SPSS_subset$imsmetn 
+dat_SPSS_subset$imdfetn <- 5 - dat_SPSS_subset$imdfetn
+dat_SPSS_subset$impcntr <- 5 - dat_SPSS_subset$impcntr
+
+
+psych::cor.plot(r = cor(dat_SPSS_subset[, c("stflife", sel_var_MigEnrich, sel_var_MigAllow)], use =  "pairwise.complete.obs"))
+```
+
+### compute mean scores
+
+```{r}
+dat_SPSS_subset$mean_MigEnrich <- rowMeans(x = dat_SPSS_subset[, sel_var_MigEnrich], na.rm = TRUE)
+dat_SPSS_subset$mean_MigAllow <- rowMeans(x = dat_SPSS_subset[, sel_var_MigAllow], na.rm = TRUE)
+dat_SPSS_subset$mean_Trust <- rowMeans(x = dat_SPSS_subset[, sel_var_Trust], na.rm = TRUE)
+
+
+psych::cor.plot(r = cor(dat_SPSS_subset[, str_subset(string = colnames(dat_SPSS_subset), pattern = "^mean")], use =  "pairwise.complete.obs"))
+```
+
+
+### compute dummy variables
+
+get extreme groups for `lrscale` (left, right scale) variable:
+
+
+```{r}
+dat_SPSS_subset$lrscale_scaled <- scale(x = dat_SPSS_subset$lrscale, center = TRUE, scale = TRUE)
+mean_upper <- mean(dat_SPSS_subset$lrscale_scaled[dat_SPSS_subset$lrscale_scaled > cutOff], na.rm = TRUE)
+mean_lower <- mean(dat_SPSS_subset$lrscale_scaled[dat_SPSS_subset$lrscale_scaled < cutOff * -1], na.rm = TRUE)
+
+## draw histogram:
+hist(dat_SPSS_subset$lrscale_scaled)
+# add vertical line
+abline(v=mean_upper, col = "red")
+abline(v=mean_lower, col = "red")
+
+
+## compute dummy
+dat_SPSS_subset$lrscale_dummy <- ifelse(test = dat_SPSS_subset$lrscale_scaled > mean_upper, yes = "right", no =
+         ifelse(test = dat_SPSS_subset$lrscale_scaled < mean_lower, yes = "left", no = "middle"))
+table(dat_SPSS_subset$lrscale_dummy)
+
+
+dat_SPSS_subset$lrscale_scaled <- NULL # remove
+dat_SPSS_subset$lrscale_dummy <- factor(dat_SPSS_subset$lrscale_dummy, levels = c("left", "middle", "right"))
+```
+
+```{r}
+dat_SPSS_subset %>%
+  group_by(lrscale_dummy) %>%
+  summarise(N = n(), 
+            m_MigEnrich = mean(mean_MigEnrich, na.rm = TRUE), 
+            SD_MigEnrich = sd(mean_MigEnrich, na.rm = TRUE),
+            m_MigAllow = mean(mean_MigAllow, na.rm = TRUE),
+            SD_MigAllow = mean(mean_MigAllow, na.rm = TRUE))
+```
+
+## save prepared data set
+
+all additional information like labes need to be removed to depict data with a dynamic table:
+
+```{r}
+# Convert labelled data to regular data.frame (drop SPSS metadata)
+dat_SPSS_subset_clean <- haven::zap_labels(dat_SPSS_subset)  # remove SPSS value labels
+dat_SPSS_subset_clean <- haven::zap_formats(dat_SPSS_subset_clean)  # remove SPSS formatting
+dat_SPSS_subset_clean <- haven::zap_label(dat_SPSS_subset_clean)  # remove variable labels
+
+# Now it's safe to use with DT
+DT::datatable(data = dat_SPSS_subset_clean)
+```
+
+save data set:
+
+```{r}
+# Set output directory
+setwd("outputs")
+
+# Save as Excel (.xlsx)
+writexl::write_xlsx(
+  x = dat_SPSS_subset,
+  path = "dat_SPSS_subset.xlsx"   # Save Excel file
+)
+
+# Save as RDS (R internal format)
+write_rds(
+  x = dat_SPSS_subset,
+  file = "dat_SPSS_subset.rds"    # Save R object for later use
+)
+
+# Save as CSV
+write_csv(
+  dat_SPSS_subset,
+  file = "dat_SPSS_subset.csv"    # Save as CSV (comma-separated)
+)
+
+# Save as SPSS (.sav)
+haven::write_sav(
+  data = dat_SPSS_subset,
+  path = "dat_SPSS_subset.sav"    # Save for SPSS
+)
+```
+
+# "hands on": import, prepare, clean reaction time data
+
+Data was downloaded from: <https://osf.io/9fjeb/?view_only=c0b2db9049e44581961e9a33439ba40c>
+
+
+# References
+
