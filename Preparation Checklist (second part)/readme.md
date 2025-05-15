@@ -37,41 +37,39 @@ This section outlines the statistical procedures we will cover, based on student
 - Data cleaning (e.g., applying exclusion criteria)  
 - Creating composite scores, reversing items, calculating percentages  
 
-### 2. **Descriptive Statistics & Assumptions**
+### 2. **Hypothesis Test**
 - Summary statistics  
 - Assumption checks (e.g., Shapiro test, homoscedasticity, independence)  
-- *t*-tests and One-Way ANOVA  
-
-### 3. **ANOVA Methods**
+- *t*-test
 - One-way and factorial ANOVA  
 - Mixed-design ANOVA (within- and between-subjects)  
-- Cluster-based permutation analysis (conceptual understanding)  
 
-### 4. **Regression & Mediation Analysis**
+> including reaction time analysis
+
+### 3. **Regression & Mediation Analysis**
 - Linear and multiple regression  
 - Logistic regression with interactions  
 - Poisson regression  
 - Moderation and mediation in R  
 
-### 5. **Multilevel & Mixed Models**
-- Linear mixed-effects models (LMMs, GLMMs)  
+### 4. **Multilevel & Mixed Models, GLMMs**
+- Linear mixed-effects models (LMMs, GLMMs - mixed logistic model)  
 - Hierarchical linear models (multilevel analysis)  
 
-### 6. **Psychometrics & Questionnaire Data**
+> including reaction time and error analysis
+
+### 5. **Psychometrics & Questionnaire Data**
 - Cronbach’s alpha  
 - Factor analysis  
 - Validating 7-point Likert scales  
 
-### 7. **Reaction Time & Error Analysis**
-- ANOVA and *t*-tests for RT data  
-- Error data analysis  
-- Selective trial analysis (e.g., dual vs. single-task)  
-
-### 8. **Visualization & Reporting**
+### 6. **Reporting & Visualization**
 - Creating and customizing plots  
 - APA-style figures and tables (APA 7th edition)  
 
-### 9. **Automation & Workflow**
+
+
+### Only explaining: **Automation & Workflow**
 - Automating analysis pipelines  
 - Tidyverse workflow integration  
 - Writing reusable scripts and functions (e.g., ExParA, JASP workflows)
