@@ -1,0 +1,269 @@
+---
+title: "The tiny Quarto guide"
+author: "Julius Fenn"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    html-math-method: katex
+bibliography: Library_subset.bib
+biblio-style: apalike
+link-citations: true
+---
+
+
+
+# Background Information
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This file contains some instructions how to write code and texts in dynamic [Quarto](https://quarto.org/) documents. For more detailed information, refer to the [Quarto Markdown Basics](https://quarto.org/docs/authoring/markdown-basics.html).
+
+
+
+# 📄 Introduction to Quarto Markdown
+
+Quarto enables you to create dynamic documents by combining plain text with executable code. Understanding Markdown syntax is essential for formatting your documents effectively. Below are the fundamental elements:
+
+## 1. **Headings**
+
+Use the `#` symbol to create headings. The number of `#` symbols indicates the heading level:
+
+```markdown
+# Heading Level 1
+## Heading Level 2
+### Heading Level 3
+```
+
+
+## 2. **Emphasis**
+
+* *Italic*: Wrap text with one asterisk or underscore: `*italic*` or `_italic_`
+* **Bold**: Wrap text with two asterisks or underscores: `**bold**` or `__bold__`
+* ***Bold and Italic***: Combine both: `***bold and italic***`
+
+## 3. **Lists**
+
+* **Unordered Lists**: Use `-`, `*`, or `+` followed by a space:
+
+  ```markdown
+  - Item 1
+  - Item 2
+  ```
+
+* **Ordered Lists**: Use numbers followed by a period:
+
+  ```markdown
+  1. First item
+  2. Second item
+  ```
+
+## 4. **Links and Images**
+
+* **Hyperlinks**: `[Link Text](URL)`
+
+  Example:
+
+  ```markdown
+  [Quarto Documentation](https://quarto.org/docs/)
+  ```
+
+* **Images**: `![Alt Text](Image URL)`
+
+  Example:
+
+  ```markdown
+  ![R is so cool](https://user-images.githubusercontent.com/64165327/95934136-26177f00-0d9e-11eb-8bdc-748ee65ad17a.png)
+  ```
+  
+## 5. **Blockquotes**
+
+Use `>` to create blockquotes:
+
+```markdown
+> This is a blockquote.
+```
+
+## 6. **Code**
+
+* **Inline Code**: Use backticks `` ` `` to enclose code within a line:
+
+  ```markdown
+  I can now compute the mean from 1 to 5 within my document: `r mean(c(1:5))`
+  ```
+
+* **Code Blocks**: Use triple backticks to create code blocks. It is possible to apply different programming languages:
+
+like R:
+
+```{r eval=FALSE}
+summary(cars)
+```
+
+
+or Python:  
+
+```{python eval=FALSE}
+1 + 1
+```
+
+
+## 7. **Tables**
+
+Create tables using pipes `|` and hyphens `-`:
+
+```markdown
+| Column 1 | Column 2 |
+|----------|----------|
+| Data 1   | Data 2   |
+```
+
+## 8. **Mathematical Notation**
+
+Quarto supports LaTeX-style math expressions:
+
+* **Inline Math**: Use single dollar signs: `$...$`
+
+  Example:
+
+  ```markdown
+  The equation of a line is $y = mx + b$.
+  ```
+
+* **Display Math**: Use double dollar signs:
+
+  ```markdown
+  $$
+  E = mc^2
+  $$
+  ```
+
+## 9. **Callout Blocks**
+
+Highlight important information using callout blocks:
+
+```markdown
+::: note
+This is a note.
+:::
+
+::: warning
+This is a warning.
+:::
+```
+
+
+## 10. **YAML Front Matter**
+
+At the beginning of your `.qmd` file, include metadata enclosed by `---`:
+
+```yaml
+---
+title: "The tiny Quarto guide"
+author: "Julius Fenn"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    html-math-method: katex
+bibliography: Library_subset.bib
+biblio-style: apalike
+link-citations: true
+---
+```
+
+Ensure proper indentation and spacing in the YAML section to avoid errors.
+
+
+
+# Real Application Case
+
+Please read [Quarto Using R](https://quarto.org/docs/computations/r.html) and play around with the following code:
+
+---
+
+
+Let’s demonstrate a real-world example using the built-in `iris` dataset, which contains measurements of different iris flower species.
+
+We begin by displaying the first few rows of the dataset. We’ll use a code chunk with `echo = TRUE` to display both the code and its output:
+
+```{r echo=TRUE}
+# Show the first six rows of the iris dataset
+head(iris)
+```
+
+If you want to **show only the output and not the code**, use the chunk option `echo = FALSE`:
+
+```{r echo=FALSE}
+summary(iris)
+```
+
+> ✅ `echo = FALSE` is useful in final reports where you want to focus on the results without showing the underlying R code.
+
+You can also **suppress the output** using `eval = FALSE`, which means the code won't be run:
+
+```{r eval=FALSE}
+# This code won't be executed
+plot(iris$Sepal.Length, iris$Sepal.Width)
+```
+
+Now, let’s perform a simple data analysis:
+
+## Mean Sepal Length by Species
+
+We can compute the average sepal length for each species using the `aggregate()` function. Here, we use `message = FALSE` and `warning = FALSE` to suppress potential messages or warnings.
+
+```{r message=FALSE, warning=FALSE}
+agg_means <- aggregate(Sepal.Length ~ Species, data = iris, mean)
+agg_means
+```
+
+> 💡 `message = FALSE` and `warning = FALSE` are useful for cleaner outputs, especially when functions produce startup messages or minor warnings.
+
+## Plotting
+
+We now generate a boxplot of Sepal Length by Species and interpret the result.
+
+```{r fig.cap="Boxplot of Sepal Length by Species", fig.width=6, fig.height=4}
+boxplot(Sepal.Length ~ Species, data = iris,
+        main = "Sepal Length by Species",
+        xlab = "Species", ylab = "Sepal Length (cm)",
+        col = c("lightblue", "lightgreen", "lightpink"))
+```
+
+
+
+
+The highest average sepal length is `r max(agg_means$Sepal.Length)`
+
+
+> 🧠 **Inline code** lets us reference live results directly in text. This ensures your interpretations remain in sync with your data.
+
+
+
+# Global Chunk Options
+
+To avoid repeating the same chunk options (like `echo = FALSE`, `message = FALSE`, etc.) in every code block, you can set them **globally** at the beginning of your document using the `knitr::opts_chunk$set()` function.
+
+This is done in a setup chunk, which is typically not shown in the output.
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  include = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  fig.align = "center"
+)
+```
+
+Code is evaluated, but not shown or included:
+
+```{r}
+randomNumbers <- rnorm(n = 10, mean = 0, sd = 1) 
+plot(randomNumbers)
+```
+
+
+# References
+
