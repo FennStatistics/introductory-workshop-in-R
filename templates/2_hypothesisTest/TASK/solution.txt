@@ -1,0 +1,29 @@
+```{r}
+# Fit the ANOVA model
+model <- aov(trstlgl ~ lrscale_dummy, data = dat_subset)
+
+# QQ plot of residuals
+qqnorm(residuals(model)); qqline(residuals(model))
+
+# Shapiro–Wilk test on residuals
+shapiro.test(residuals(model))
+
+
+car::leveneTest(trstlgl ~ lrscale_dummy, data = dat_subset)
+
+
+# Run the one-way ANOVA
+summary(model)
+
+
+# Welch's ANOVA (robust to unequal variances)
+oneway.test(trstlgl ~ gndr, data = dat, var.equal = FALSE)
+
+
+# Tukey HSD post hoc test (if applicable)
+TukeyHSD(model)
+
+
+# APA-style report
+report::report(model)
+```

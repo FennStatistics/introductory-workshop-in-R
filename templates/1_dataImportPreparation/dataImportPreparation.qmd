@@ -15,7 +15,7 @@ link-citations: true
 
 # Background Information
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This file contains the pre-processing step (clean, prepare and transform data). File are split into multiple subfiles like data processing and data analyses steps, which follows the classical data-analysis pipeline [see @pengArtDataScience2016; @wickhamDataScienceImport2017].
+This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This file contains the pre-processing step (clean, prepare and transform data). Files are split into multiple subfiles like data processing and data analyses steps, which follows the classical data-analysis pipeline [see @pengArtDataScience2016; @wickhamDataScienceImport2017].
 
 
 # Global Variables

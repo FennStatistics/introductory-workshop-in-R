@@ -1,0 +1,311 @@
+---
+title: "Mixed Models for Reaction Time Data"
+author: "Julius Fenn"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    html-math-method: katex
+bibliography: Library_subset.bib
+biblio-style: apalike
+link-citations: true
+---
+
+
+# Background Information
+
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This file contains summary statistics, respectively the analysis step (confirmatory and exploratory analyses). Files are split into multiple subfiles like data processing and data analyses steps, which follows the classical data-analysis pipeline [see @pengArtDataScience2016; @wickhamDataScienceImport2017].
+
+# Global Variables
+
+```{r}
+# none global variables defined
+```
+
+# get packages, raw data, functions
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: get raw data
+
+### install and load packages
+#  if packages are not already installed, the function will install and activate them
+usePackage <- function(p) {
+  if (!is.element(p, installed.packages()[,1]))
+    install.packages(p, dep = TRUE, repos = "http://cran.us.r-project.org")
+  require(p, character.only = TRUE)
+}
+
+usePackage("afex")
+usePackage("tidyverse") # ggplot2 will be loaded
+usePackage("lme4") # mixed models / GLMMs
+usePackage("lattice") # plot random effects
+usePackage("multilevel") # generate multilevel data with different ICCs
+```
+
+# Motivating Mixed Models
+
+```{r}
+set.seed(123)  # Ensure reproducibility
+
+# ----------------------------------------
+# Simulate two datasets with different ICCs
+# ----------------------------------------
+
+# High ICC (~.90): strong group effect
+sim_ICC_high <- multilevel::sim.icc(gsize = 30, ngrp = 20, icc1 = 0.90)
+icc_high <- multilevel::ICC1(aov(VAR1 ~ as.factor(GRP), sim_ICC_high))  # Check ICC
+
+# Low ICC (~.05): weak group effect
+sim_ICC_low <- multilevel::sim.icc(gsize = 30, ngrp = 20, icc1 = 0.05)
+icc_low <- multilevel::ICC1(aov(VAR1 ~ as.factor(GRP), sim_ICC_low))  # Check ICC
+
+# Print ICCs
+cat("Estimated ICC (high):", round(icc_high, 2), "\n")
+cat("Estimated ICC (low):", round(icc_low, 2), "\n")
+
+# ----------------------------------------
+# Mixed Models (Random Intercepts Only)
+# ----------------------------------------
+
+# Random intercept model for high ICC data
+model_high <- lmer(VAR1 ~ 1 + (1 | GRP), data = sim_ICC_high, REML = FALSE)
+summary(model_high)
+# Random intercept model for low ICC data
+model_low <- lmer(VAR1 ~ 1 + (1 | GRP), data = sim_ICC_low, REML = FALSE)
+summary(model_low)
+# ----------------------------------------
+# Plot Random Effects
+# ----------------------------------------
+
+# Dotplot of random intercepts (BLUPs)
+dotplot(ranef(model_high))
+
+dotplot(ranef(model_low))
+
+
+# ----------------------------------------
+# Confidence Intervals for Group Effects (manual)
+# ----------------------------------------
+
+# Example: CI for random effect of one group in high ICC data
+test_group <- 1
+postVar <- attr(ranef(model_high, condVar = TRUE)[[1]], "postVar")[, , test_group]
+group_est <- ranef(model_high, condVar = TRUE)$GRP[test_group, 1]
+CI_lower <- group_est - 1.96 * sqrt(postVar)
+CI_upper <- group_est + 1.96 * sqrt(postVar)
+cat("Group", test_group, "BLUP CI:", round(CI_lower, 2), "to", round(CI_upper, 2), "\n")
+
+# ----------------------------------------
+# Group-wise Means
+# ----------------------------------------
+
+sim_ICC_high %>%
+  group_by(GRP) %>%
+  summarise(N = n(), Mean = mean(VAR1)) %>%
+  head()
+
+sim_ICC_low %>%
+  group_by(GRP) %>%
+  summarise(N = n(), Mean = mean(VAR1)) %>%
+  head()
+
+# ----------------------------------------
+# Fully Pooled vs. Unpooled Linear Models
+# ----------------------------------------
+
+# Fully pooled: ignore group
+pooled_model_high <- lm(VAR1 ~ 1, data = sim_ICC_high)
+pooled_model_low <- lm(VAR1 ~ 1, data = sim_ICC_low)
+
+
+# Plot for comparison
+group_means_high <- sim_ICC_high %>%
+  group_by(GRP) %>%
+  summarise(Mean = mean(VAR1))
+
+group_means_low <- sim_ICC_low %>%
+  group_by(GRP) %>%
+  summarise(Mean = mean(VAR1))
+
+
+ggplot(sim_ICC_high, aes(x = as.factor(GRP), y = VAR1)) +
+  geom_jitter(alpha = 0.4, width = 0.2, color = "gray") +
+  geom_point(data = group_means_high, aes(y = Mean), color = "blue", size = 2) +
+  geom_hline(yintercept = coef(pooled_model_high)[1], color = "red", linetype = "dashed", size = 1) +
+  labs(title = "Group Means vs. Pooled Estimate",
+       subtitle = "Red line = pooled mean | Blue dots = unpooled group means",
+       x = "Group", y = "Outcome (VAR1)") +
+  theme_minimal()
+
+
+ggplot(sim_ICC_low, aes(x = as.factor(GRP), y = VAR1)) +
+  geom_jitter(alpha = 0.4, width = 0.2, color = "gray") +
+  geom_point(data = group_means_low, aes(y = Mean), color = "blue", size = 2) +
+  geom_hline(yintercept = coef(pooled_model_low)[1], color = "red", linetype = "dashed", size = 1) +
+  labs(title = "Group Means vs. Pooled Estimate",
+       subtitle = "Red line = pooled mean | Blue dots = unpooled group means",
+       x = "Group", y = "Outcome (VAR1)") +
+  theme_minimal()
+```
+
+
+
+
+# Mixed Model Example
+
+based on:
+
+Singmann, H., & Kellen, D. (2019). An Introduction to Mixed Models for Experimental Psychology. In New Methods in Cognitive Psychology. Routledge.
+
+
+```{r}
+# --- Create Synthetic Reaction Time Dataset ---
+# --- PARAMETERS ---
+set.seed(123)
+participants <- paste0("P", 1:50)
+items <- paste0("I", 1:20)
+conditions <- c("easy", "hard")
+
+# --- RANDOM EFFECTS ---
+# Random intercepts for participants and items
+participant_effects <- rnorm(length(participants), 0, 50)
+names(participant_effects) <- participants
+
+item_effects <- rnorm(length(items), 0, 30)
+names(item_effects) <- items
+
+# Random slopes for condition per participant (some are more sensitive than others)
+condition_slopes <- rnorm(length(participants), mean = 100, sd = 50)  # SD=50 to boost variance
+names(condition_slopes) <- participants
+
+
+# Random fatigue/practice slopes for participants (some speed up, some slow down)
+trial_slopes <- rnorm(length(participants), 0, 1)
+names(trial_slopes) <- participants
+
+# --- DATA GENERATION ---
+data_list <- list()
+
+for (p in participants) {
+  slope <- trial_slopes[p]
+  condition_effect <- condition_slopes[p]  # individual effect of "hard" vs "easy"
+  trial_counter <- 1
+  for (i in items) {
+    for (cond in conditions) {
+      base_rt <- 700  # neutral midpoint
+      cond_shift <- ifelse(cond == "hard", condition_effect / 2, -condition_effect / 2)
+      fatigue <- slope * trial_counter
+      noise <- rnorm(1, 0, 50)
+      rt <- base_rt + participant_effects[p] + item_effects[i] + fatigue + cond_shift + noise
+      data_list[[length(data_list) + 1]] <- data.frame(
+        participant = p,
+        item = i,
+        condition = cond,
+        trial = trial_counter,
+        rt = rt
+      )
+      trial_counter <- trial_counter + 1
+    }
+  }
+}
+
+# --- BUILD FINAL DATASET ---
+rt_data <- do.call(rbind, data_list)
+
+# Convert to factors and center trial
+rt_data$participant <- factor(rt_data$participant)
+rt_data$item <- factor(rt_data$item)
+rt_data$condition <- factor(rt_data$condition)
+rt_data$trial <- scale(rt_data$trial)  # z-score for interpretability
+
+# --- Optional: quick look at the data ---
+head(rt_data)
+```
+
+```{r}
+# --- Quick Summary Plot ---
+ggplot(rt_data, aes(x = condition, y = rt)) +
+  geom_boxplot() +
+  labs(title = "Reaction Times by Condition", y = "RT (ms)", x = "Condition")
+```
+
+
+```{r}
+# Filter for first 20 participants
+subset_rt <- subset(rt_data, participant %in% paste0("P", 1:20))
+
+# Line plot of RT by trial for each participant
+ggplot(subset_rt, aes(x = trial, y = rt, group = participant, color = participant)) +
+  geom_line(alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, linetype = "dashed", size = 0.8) +
+  facet_wrap(~participant, scales = "free_y") +
+  labs(title = "Reaction Time Over Trials (First 20 Participants)",
+       x = "Standardized Trial Number (Fatigue/Practice)",
+       y = "Reaction Time (ms)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+
+
+```{r}
+# Set sum-to-zero contrasts globally for interpretability
+set_sum_contrasts()
+```
+
+
+```{r}
+# --- Fixed Effects Only Model ---
+fixed_model <- lm(rt ~ condition, data = rt_data)
+summary(fixed_model)
+```
+
+
+
+```{r}
+# --- Random Intercepts Model (Participants) ---
+ri_model <- lmer(rt ~ condition + (1 | participant), data = rt_data)
+summary(ri_model)
+
+# Plot random effects
+dotplot(ranef(ri_model, condVar = TRUE))
+```
+
+
+```{r}
+# --- Random Intercepts and Slopes (Participants) ---
+ris_model <- lmer(rt ~ condition + (condition | participant), data = rt_data)
+summary(ris_model)
+
+dotplot(ranef(ris_model, condVar = TRUE))
+
+```
+
+
+
+```{r}
+# --- Crossed Random Effects (Participants and Items) ---
+crossed_model <- lmer(rt ~ condition + 
+                        (condition | participant) + 
+                        (condition | item), data = rt_data)
+summary(crossed_model)
+
+# --- Using afex::mixed() with Type III tests ---
+mixed_model <- mixed(rt ~ condition + 
+                       (condition | participant) + 
+                       (condition | item), 
+                     data = rt_data, 
+                     method = "KR")
+summary(mixed_model)
+```
+
+
+
+
+# References
+

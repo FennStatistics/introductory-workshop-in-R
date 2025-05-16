@@ -1,0 +1,642 @@
+---
+title: "Summary Statistics and Hypothesis Test"
+author: "Julius Fenn"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    html-math-method: katex
+bibliography: Library_subset.bib
+biblio-style: apalike
+link-citations: true
+---
+
+
+# Background Information
+
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This file contains summary statistics, respectively the analysis step (confirmatory and exploratory analyses). Files are split into multiple subfiles like data processing and data analyses steps, which follows the classical data-analysis pipeline [see @pengArtDataScience2016; @wickhamDataScienceImport2017].
+
+# Global Variables
+
+```{r}
+# none global variables defined
+```
+
+
+
+# get packages, raw data, functions
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: get raw data
+
+### install and load packages
+#  if packages are not already installed, the function will install and activate them
+usePackage <- function(p) {
+  if (!is.element(p, installed.packages()[,1]))
+    install.packages(p, dep = TRUE, repos = "http://cran.us.r-project.org")
+  require(p, character.only = TRUE)
+}
+
+usePackage("haven")       # Import SPSS and other formats
+usePackage("tidyverse")   # Data manipulation
+usePackage("psych")       # Psychometric analyses
+usePackage("moments")     # Descriptive stats: skewness, kurtosis
+usePackage("stargazer")   # Output formatting
+usePackage("report")      # APA style reports
+# usePackage("mice")        # Get missing data patterns
+usePackage("DT")          # dynamic tables
+usePackage("writexl")     # write data to .xlsx file
+
+## exemplify Mahalanobis Distance
+usePackage("mvtnorm") 
+usePackage("plotly") 
+usePackage("MASS") 
+
+
+##
+usePackage("ggstatsplot") 
+usePackage("BayesFactor") 
+usePackage("rstatix") 
+usePackage("car")
+
+usePackage("report")
+
+
+
+rm(usePackage)
+
+
+### load data files
+## change working directory
+setwd("data")
+## load data
+dat <- readRDS(file = "dat_SPSS_subset.rds")
+
+
+### load functions
+# print(getwd())
+setwd("../functions")
+for(i in 1:length(dir())){
+  # print(dir()[i])
+  source(dir()[i], encoding = "utf-8")
+}
+
+rm(i)
+```
+# Get an overview of your data
+
+```{r}
+# Dataset dimensions and structure
+dim(dat)             # Number of rows and columns
+names(dat)           # Variable names
+dplyr::glimpse(dat)  # Compact summary of variable types and contents
+str(dat)             # Internal structure of the dataset
+head(dat)            # Preview first observations
+```
+
+
+# Univariate summary statistics
+
+
+## Descriptive Statistics: Continuous Variables
+
+```{r}
+# Identify continuous variables (numeric or integer)
+continuous_vars <- names(dat)[sapply(dat, is.numeric)]
+
+# Calculate descriptive statistics using base R
+summarize_continuous <- function(x) {
+  x <- na.omit(x)
+  c(
+    Mean      = mean(x),
+    Median    = median(x),
+    Mode      = as.numeric(names(which.max(table(x)))),  # assumes unimodal
+    SD        = sd(x),
+    Min       = min(x),
+    Max       = max(x),
+    Skewness  = moments::skewness(x),    # still needs moments for distribution shape
+    Kurtosis  = moments::kurtosis(x)     # still needs moments for distribution shape
+  )
+}
+
+# Apply function across all continuous variables
+continuous_summary <- t(sapply(dat[continuous_vars], summarize_continuous))
+
+# Display rounded results
+round(continuous_summary, 2)
+
+```
+### Plots:
+
+Histograms: 
+
+```{r}
+# Histogram for a continuous variable
+hist(dat[[continuous_vars[1]]],
+     main = paste("Histogram of", continuous_vars[1]),
+     xlab = continuous_vars[1],
+     col = "lightblue",
+     border = "white")
+
+```
+
+Boxplots:
+
+```{r}
+# Boxplot for a continuous variable
+boxplot(dat[[continuous_vars[1]]],
+        main = paste("Boxplot of", continuous_vars[1]),
+        ylab = continuous_vars[1],
+        col = "lightblue",
+        horizontal = FALSE)
+```
+
+Combined Histogram + Empirical Density + Normal Curve:
+
+```{r}
+# Select variable and remove missing values
+x <- na.omit(dat[[continuous_vars[1]]])
+
+# Plot histogram scaled to density
+hist(x,
+     freq = FALSE,
+     main = paste("Histogram + Density + Normal Curve of", continuous_vars[1]),
+     xlab = continuous_vars[1],
+     col = "lightblue",
+     border = "white")
+
+# Add empirical kernel density
+dens <- density(x)
+lines(dens, col = "blue", lwd = 2)
+polygon(dens, col = rgb(0, 0, 1, 0.2), border = NA)
+
+# Add normal curve with same mean and sd as x
+x_vals <- seq(min(x), max(x), length = 100)
+normal_curve <- dnorm(x_vals, mean = mean(x), sd = sd(x))
+lines(x_vals, normal_curve, col = "red", lwd = 2, lty = 2)
+
+abline(v=mean(x), col="black")
+
+# Optional: add legend
+legend("topright",
+       legend = c("Empirical Density", "Normal Curve"),
+       col = c("blue", "red"),
+       lwd = 2,
+       lty = c(1, 2),
+       bty = "n")
+```
+
+
+
+## Descriptive Statistics: Categorical Variables
+
+
+```{r}
+# Identify categorical variables
+categorical_vars <- names(dat)[sapply(dat, is.factor) | sapply(dat, is.character)]
+
+# Frequency tables for each categorical variable
+lapply(dat[categorical_vars], function(x) {
+  tbl <- table(x)
+  rel <- prop.table(tbl)
+  data.frame(
+    Category = names(tbl),
+    Frequency = as.integer(tbl),
+    Percentage = round(100 * rel, 1)
+  )
+})
+```
+### Plots:
+
+Bar Plot:
+
+```{r}
+# Bar plot for a categorical variable
+barplot(table(dat[[categorical_vars[2]]]),
+        main = paste("Barplot of", categorical_vars[2]),
+        col = "lightgreen",
+        las = 2)
+```
+
+
+Pie Chart:
+
+```{r}
+# Pie chart for another categorical variable
+pie(table(dat[[categorical_vars[2]]]),
+    main = paste("Pie Chart of", categorical_vars[2]),
+    col = rainbow(length(unique(dat[[categorical_vars[2]]]))))
+```
+
+
+
+# Bivariate summary statistics
+
+Covariance and Correlation (Continuous–Continuous):
+
+```{r}
+# Select two continuous variables to analyze
+var1 <- continuous_vars[1]
+var2 <- continuous_vars[2]
+
+# Remove missing data
+x <- na.omit(dat[[var1]])
+y <- na.omit(dat[[var2]])
+xy <- na.omit(data.frame(x = dat[[var1]], y = dat[[var2]]))
+
+# Sample covariance
+cov_xy <- cov(xy$x, xy$y)
+cov_xy
+
+# Pearson correlation coefficient
+cor_xy <- cor(xy$x, xy$y)
+cor_xy
+
+# Full covariance and correlation matrices
+cov(dat[continuous_vars[1:5]], use = "pairwise.complete.obs")
+cor(dat[continuous_vars[1:5]], use = "pairwise.complete.obs")
+```
+
+## plots
+
+Scatterplot (Continuous–Continuous):
+
+```{r}
+# Basic scatterplot with regression line
+plot(dat[[var1]], dat[[var2]],
+     main = paste("Scatterplot of", var1, "vs", var2),
+     xlab = var1,
+     ylab = var2,
+     pch = 19, col = "darkgray")
+
+# Add linear regression line
+abline(lm(dat[[var2]] ~ dat[[var1]]), col = "blue", lwd = 2)
+
+legend("bottomright", legend = c("Linear Fit"),
+       col = c("blue"), lty = c(1, 2))
+```
+
+ Parallel Boxplots (Categorical–Continuous):
+
+```{r}
+# Pick one categorical and one continuous variable
+group_var <- categorical_vars[1]
+metric_var <- continuous_vars[1]
+
+# Boxplot grouped by category
+boxplot(dat[[metric_var]] ~ dat[[group_var]],
+        main = paste("Boxplot of", metric_var, "by", group_var),
+        xlab = group_var,
+        ylab = metric_var,
+        col = "lightgray")
+```
+
+
+
+```{r}
+# Specify variable names
+cat1 <- categorical_vars[1]
+cat2 <- categorical_vars[2]
+outcome <- "trstlgl"
+
+# Ensure categorical variables are factors
+f1 <- as.factor(dat[[cat1]])
+f2 <- as.factor(dat[[cat2]])
+y  <- dat[[outcome]]
+
+# Drop rows with missing values
+valid_rows <- complete.cases(f1, f2, y)
+
+# Plot interaction
+interaction.plot(f1[valid_rows], f2[valid_rows], y[valid_rows],
+                 col = 1:length(levels(f2)), lty = 1, lwd = 2,
+                 trace.label = cat2,
+                 xlab = cat1,
+                 ylab = paste("Mean", outcome),
+                 main = paste("Interaction Plot:", outcome, "by", cat1, "and", cat2))
+
+# Create means table for combinations of the two categorical variables
+group_means <- dat %>%
+  filter(!is.na(.data[[cat1]]), !is.na(.data[[cat2]]), !is.na(.data[[outcome]])) %>%
+  group_by(.data[[cat1]], .data[[cat2]]) %>%
+  summarise(
+    mean_outcome = mean(.data[[outcome]]),
+    n = n(),
+    .groups = "drop"
+  )
+
+# Display the result
+group_means
+```
+
+# outlier analysis
+
+A distinction is made between univariate and multivariate outliers, statistical procedures like structural equation modeling / confirmatory factor analysis are multivariate methods (several IVs and DVs), it is necessary to check the data for multivariate outliers. The **Mahalanobis Distance** is suitable for this:
+
+```{r}
+## exemplify Mahalanobis Distance
+sigma <- matrix(c(4,1,2,1,5,4,2,4,6), ncol = 3)
+cov2cor(sigma)
+
+
+means <- c(0, 0, 0)
+set.seed(42)
+n <- 1000
+x <- rmvnorm(n = n, mean = means, sigma = sigma)
+d <- data.frame(x)
+p1 <- plot_ly(d, x = ~ X1, y = ~ X2, z = ~ X3,
+              marker = list(color = ~ X2,
+                            showscale = TRUE)) %>%
+  add_markers()
+
+p1
+
+
+## identify multivariate outliers
+d$mahal <- mahalanobis(d, colMeans(d), cov(d))
+d$p_mahal <- pchisq(d$mahal, df=2, lower.tail=FALSE)
+d[d$p_mahal < .001, ]
+```
+
+## in action:
+
+```{r}
+# imsmetn	Allow many/few immigrants of same race/ethnic group as majority
+#> Now, using this card, to what extent do you think [country] should allow people of the same race or ethnic group as most [country]'s people to come and live here?
+# imdfetn	Allow many/few immigrants of different race/ethnic group from majority
+#> All rounds: How about people of a different race or ethnic group from most [country] people?
+# impcntr	Allow many/few immigrants from poorer countries outside Europe
+#> All rounds: How about people from the poorer countries outside Europe?
+sel_var_MigAllow <- c("imsmetn", "imdfetn", "impcntr")
+
+
+dat$mahal_MigAllow <- mahalanobis(x = dat[,sel_var_MigAllow], center = colMeans(dat[,sel_var_MigAllow], na.rm = TRUE), cov =  cov(dat[,sel_var_MigAllow], use = "pairwise"))
+dat$p_mahal_MigAllow <- pchisq(dat$mahal_MigAllow, df=3, lower.tail=FALSE)
+
+## identify multivariate outliers
+head(dat[dat$p_mahal_MigAllow < .001  & !is.na(dat$mahal_MigAllow), c(sel_var_MigAllow, "mahal_MigAllow", "p_mahal_MigAllow")])
+```
+
+*recommended literature*:
+
+- Hong, M., Steedle, J. T., & Cheng, Y. (2020). Methods of Detecting Insufficient Effort Responding: Comparisons and Practical Recommendations. Educational and Psychological Measurement, 80(2), 312–345. <https://doi.org/10.1177/0013164419865316>
+- Stosic, M. D., Murphy, B. A., Duong, F., Fultz, A. A., Harvey, S. E., & Bernieri, F. (2024). Careless Responding: Why Many Findings Are Spurious or Spuriously Inflated. Advances in Methods and Practices in Psychological Science, 7(1), <https://doi.org/10.1177/25152459241231581>
+
+
+---
+
+# Hypothesis Test
+
+## t-tests
+
+
+In this section we perform both independent-samples and paired-samples t-tests.  
+
+1. **Test Types & Data Formats**  
+   - **Independent t-test**: two separate groups, different participants in each.  
+     - *Long format*: one outcome column + one grouping factor  
+     - *Wide format*: two separate columns of scores  
+   - **Paired t-test**: two measurements on the same participants (or matched pairs).  
+     - *Long format* with `paired = TRUE`  
+     - *Wide format* with two columns and `paired = TRUE`
+
+2. **Key Assumptions**  
+   - Measurement: Interval (or ratio) level  
+   - **Independence**  
+     - Independent t-test: observations between groups must be independent  
+     - Paired t-test: differences within pairs must be independent  
+   - **Normality**  
+     - Independent: sampling distribution of group means ≈ normal  
+     - Paired: distribution of paired differences ≈ normal  
+   - **Homoscedasticity** (Independent only)  
+     - Equal variances across groups (Levene’s test)  
+
+3. **Procedure**  
+   1. Inspect data & check assumptions (e.g., Shapiro–Wilk, Levene).  
+   2. Run `t.test()` with appropriate arguments.  
+   3. Interpret t-value, df, p-value, and report means ± SE.  
+   4. (Optional) Compute effect size (e.g., Cohen’s d).
+
+### single steps:
+
+**Example Paired t-test:**
+
+1. get an overview of your data:
+
+```{r}
+data("sleep") # Student's Sleep Data
+
+# ?sleep
+DT::datatable(sleep, options = list(pageLength = 5))
+```
+
+2. compute summary statistics / visualize your data - simple plots:
+
+```{r}
+## grouped boxplot
+boxplot(sleep$extra ~ sleep$group)
+## compute mean deviations:
+sleep1 <- with(sleep, extra[group == 2] - extra[group == 1])
+summary(sleep1)
+
+
+stripchart(sleep1, method = "stack", xlab = "hours",
+           main = "Sleep prolongation (n = 10)")
+boxplot(sleep1, horizontal = TRUE, add = TRUE,
+        at = .6, pars = list(boxwex = 0.5, staplewex = 0.25))
+```
+
+2. compute summary statistics / visualize your data - more sophisticated plots (**ggplot2**): 
+
+
+```{r}
+ggplot_theme <- theme(axis.title.x = element_blank(),
+                      axis.title.y = element_text(size=12),
+                      axis.text.x = element_text(size=10,hjust=0.5,vjust=0.5,face="plain", 
+                                                 colour = "black"),
+                      axis.text.y = element_text(size=12,face="plain", colour = "black"),
+                      panel.border = element_blank(),
+                      axis.line = element_line(colour = "black"),
+                      panel.grid.major = element_blank(),
+                      panel.grid.minor = element_blank(),
+                      panel.background = element_blank(),
+                      legend.position="none")  # no legend
+
+# grouped boxplot
+ggplot(sleep, aes(x=group, y=extra)) + 
+    geom_boxplot() + ggplot_theme
+```
+
+
+2. compute summary statistics / visualize your data - more sophisticated plots (**ggstatsplot**):  
+
+Using the type argument you can specify the statistical approach: 
+
+* "parametric"
+* "nonparametric"
+* "robust"
+* "bayes"
+
+```{r}
+## parametric t-test
+p1 <- ggwithinstats(
+  data = sleep,
+  x = group,
+  y = extra,
+  type = "p",
+  effsize.type = "d",
+  conf.level = 0.95,
+  title = "Parametric test"
+)
+
+p1
+```
+
+3. check the assumptions of the paired sample t-test:
+
+- Independence: Each observation should be independent of every other observation.
+- Normality: The differences between the pairs should be approximately normally distributed.
+  + No Extreme Outliers: There should be no extreme outliers in the differences.
+  + Remark: quite often in practice, if $n >> 30$ this assumption is not checked
+  
+  
+```{r}
+boxplot(sleep1) # to check outlier assumption
+```
+applying Kolmogorov-Smirnov OR Shapiro-Wilk-Test to check normality; sample size sensitive: tests become more sensitive to minimal deviations from the normal distribution as sample size increases. Use Shapiro-Wilk normality test, we have the following hypotheses:
+* Null hypothesis: the data are normally distributed
+* Alternative hypothesis: the data are not normally distributed
+
+
+```{r}
+# Shapiro-Wilk normality test for the differences
+shapiro.test(sleep1)
+```
+
+because of the  sample size sensitivity it is often better to visually check the assumption of normality:
+
+```{r}
+sleep1_sc <- scale(sleep1) # z standardize mean differences
+
+qqnorm(sleep1_sc) # QQ Plot
+qqline(sleep1_sc) # vertical line
+
+
+hist(sleep1_sc, freq = FALSE, xlim = c(-3,3))
+x<-seq(-4,+4,by=0.02)
+curve(dnorm(x), add=TRUE)
+```
+4 compute paired sample t-test:
+
+
+```{r}
+## Formula interface
+t.test(extra ~ group, data = sleep, paired = TRUE)
+```
+outputs: 
+
+* t is the t-test statistic value
+* df is the degrees of freedom
+* p-value is the significance level of the t-test
+* conf.int is the confidence interval (conf.int) of the mean differences at 95%
+* sample estimates is the mean differences between pairs
+
+
+```{r}
+## Traditional interface
+with(sleep, ttestBF(extra[group == 1], extra[group == 2], paired=TRUE))
+```
+
+> BF₁₀ = 17.26, indicating strong evidence for a mean difference
+
+to evaluate Bayse factor, see: <https://www.statlect.com/fundamentals-of-statistics/Jeffreys-scale>
+
+
+### power analysis:
+
+if you want to install / use / read more about G*Power: <https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower>
+
+The standardized mean difference effect size for within-subjects designs is referred to as Cohen’s $d_z$, which can be computed as: 
+
+
+```{r}
+## by hand:
+means <- with(sleep, tapply(extra, group, mean)) # get group means
+md <- means[1]-means[2] # get mean difference
+sleep_wide <- cbind(sleep$extra[sleep$group==1], sleep$extra[sleep$group==2])
+
+(md / sqrt(sum(((sleep_wide[,1] - sleep_wide[,2])-md)^2) / (10-1)))
+           
+           
+## by package "rstatix"
+sleep %>% cohens_d(extra ~ group, paired = TRUE)
+```
+see: Lakens, D. (2013). Calculating and reporting effect sizes to facilitate cumulative science: A practical primer for t-tests and ANOVAs. Frontiers in Psychology, 4. <https://www.frontiersin.org/articles/10.3389/fpsyg.2013.00863>
+
+
+# "hands on": one-way ANOVA
+
+One-way ANOVA compares group means across a single categorical predictor. Below, we walk through the necessary steps to check assumptions, compute the ANOVA, and interpret results.
+
+## single steps:
+
+```{r}
+# Select DV (continuous) and IV (categorical)
+dv <- "trstlgl"              # trust in legal system
+iv <- "lrscale_dummy"         # left-right dummy
+
+
+dat_subset <- dat[,c(dv, iv)]
+dim(dat_subset)
+dat_subset <- na.omit(dat_subset)
+dim(dat_subset)
+
+# Ensure grouping variable is a factor
+dat_subset[[iv]] <- factor(dat_subset[[iv]])
+```
+
+
+1. Inspect and Visualize Data
+
+```{r}
+# Boxplot: trust in legal system by Left-Right Dummy
+ggplot(dat_subset, aes_string(x = iv, y = dv)) +
+  geom_boxplot(fill = "lightgray") +
+  labs(title = "Trust in Legal System by Left-Right Dummy",
+       x = "Left Right Dummy", y = "Trust in Legal System") +
+  theme_minimal()
+```
+
+2. Check Assumptions
+
+...
+
+```{r}
+# Fit the ANOVA model
+
+# QQ plot of residuals
+
+# Shapiro–Wilk test on residuals
+
+# Check Homogeneity of Variance
+
+
+
+# Run the one-way ANOVA
+
+# Welch's ANOVA (robust to unequal variances)
+
+
+# Tukey HSD post hoc test (if applicable)
+
+
+# APA-style report
+```
+
+# References
+
