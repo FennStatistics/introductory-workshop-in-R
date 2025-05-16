@@ -1,0 +1,183 @@
+---
+title: "Mixed Effects Logistic Regression (GLLM)"
+author: "Julius Fenn"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    html-math-method: katex
+bibliography: Library_subset.bib
+biblio-style: apalike
+link-citations: true
+---
+
+
+# Background Information
+
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This file contains summary statistics, respectively the analysis step (confirmatory and exploratory analyses). Files are split into multiple subfiles like data processing and data analyses steps, which follows the classical data-analysis pipeline [see @pengArtDataScience2016; @wickhamDataScienceImport2017].
+
+# Global Variables
+
+```{r}
+# none global variables defined
+```
+
+# get packages, raw data, functions
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: get raw data
+
+### install and load packages
+#  if packages are not already installed, the function will install and activate them
+usePackage <- function(p) {
+  if (!is.element(p, installed.packages()[,1]))
+    install.packages(p, dep = TRUE, repos = "http://cran.us.r-project.org")
+  require(p, character.only = TRUE)
+}
+
+usePackage("afex")
+usePackage("tidyverse") # ggplot2 will be loaded
+usePackage("lme4") # mixed models / GLMMs
+usePackage("afex")    # mixed model helpers (optional)
+usePackage("lattice") # plot random effects
+usePackage("multilevel") # generate multilevel data with different ICCs
+
+usePackage("haven")       # Import SPSS and other formats
+
+
+usePackage("compiler")
+usePackage("parallel")
+usePackage("boot")
+usePackage("GGally")
+
+
+
+### load data files
+## change working directory
+setwd("data")
+## load data
+dat <- readRDS(file = "dat_SPSS_subset.rds")
+```
+
+# Motivating Logistic Models
+
+```{r}
+dim(dat)
+summary(dat$lrscale)
+table(dat$lrscale_dummy)
+
+dat$lrscaleIsMissing <- ifelse(test = is.na(dat$lrscale), yes = 1, no = 0)
+table(dat$lrscaleIsMissing)
+
+dat$lrscaleIsRight <- as.character(dat$lrscale_dummy)
+dat$lrscaleIsRight[dat$lrscaleIsRight == "right"] <- 1
+dat$lrscaleIsRight[dat$lrscaleIsRight == "left"] <- 0
+dat$lrscaleIsRight[dat$lrscaleIsRight == "middle"] <- NA
+dat$lrscaleIsRight <- as.numeric(dat$lrscaleIsRight)
+table(dat$lrscaleIsRight)
+```
+
+```{r}
+dat_subset <- dat[,c("lrscaleIsRight", "mean_MigEnrich", "mean_MigAllow", "stflife", "rlgdgr", 
+                     str_subset(string = colnames(dat), pattern = "^trst"))]
+dim(dat_subset)
+dat_subset <- na.omit(dat_subset)
+dim(dat_subset)
+m <- glm(lrscaleIsRight ~., data = dat_subset, family = binomial)
+summary(m)
+
+
+dat_subset <- dat[,c("lrscaleIsRight", "mean_MigEnrich", "mean_MigAllow", "mean_Trust", "stflife", "rlgdgr")]
+dim(dat_subset)
+dat_subset <- na.omit(dat_subset)
+dim(dat_subset)
+m <- glm(lrscaleIsRight ~., data = dat_subset, family = binomial)
+summary(m)
+
+
+step.model <- m %>% stepAIC(trace = FALSE)
+summary(step.model)
+coef(step.model) 
+# to interpret the params: 
+ exp(coef(step.model)) - 1
+```
+for interpretation of coefficients, see: <https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/zusammenhaenge/lreg.html>
+
+
+```{r}
+ggplot(dat_subset, aes(x = lrscaleIsRight, y = mean_MigAllow)) +
+  geom_jitter(height = 0.1, width = 0, alpha = 0.5) +
+  geom_smooth(method = "lm", se = TRUE, color = "blue") +
+  labs(y = "Mean Migration Allowance",
+       x = "Right-Wing (1) vs. Left-Wing (0)",
+       title = "Linear Regression: Migration Attitudes and Political Orientation") +
+  theme_minimal()
+
+
+lm <- lm(formula = lrscaleIsRight ~ mean_MigAllow, data = dat_subset)
+summary(lm)
+predict(lm)[1:5]
+
+boxplot(dat_subset$mean_MigAllow ~ dat_subset$lrscaleIsRight)
+```
+
+# Mixed Effects Logistic Regression
+
+
+Mixed effects logistic regression is a special case of a Generalized Linear Mixed Model (GLMM), in which a binary outcome is modeled via a logit link, and both fixed (population-level) and random (cluster-level) effects enter the linear predictor.
+
+## Model formula
+
+In matrix form, a GLMM is written as:  
+
+$$
+\mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \mathbf{Z} \mathbf{u} + \boldsymbol{\varepsilon}
+$$ 
+where  
+- $\mathbf{y}$ is the $N\times1$ response vector,  
+- $\mathbf{X}$ ($N\times p$) and $\boldsymbol{\beta}$ ($p\times1$) are the fixed-effects design matrix and coefficients,  
+- $\mathbf{Z}$ ($N\times q$) and $\mathbf{u}$ ($q\times1$) are the random-effects design matrix and (unobserved) random effects  
+- $\boldsymbol{\varepsilon}$ is the residual error vector :contentReference[oaicite:0]{index=0}.  
+
+For non-Gaussian outcomes we apply a link function $g(\cdot)$.  Letting  
+$$
+\eta = \mathbf{X}\beta + \mathbf{Z}u,
+$$ 
+the GLMM is specified as  
+$$
+g\bigl(E(\mathbf{y}\mid \mathbf{u})\bigr) = \eta.
+$$ 
+In logistic GLMMs $g(p)=\log\bigl(p/(1-p)\bigr)$ is the logit link and $y_{ij}\mid u_j\sim\mathrm{Bernoulli}(p_{ij})$ 
+
+Random effects are assumed  
+$$
+\mathbf{u}\sim N(\mathbf{0},\,\mathbf{G}), 
+$$  
+with $\mathbf{G}$ a variance–covariance matrix (e.g.\ a scalar variance for random intercepts), and residuals (conditional on $u$) typically independent.
+
+## Key points
+
+- **Conditional distribution**  
+  $\;y_{ij}\mid u_j\sim\text{Bernoulli}(p_{ij})$, $\;g(p_{ij}) = X_{ij}\beta + Z_{ij}u_j$.  
+- **Link function**  
+  Logit: $g(p)=\log\{\tfrac{p}{1-p}\},\;g^{-1}(\eta)=\tfrac{e^\eta}{1+e^\eta}.$  
+- **Fixed vs. random effects**  
+  Fixed effects $\beta$ capture population-level trends; random effects $u$ capture cluster-specific shifts (e.g.\ subjects, sites).  
+- **Estimation**  
+  Maximized via (adaptive) Gauss–Hermite quadrature or Laplace approximation, often with specialized optimizers to ensure convergence.  
+- **Interpretation**  
+  Estimates on the log-odds scale; exponentiating gives cluster-conditional odds ratios.  
+
+
+# "hands on": try to set up a Mixed Effects Logistic Regression yourself
+
+read and copy code from: <https://stats.oarc.ucla.edu/r/dae/mixed-effects-logistic-regression/> (till section "Predicted probabilities and graphing")
+
+
+# References
+

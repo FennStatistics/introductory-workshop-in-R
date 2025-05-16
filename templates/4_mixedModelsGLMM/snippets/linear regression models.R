@@ -3,11 +3,10 @@
 # date of creation: March 2020
 # authors: Julius Fenn
 # ==============================================================================
-rm(list=ls()); dev.off()
+rm(list=ls())
+# dev.off()
 
-setwd("D:/Daten Wissen/AKTUELL/zzWebpage/stepwise model selections")
-
-############################################################################ 
+############################################################################
 # load packages
 ############################################################################
 # wenn Pakete nicht bereits installiert sind, wird die Funktion diese installieren und aktivieren
@@ -22,7 +21,7 @@ usePackage <- function(p) {
 usePackage("MASS")
 usePackage("Rcmdr")
 
- 
+
 # usePackage("performance") # assessment of Regression Models Performance -> ICC
 # usePackage("stargazer") # Tabellen erstellen
 # usePackage("ggplot2")
@@ -31,7 +30,7 @@ usePackage("Rcmdr")
 # rm(usePackage)
 
 
-############################################################################ 
+############################################################################
 # package: article sthda, different packages
 # http://www.sthda.com/english/articles/37-model-selection-essentials-in-r/154-stepwise-regression-essentials-in-r/
 ############################################################################
@@ -40,13 +39,13 @@ usePackage("Rcmdr")
 # by MASS package
 ##################
 ### linear regression model
-# Fit the full model 
+# Fit the full model
 full.model <- lm(Fertility ~., data = swiss)
 summary(full.model)
 
 # Stepwise regression model
 help(stepwise)
-step.model <- stepAIC(object = full.model, direction = "both", 
+step.model <- stepAIC(object = full.model, direction = "both",
                       trace = TRUE)
 summary(step.model)
 
@@ -54,7 +53,7 @@ summary(step.model)
 ### GLM
 example(birthwt)
 birthwt.glm <- glm(low ~ ., family = binomial, data = bwt)
-birthwt.step <- stepAIC(object = birthwt.glm, direction = "both", 
+birthwt.step <- stepAIC(object = birthwt.glm, direction = "both",
                         trace = TRUE)
 birthwt.step$anova
 summary(birthwt.step)
@@ -79,7 +78,7 @@ set.seed(123)
 train.control <- trainControl(method = "cv", number = 10)
 # Train the model
 step.model <- train(Fertility ~., data = swiss,
-                    method = "leapBackward", 
+                    method = "leapBackward",
                     tuneGrid = data.frame(nvmax = 1:5),
                     trControl = train.control
 )

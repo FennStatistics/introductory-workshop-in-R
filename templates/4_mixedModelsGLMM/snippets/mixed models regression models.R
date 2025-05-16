@@ -3,7 +3,8 @@
 # date of creation: March 2020
 # authors: Julius Fenn
 # ==============================================================================
-rm(list=ls()); dev.off()
+rm(list=ls())
+# dev.off()
 
 ############################################################################
 # load packages
@@ -50,5 +51,5 @@ plot(s)
 
 m <- lmer(Coloursaturation ~ TVset*Picture+
             (1|Assessor)+(1|Assessor:TVset), data=TVbo)
-
+summary(m)
 step(m, keep.effs = "Assessor")
