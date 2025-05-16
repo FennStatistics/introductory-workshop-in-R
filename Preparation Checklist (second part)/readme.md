@@ -31,6 +31,14 @@ This section outlines the statistical procedures we will cover, based on student
 
 📘 I highly recommend to immerse yourself into the statistical procedures you need, for possible ressources check out the recommended [learning materials (online document)](https://docs.google.com/document/d/1Z40Rkux_Ysq15VziCJJH21ca07ipwN52dA_LFYIsZ2g/edit?usp=sharing) of mine
 
+### 0. **The tiny Quarto guide**
+- Set up document metadata via YAML front matter.  
+- Use core Markdown: headings, lists, links, images, tables.  
+- Embed and customize code chunks (R/Python) with options (`echo`, `eval`, etc.).  
+- Integrate inline code and LaTeX math for dynamic narratives.  
+- Apply global chunk settings for consistent styling and output.
+
+
 ### 1. **Data Import & Preparation**
 - Importing SPSS and CSV data  
 - Merging participant data into wide format  
