@@ -1,0 +1,137 @@
+---
+title: "Regression and Mediation Analysis"
+author: "Julius Fenn"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    html-math-method: katex
+bibliography: Library_subset.bib
+biblio-style: apalike
+link-citations: true
+---
+
+
+# Background Information
+
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This file contains summary statistics, respectively the analysis step (confirmatory and exploratory analyses). Files are split into multiple subfiles like data processing and data analyses steps, which follows the classical data-analysis pipeline [see @pengArtDataScience2016; @wickhamDataScienceImport2017].
+
+# Global Variables
+
+```{r}
+# none global variables defined
+```
+
+# get packages, raw data, functions
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: get raw data
+
+### install and load packages
+#  if packages are not already installed, the function will install and activate them
+usePackage <- function(p) {
+  if (!is.element(p, installed.packages()[,1]))
+    install.packages(p, dep = TRUE, repos = "http://cran.us.r-project.org")
+  require(p, character.only = TRUE)
+}
+
+usePackage("semPlot")
+usePackage("lavaan") # ggplot2 will be loaded
+usePackage("readxl") # read .xlsx file
+
+
+### load data files
+## change working directory
+setwd("data")
+## load data
+dat <- readxl::read_excel(path = "questionnaire.xlsx", sheet = 1)
+
+
+### load functions
+# print(getwd())
+setwd("../functions")
+for(i in 1:length(dir())){
+  # print(dir()[i])
+  source(dir()[i], encoding = "utf-8")
+}
+
+rm(i)
+```
+
+# Mediation Analysis
+
+
+## Manifest
+
+
+## Latent
+
+
+```{r}
+regEx <- "^acceptability|^RiskBenefit.*r$|^panas.*n$"
+tmp_vars <- str_subset(string = colnames(dat), pattern = regEx)
+
+tmp_dat_mediation <- dat[,tmp_vars]
+
+
+a <- str_extract(string = colnames(tmp_dat_mediation), pattern = "[:digit:]+")
+b <- str_extract(string = colnames(tmp_dat_mediation), pattern = "(?<=[:digit:]{2}).*")
+
+
+colnames(tmp_dat_mediation) <- paste0(b,a)
+
+# model_lavaan(vars = paste0(b,a), labelLatentVar = "test")
+
+model <- '
+ acceptability =~ bi01 + gen01 + bi02 + genr02 + bir03 + gen03 + bir04 + genr04 + bi05 + gen05 + bir06 + bi07 + bir08 + bi09
+
+  percRisks =~ r01 + r02 + r03 + r04 + r05
+
+negAffect =~ n01 + n02 + n03 + n04 + n05 + n06 + n07 + n08 + n09 + n10
+
+
+# adjustments
+n03 ~~ n07;
+n05 ~~ n06;
+n04 ~~ n10;
+
+
+# direct effect
+acceptability ~ c*negAffect
+# mediator
+percRisks ~ a*negAffect
+acceptability ~ b*percRisks
+
+
+# indirect effect (a*b)
+ab := a*b
+# total effect
+total := c + (a*b)
+
+         '
+fit <- sem(model, data = tmp_dat_mediation, estimator = "MLR")
+summary(fit, standardized = TRUE)
+# fit_bootstrap <- sem(model, data = tmp_dat_mediation, estimator = "ML", se ="bootstrap")
+# summary(fit_bootstrap, standardized = TRUE)
+
+
+
+semPlot::semPaths(object = fit, what = "std", edge.label.cex = 0.5)
+round(fitmeasures(fit,
+                  fit.measures =c("aic", "bic", "logl", "pvalue",
+                                  "rmsea", "rmsea.ci.lower", "rmsea.ci.upper",
+                                  "srmr", "cfi")), digits = 3)
+
+```
+
+
+
+
+
+# References
+
