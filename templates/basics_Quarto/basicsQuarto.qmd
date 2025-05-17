@@ -19,6 +19,59 @@ link-citations: true
 This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This file contains some instructions how to write code and texts in dynamic [Quarto](https://quarto.org/) documents. For more detailed information, refer to the [Quarto Markdown Basics](https://quarto.org/docs/authoring/markdown-basics.html).
 
 
+---
+
+# 🛠️ RStudio Toolbar: Key Buttons for Quarto Documents
+
+When working with Quarto documents (`.qmd`) in RStudio, several toolbar buttons facilitate efficient editing, rendering, and publishing. Understanding these buttons will streamline your workflow.
+
+## 🔄 Render
+
+* **Function**: Executes the code in your Quarto document and generates the output in the specified format (e.g., HTML, PDF).
+* **Location**: Found in the toolbar above the editor pane.
+* **Usage**: Click to render the document. If multiple formats are specified in the YAML front matter, it renders the first listed format by default.
+
+## 💾 Render on Save
+
+* **Function**: Automatically renders the document each time you save it.
+* **Location**: Checkbox next to the Render button in the toolbar.
+* **Usage**: Enable this option to keep your output up-to-date with every save, facilitating real-time previews.
+
+## 👁️ Preview Options
+
+* **Function**: Controls where and how the rendered output is displayed.
+* **Location**: Accessible via the gear icon next to the Render button.
+* **Options**:
+
+  * **Preview in Viewer Pane**: Displays the output within RStudio's Viewer pane.
+  * **Preview in Window**: Opens the output in a separate window or browser tab.
+  * **No Preview**: Suppresses automatic preview display after rendering.
+
+## 📤 Publish
+
+* **Function**: Deploys your rendered Quarto document to external platforms such as Quarto Pub, GitHub Pages, or Posit Connect.
+* **Location**: Located in the toolbar, typically represented by an upward arrow icon.
+* **Usage**: Click to initiate the publishing process. You'll be prompted to select a destination and configure settings accordingly.
+
+## 📝 Visual Editor Toggle
+
+* **Function**: Switches between the source code editor and a WYSIWYG (What You See Is What You Get) visual editor.
+* **Location**: Buttons labeled "Source" and "Visual" at the top-right corner of the editor pane.
+* **Usage**: Toggle to the Visual Editor for a more intuitive editing experience, especially useful for formatting text, inserting images, and managing citations.
+
+## ▶️ Run
+
+* **Function**: Executes code within your document without rendering the entire file.
+* **Location**: Located in the toolbar above the editor pane.
+* **Usage**:
+
+  * **Run Selected Line(s)**: Select code and click Run or press `Ctrl+Enter` (Windows/Linux) or `Cmd+Enter` (macOS) to execute.
+  * **Run Current Chunk**: Place the cursor within a code chunk and click Run to execute the entire chunk.
+  * **Run All**: Use the dropdown next to the Run button to execute all code chunks in the document.
+
+
+---
+
 
 # 📄 Introduction to Quarto Markdown
 
@@ -196,16 +249,24 @@ If you want to **show only the output and not the code**, use the chunk option `
 
 ```{r echo=FALSE}
 summary(iris)
+dim(iris)
 ```
 
 > ✅ `echo = FALSE` is useful in final reports where you want to focus on the results without showing the underlying R code.
 
 You can also **suppress the output** using `eval = FALSE`, which means the code won't be run:
 
-```{r eval=FALSE}
+```{r eval=TRUE}
 # This code won't be executed
 plot(iris$Sepal.Length, iris$Sepal.Width)
+cor(iris$Sepal.Length, iris$Sepal.Width) # default is Pearson
 ```
+
+```{r}
+cor(iris$Sepal.Length, iris$Sepal.Width, method = "spearman")
+```
+
+
 
 Now, let’s perform a simple data analysis:
 

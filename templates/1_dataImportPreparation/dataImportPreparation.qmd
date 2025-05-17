@@ -161,14 +161,53 @@ sel_var_SingleItems <-  c("lrscale", "stflife", "rlgdgr", "gndr")
 get subset:
 
 ```{r}
-dim(dat_SPSS)
-dat_SPSS_subset <- dat_SPSS[, c(sel_var_MigEnrich, sel_var_MigAllow, sel_var_Trust, sel_var_SingleItems)]
-dim(dat_SPSS_subset)
+#--- 1. Initial subset: keep only selected variables
+dim(dat_SPSS)  # Dimensions of raw data
+
+dat_SPSS_subset_v1 <- dat_SPSS[, c(sel_var_MigEnrich, sel_var_MigAllow, sel_var_Trust, sel_var_SingleItems)]
+
+# Output dimensions after subsetting
+dim(dat_SPSS_subset_v1)
+
+#--- 2. Remove rows with *any* missing values
+dat_SPSS_subset_v2 <- na.omit(dat_SPSS_subset_v1)
+
+# Output dimensions after removing missing values
+dim(dat_SPSS_subset_v2)
+
+#--- 3. Apply quality filter: Keep rows with life satisfaction >= 3 and non-missing
+dat_SPSS_subset_v3 <- dat_SPSS %>%
+  filter(stflife >= 3, !is.na(stflife)) %>%
+  select(all_of(c(sel_var_MigEnrich, sel_var_MigAllow, sel_var_Trust, sel_var_SingleItems)))
+
+# Output dimensions after filtering based on life satisfaction
+dim(dat_SPSS_subset_v3)
 ```
+
+```{r}
+#| echo: true
+cat("### Summary of dataset versions:\n\n")
+cat("**Original data:**", dim(dat_SPSS)[1], "rows,", dim(dat_SPSS)[2], "columns\n")
+cat("**Subset v1 (selected variables only):**", dim(dat_SPSS_subset_v1)[1], "rows,", dim(dat_SPSS_subset_v1)[2], "columns\n")
+cat("**Subset v2 (complete cases only):**", dim(dat_SPSS_subset_v2)[1], "rows,", dim(dat_SPSS_subset_v2)[2], "columns\n")
+cat("**Subset v3 (stflife >= 3 and non-missing on stflife):**", dim(dat_SPSS_subset_v3)[1], "rows,", dim(dat_SPSS_subset_v3)[2], "columns\n")
+```
+
+
+
+
+
 any missing values?
 
 ```{r}
-md_table <- mice::md.pattern(dat_SPSS_subset)         # Table showing patterns of missing data
+# Generate the missing data pattern table using mice
+md_table <- mice::md.pattern(dat_SPSS_subset_v3)
+
+# Show only rows where there are at least 5 missing values
+md_table_filtered <- md_table[md_table[, ncol(md_table)] >= 10, ]
+
+# Display the result
+DT::datatable(data = md_table_filtered)
 ```
 
 
@@ -179,6 +218,9 @@ md_table <- mice::md.pattern(dat_SPSS_subset)         # Table showing patterns o
 ### update basic data structure
 
 ```{r}
+dat_SPSS_subset <- dat_SPSS_subset_v2
+
+
 glimpse(dat_SPSS_subset)
 ```
 

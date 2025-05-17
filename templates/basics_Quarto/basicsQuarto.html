@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Julius Fenn">
-<meta name="dcterms.date" content="2025-05-15">
+<meta name="dcterms.date" content="2025-05-17">
 
 <title>The tiny Quarto guide</title>
 <style>
@@ -102,6 +102,15 @@ div.csl-indent {
    
   <ul>
   <li><a href="#background-information" id="toc-background-information" class="nav-link active" data-scroll-target="#background-information">Background Information</a></li>
+  <li><a href="#rstudio-toolbar-key-buttons-for-quarto-documents" id="toc-rstudio-toolbar-key-buttons-for-quarto-documents" class="nav-link" data-scroll-target="#rstudio-toolbar-key-buttons-for-quarto-documents">🛠️ RStudio Toolbar: Key Buttons for Quarto Documents</a>
+  <ul class="collapse">
+  <li><a href="#render" id="toc-render" class="nav-link" data-scroll-target="#render">🔄 Render</a></li>
+  <li><a href="#render-on-save" id="toc-render-on-save" class="nav-link" data-scroll-target="#render-on-save">💾 Render on Save</a></li>
+  <li><a href="#preview-options" id="toc-preview-options" class="nav-link" data-scroll-target="#preview-options">👁️ Preview Options</a></li>
+  <li><a href="#publish" id="toc-publish" class="nav-link" data-scroll-target="#publish">📤 Publish</a></li>
+  <li><a href="#visual-editor-toggle" id="toc-visual-editor-toggle" class="nav-link" data-scroll-target="#visual-editor-toggle">📝 Visual Editor Toggle</a></li>
+  <li><a href="#run" id="toc-run" class="nav-link" data-scroll-target="#run">▶️ Run</a></li>
+  </ul></li>
   <li><a href="#introduction-to-quarto-markdown" id="toc-introduction-to-quarto-markdown" class="nav-link" data-scroll-target="#introduction-to-quarto-markdown">📄 Introduction to Quarto Markdown</a>
   <ul class="collapse">
   <li><a href="#headings" id="toc-headings" class="nav-link" data-scroll-target="#headings">1. <strong>Headings</strong></a></li>
@@ -146,7 +155,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 15, 2025</p>
+      <p class="date">May 17, 2025</p>
     </div>
   </div>
   
@@ -161,6 +170,70 @@ div.csl-indent {
 <section id="background-information" class="level1">
 <h1>Background Information</h1>
 <p>This is an <a href="http://rmarkdown.rstudio.com">R Markdown</a> document. Instructions for writing these documents and background information can be found in the book written by <span class="citation" data-cites="xieMarkdownDefinitiveGuide2018">Xie, Allaire, and Grolemund (<a href="#ref-xieMarkdownDefinitiveGuide2018" role="doc-biblioref">2018</a>)</span> When you execute code within the document, the results appear beneath the code. This file contains some instructions how to write code and texts in dynamic <a href="https://quarto.org/">Quarto</a> documents. For more detailed information, refer to the <a href="https://quarto.org/docs/authoring/markdown-basics.html">Quarto Markdown Basics</a>.</p>
+<hr>
+</section>
+<section id="rstudio-toolbar-key-buttons-for-quarto-documents" class="level1">
+<h1>🛠️ RStudio Toolbar: Key Buttons for Quarto Documents</h1>
+<p>When working with Quarto documents (<code>.qmd</code>) in RStudio, several toolbar buttons facilitate efficient editing, rendering, and publishing. Understanding these buttons will streamline your workflow.</p>
+<section id="render" class="level2">
+<h2 class="anchored" data-anchor-id="render">🔄 Render</h2>
+<ul>
+<li><strong>Function</strong>: Executes the code in your Quarto document and generates the output in the specified format (e.g., HTML, PDF).</li>
+<li><strong>Location</strong>: Found in the toolbar above the editor pane.</li>
+<li><strong>Usage</strong>: Click to render the document. If multiple formats are specified in the YAML front matter, it renders the first listed format by default.</li>
+</ul>
+</section>
+<section id="render-on-save" class="level2">
+<h2 class="anchored" data-anchor-id="render-on-save">💾 Render on Save</h2>
+<ul>
+<li><strong>Function</strong>: Automatically renders the document each time you save it.</li>
+<li><strong>Location</strong>: Checkbox next to the Render button in the toolbar.</li>
+<li><strong>Usage</strong>: Enable this option to keep your output up-to-date with every save, facilitating real-time previews.</li>
+</ul>
+</section>
+<section id="preview-options" class="level2">
+<h2 class="anchored" data-anchor-id="preview-options">👁️ Preview Options</h2>
+<ul>
+<li><p><strong>Function</strong>: Controls where and how the rendered output is displayed.</p></li>
+<li><p><strong>Location</strong>: Accessible via the gear icon next to the Render button.</p></li>
+<li><p><strong>Options</strong>:</p>
+<ul>
+<li><strong>Preview in Viewer Pane</strong>: Displays the output within RStudio’s Viewer pane.</li>
+<li><strong>Preview in Window</strong>: Opens the output in a separate window or browser tab.</li>
+<li><strong>No Preview</strong>: Suppresses automatic preview display after rendering.</li>
+</ul></li>
+</ul>
+</section>
+<section id="publish" class="level2">
+<h2 class="anchored" data-anchor-id="publish">📤 Publish</h2>
+<ul>
+<li><strong>Function</strong>: Deploys your rendered Quarto document to external platforms such as Quarto Pub, GitHub Pages, or Posit Connect.</li>
+<li><strong>Location</strong>: Located in the toolbar, typically represented by an upward arrow icon.</li>
+<li><strong>Usage</strong>: Click to initiate the publishing process. You’ll be prompted to select a destination and configure settings accordingly.</li>
+</ul>
+</section>
+<section id="visual-editor-toggle" class="level2">
+<h2 class="anchored" data-anchor-id="visual-editor-toggle">📝 Visual Editor Toggle</h2>
+<ul>
+<li><strong>Function</strong>: Switches between the source code editor and a WYSIWYG (What You See Is What You Get) visual editor.</li>
+<li><strong>Location</strong>: Buttons labeled “Source” and “Visual” at the top-right corner of the editor pane.</li>
+<li><strong>Usage</strong>: Toggle to the Visual Editor for a more intuitive editing experience, especially useful for formatting text, inserting images, and managing citations.</li>
+</ul>
+</section>
+<section id="run" class="level2">
+<h2 class="anchored" data-anchor-id="run">▶️ Run</h2>
+<ul>
+<li><p><strong>Function</strong>: Executes code within your document without rendering the entire file.</p></li>
+<li><p><strong>Location</strong>: Located in the toolbar above the editor pane.</p></li>
+<li><p><strong>Usage</strong>:</p>
+<ul>
+<li><strong>Run Selected Line(s)</strong>: Select code and click Run or press <code>Ctrl+Enter</code> (Windows/Linux) or <code>Cmd+Enter</code> (macOS) to execute.</li>
+<li><strong>Run Current Chunk</strong>: Place the cursor within a code chunk and click Run to execute the entire chunk.</li>
+<li><strong>Run All</strong>: Use the dropdown next to the Run button to execute all code chunks in the document.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
 </section>
 <section id="introduction-to-quarto-markdown" class="level1">
 <h1>📄 Introduction to Quarto Markdown</h1>
@@ -310,22 +383,42 @@ div.csl-indent {
                 
                 </code></pre>
 </div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 150   5</code></pre>
+</div>
 </div>
 <blockquote class="blockquote">
 <p>✅ <code>echo = FALSE</code> is useful in final reports where you want to focus on the results without showing the underlying R code.</p>
 </blockquote>
 <p>You can also <strong>suppress the output</strong> using <code>eval = FALSE</code>, which means the code won’t be run:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This code won't be executed</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris<span class="sc">$</span>Sepal.Length, iris<span class="sc">$</span>Sepal.Width)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This code won't be executed</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris<span class="sc">$</span>Sepal.Length, iris<span class="sc">$</span>Sepal.Width)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="basicsQuarto_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(iris<span class="sc">$</span>Sepal.Length, iris<span class="sc">$</span>Sepal.Width) <span class="co"># default is Pearson</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.1175698</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(iris<span class="sc">$</span>Sepal.Length, iris<span class="sc">$</span>Sepal.Width, <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.1667777</code></pre>
+</div>
 </div>
 <p>Now, let’s perform a simple data analysis:</p>
 <section id="mean-sepal-length-by-species" class="level2">
 <h2 class="anchored" data-anchor-id="mean-sepal-length-by-species">Mean Sepal Length by Species</h2>
 <p>We can compute the average sepal length for each species using the <code>aggregate()</code> function. Here, we use <code>message = FALSE</code> and <code>warning = FALSE</code> to suppress potential messages or warnings.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>agg_means <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Sepal.Length <span class="sc">~</span> Species, <span class="at">data =</span> iris, mean)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>agg_means</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>agg_means <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Sepal.Length <span class="sc">~</span> Species, <span class="at">data =</span> iris, mean)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>agg_means</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Species Sepal.Length
 1     setosa        5.006
@@ -341,14 +434,14 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="plotting">Plotting</h2>
 <p>We now generate a boxplot of Sepal Length by Species and interpret the result.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Sepal.Length <span class="sc">~</span> Species, <span class="at">data =</span> iris,</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Sepal Length by Species"</span>,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Species"</span>, <span class="at">ylab =</span> <span class="st">"Sepal Length (cm)"</span>,</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"lightgreen"</span>, <span class="st">"lightpink"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Sepal.Length <span class="sc">~</span> Species, <span class="at">data =</span> iris,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Sepal Length by Species"</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Species"</span>, <span class="at">ylab =</span> <span class="st">"Sepal Length (cm)"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"lightgreen"</span>, <span class="st">"lightpink"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="basicsQuarto_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="576"></p>
+<p><img src="basicsQuarto_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="576"></p>
 <figcaption>Boxplot of Sepal Length by Species</figcaption>
 </figure>
 </div>
@@ -365,13 +458,13 @@ div.csl-indent {
 <p>To avoid repeating the same chunk options (like <code>echo = FALSE</code>, <code>message = FALSE</code>, etc.) in every code block, you can set them <strong>globally</strong> at the beginning of your document using the <code>knitr::opts_chunk$set()</code> function.</p>
 <p>This is done in a setup chunk, which is typically not shown in the output.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">echo =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">include =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">message =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">warning =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.align =</span> <span class="st">"center"</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">echo =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">include =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">message =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">warning =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.align =</span> <span class="st">"center"</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Code is evaluated, but not shown or included:</p>
 </section>
