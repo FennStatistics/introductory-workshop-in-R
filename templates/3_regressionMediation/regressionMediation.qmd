@@ -40,16 +40,25 @@ usePackage <- function(p) {
   require(p, character.only = TRUE)
 }
 
+usePackage("tidyverse")
+usePackage("dplyr")
+usePackage("readxl") # read .xlsx file
+usePackage("haven") # read, import SPSS files
+
+usePackage("stargazer")
+
+
+
 usePackage("semPlot")
 usePackage("lavaan") # ggplot2 will be loaded
-usePackage("readxl") # read .xlsx file
 
 
 ### load data files
 ## change working directory
 setwd("data")
 ## load data
-dat <- readxl::read_excel(path = "questionnaire.xlsx", sheet = 1)
+dat_Fenn2023 <- readxl::read_excel(path = "questionnaire.xlsx", sheet = 1)
+dat_ESS <- readRDS(file = "dat_SPSS_subset.rds")
 
 
 ### load functions
@@ -63,6 +72,120 @@ for(i in 1:length(dir())){
 rm(i)
 ```
 
+# Regression Analysis
+
+```{r}
+table(dat_ESS$lrscale_dummy)
+boxplot(dat_ESS$lrscale ~ dat_ESS$lrscale_dummy)
+```
+
+
+```{r}
+# Correlation test and report
+cor_result <- cor.test(dat_ESS$stflife, dat_ESS$mean_MigEnrich, use = "complete")
+report::report(cor_result)
+
+# Improved ggplot with regression line
+ggplot(dat_ESS, aes(x = stflife, y = mean_MigEnrich)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = TRUE, color = "blue") +
+  labs(
+    title = "Relationship between Life Satisfaction and Attitudes Toward Migrant Enrichment",
+    x = "Life Satisfaction (stflife)",
+    y = "Mean Migrant Enrichment Score (mean_MigEnrich)"
+  ) +
+  theme_minimal()
+```
+```{r}
+# Get unique groups
+groups <- unique(dat_ESS$lrscale_dummy)
+
+# Loop through each group and compute correlation
+for (g in groups) {
+  cat("Group:", g, "\n")
+  
+  # Subset the data
+  sub_data <- subset(dat_ESS, lrscale_dummy == g)
+  
+  # Run correlation test
+  result <- cor.test(sub_data$stflife, sub_data$mean_MigEnrich, use = "complete.obs")
+  
+  # Print correlation estimate and p-value
+  print(result)
+  cat("\n")
+}
+```
+```{r}
+dat_upper <- dat_ESS %>%
+  filter(dat_ESS$lrscale_dummy == "right")
+dim(dat_upper)
+dat_lower <- dat_ESS %>%
+  filter(dat_ESS$lrscale_dummy == "left")
+dim(dat_lower)
+```
+
+
+
+```{r}
+lm_lower <- lm(formula = mean_MigEnrich ~ mean_Trust + stflife + gndr + rlgdgr, data = dat_lower)
+lm_upper <- lm(formula = mean_MigEnrich ~ mean_Trust + stflife + gndr + rlgdgr, data = dat_upper)
+summary(lm_lower)
+summary(lm_upper)
+```
+
+Again we can use the **stargazer** package, which identifies `lm_upper` for example as an lm-object in R and creates a wonderful table for the model results: 
+
+```{r}
+#| echo: true
+#| warning: false
+#| results: asis
+#| label: regression for low, high using stargazer
+
+setwd("outputs")
+
+
+stargazer(lm_lower, type = "html", out = "lm_lower.html")
+stargazer(lm_upper, type = "html", out = "lm_upper.html")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+# Discretize stflife into bins (e.g., quartiles)
+dat_ESS$trust_bin <- cut(dat_ESS$stflife, breaks = quantile(dat_ESS$mean_Trust, probs = seq(0, 1, 0.25), na.rm = TRUE), include.lowest = TRUE)
+
+# Remove missing data
+valid_rows <- complete.cases(dat_ESS$trust_bin, dat_ESS$lrscale_dummy, dat_ESS$mean_MigEnrich)
+
+# Make factors
+f1 <- dat_ESS$trust_bin[valid_rows]
+f2 <- dat_ESS$lrscale_dummy[valid_rows]
+y  <- dat_ESS$mean_MigEnrich[valid_rows]
+
+# Plot
+interaction.plot(f1, f2, y,
+                 col = 1:length(levels(f2)), lty = 1, lwd = 2,
+                 trace.label = "lrscale_dummy",
+                 xlab = "Trust (Binned)",
+                 ylab = "Mean Migrant Enrichment",
+                 main = "Interaction: Trust x Political Orientation")
+```
+
+
+
+
+
 # Mediation Analysis
 
 
@@ -74,9 +197,9 @@ rm(i)
 
 ```{r}
 regEx <- "^acceptability|^RiskBenefit.*r$|^panas.*n$"
-tmp_vars <- str_subset(string = colnames(dat), pattern = regEx)
+tmp_vars <- str_subset(string = colnames(dat_Fenn2023), pattern = regEx)
 
-tmp_dat_mediation <- dat[,tmp_vars]
+tmp_dat_mediation <- dat_Fenn2023[,tmp_vars]
 
 
 a <- str_extract(string = colnames(tmp_dat_mediation), pattern = "[:digit:]+")

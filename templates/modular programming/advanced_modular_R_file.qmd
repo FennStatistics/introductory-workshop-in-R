@@ -167,7 +167,7 @@ dat_lower <-dat %>%
 ### get dummy
 dat$lrscale_dummy <- ifelse(test = dat$lrscale_scaled > mean_upper, yes = 2, no =
          ifelse(test = dat$lrscale_scaled < mean_lower, yes = 1, no = 0))
-table(dat$lrscale_dummy)
+dplyr
 ```
 
 

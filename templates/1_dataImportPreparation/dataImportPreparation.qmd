@@ -154,7 +154,7 @@ sel_var_Trust <-  str_subset(string = colnames(dat_SPSS), pattern = "^trst")
 # rlgdgr	How religious are you
 #> All rounds: Regardless of whether you belong to a particular religion, how religious would you say you are?
 # Gender
-sel_var_SingleItems <-  c("lrscale", "stflife", "rlgdgr", "gndr")
+sel_var_SingleItems <-  c("lrscale", "stflife", "happy", "rlgdgr", "gndr")
 ```
 
 
