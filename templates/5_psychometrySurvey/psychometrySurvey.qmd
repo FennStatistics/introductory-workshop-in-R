@@ -1,0 +1,653 @@
+---
+title: "First analyses of cultural worldview measures"
+author: "Julius Fenn, Michael Gorki"
+date: "`r Sys.Date()`"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    html-math-method: katex
+bibliography: Library_subset.bib
+biblio-style: apalike
+link-citations: true
+---
+
+
+# Background Information
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This is an [R Markdown](http://rmarkdown.rstudio.com) document. Instructions for writing these documents and background information can be found in the book written by @xieMarkdownDefinitiveGuide2018 When you execute code within the document, the results appear beneath the code. This file contains summary statistics, respectively the analysis step (confirmatory and exploratory analyses). Files are split into multiple subfiles like data processing and data analyses steps, which follows the classical data-analysis pipeline [see @pengArtDataScience2016; @wickhamDataScienceImport2017].
+
+
+
+
+# Notes
+
+
+
+Global variables to control output: 
+
+```{r}
+## global variables
+runLCA <- FALSE
+## set to lower values to reduce compilation time: 
+LCArunsDef <- 6
+nRep_def = 100 # 100
+```
+
+
+# get packages, raw data, functions
+
+
+```{r}
+#| echo: true
+#| warning: false
+#| label: get raw data
+
+### install and load packages
+#  if packages are not already installed, the function will install and activate them
+usePackage <- function(p) {
+  if (!is.element(p, installed.packages()[,1]))
+    install.packages(p, dep = TRUE, repos = "http://cran.us.r-project.org")
+  require(p, character.only = TRUE)
+}
+
+usePackage("readxl") # read .xlsx files
+usePackage("writexl") # write .xlsx files
+
+usePackage("tidyverse") # data cleaning and summarizing
+
+## psychometric analysis
+usePackage("moments") # skewness, kurtosis
+usePackage("psych") # psychometric analysis (EFA), reliability measures
+
+usePackage("lavaan") # for CFA, SEM
+usePackage("regsem") # for regularizations -> local item dependencies
+
+usePackage("mirt") # for IRT
+
+# usePackage("MplusAutomation") # to apply statistical software Mplus (LCA)
+
+usePackage("poLCA")
+
+## outputs
+usePackage("stargazer") # create tables
+usePackage("report") # get reports of statistical tests in APA7
+
+
+rm(usePackage)
+
+
+### load data files
+## change working directory
+setwd("data")
+## load data
+dat_naming <- readxl::read_excel(path = "Overview_CCWS_short.xlsx", sheet = 1)
+
+setwd("bioinspiredBuildings")
+dat_bioinspired <- read.csv2(file("data_gabaeude_2024-06-01_00-41_load.csv", encoding = "UTF-16LE"),
+                             header = TRUE, sep = "\t")
+setwd("..")
+
+setwd("sustainabilityCAMs")
+dat_sustainability <- read.csv(file("validSoSci.csv", encoding = "UTF-8-BOM"), header = TRUE)
+setwd("..")
+
+setwd("sustainabilityCAMs")
+dat_sustainability <- read.csv(file("validSoSci.csv", encoding = "UTF-8-BOM"), header = TRUE)
+setwd("..")
+
+setwd("temporalFraming")
+dat_temporal <- readxl::read_excel(path = "data_climate-impact_2025-01-07_13-58_FILTERED.xlsx", sheet = 1)
+setwd("..")
+
+
+### load functions
+# print(getwd())
+setwd("../functions")
+for(i in 1:length(dir())){
+  # print(dir()[i])
+  source(dir()[i], encoding = "utf-8")
+}
+
+rm(i)
+```
+
+
+
+# data preperation
+
+rename variables:
+
+1. check if variables exists:
+
+```{r}
+unique(dat_naming$Item) %in% colnames(dat_bioinspired) 
+unique(dat_naming$Item) %in% colnames(dat_sustainability) 
+unique(dat_naming$Item) %in% colnames(dat_temporal) 
+```
+
+2. rename variables
+
+```{r}
+# Loop over each unique item
+for (item in unique(dat_naming$Item)) {
+  
+  # Get abbreviation for this item
+  abbrev <- unique(dat_naming$Abbrevation[dat_naming$Item == item])
+  # Get dimension for this item
+  dimension <- unique(dat_naming$Dimension[dat_naming$Item == item])
+  # Get labels as named character vector
+  val_lab <- dat_naming[dat_naming$Item == item, c("Value", "Label")]
+  labels_vec <- setNames(as.character(val_lab$Label), val_lab$Value)
+
+  if(dimension == "A: Group (Individualism-Communitarianism)"){
+    abbrev <- paste0("A_", abbrev) # "A: Group (Individualism-Communitarianism)"
+  }else{
+    abbrev <- paste0("B_", abbrev) # "B: Grid (Hierarchy-Egalitarianism)"
+  }
+  
+  # Rename column if it exists in dat_bioinspired
+  if (item %in% colnames(dat_bioinspired)) {
+    colnames(dat_bioinspired)[colnames(dat_bioinspired) == item] <- abbrev
+    colnames(dat_sustainability)[colnames(dat_sustainability) == item] <- abbrev
+    colnames(dat_temporal)[colnames(dat_temporal) == item] <- abbrev
+
+  }
+  
+  # Add value labels as an attribute (keeping variable numeric)
+  if (abbrev %in% colnames(dat_bioinspired)) {
+    
+    # Set the 'labels' attribute
+    attr(dat_bioinspired[[abbrev]], "labels") <- labels_vec
+    attr(dat_sustainability[[abbrev]], "labels") <- labels_vec
+    attr(dat_temporal[[abbrev]], "labels") <- labels_vec
+  }
+}
+```
+
+3. check renamed variables
+
+```{r}
+# List of datasets
+datasets <- list(
+  dat_bioinspired = dat_bioinspired,
+  dat_sustainability = dat_sustainability,
+  dat_temporal = dat_temporal
+)
+
+# Loop through each dataset
+for (name in names(datasets)) {
+  data <- datasets[[name]]
+  a_vars <- str_subset(colnames(data), "^A_")
+  b_vars <- str_subset(colnames(data), "^B_")
+  
+  cat("\n---", name, "---\n")
+  cat("A-prefixed variables (", length(a_vars), "):\n", paste(a_vars, collapse = ", "), "\n")
+  cat("B-prefixed variables (", length(b_vars), "):\n", paste(b_vars, collapse = ", "), "\n")
+  cat("Total columns:", ncol(data), "and rows:", nrow(data), "\n")
+}
+```
+
+## compute mean variables
+
+However, items regarding Individualism-Communitarianism are **not undimensional**!
+
+```{r}
+dat_bioinspired$mean_IndCom <- rowMeans(x = dat_bioinspired[,a_vars])
+dat_sustainability$mean_IndCom <- rowMeans(x = dat_sustainability[,a_vars])
+dat_temporal$mean_IndCom <- rowMeans(x = dat_temporal[,a_vars])
+
+dat_bioinspired$mean_HieEga <- rowMeans(x = dat_bioinspired[,b_vars])
+dat_sustainability$mean_HieEga <- rowMeans(x = dat_sustainability[,b_vars])
+dat_temporal$mean_HieEga <- rowMeans(x = dat_temporal[,b_vars])
+```
+
+
+## merge data sets
+
+```{r}
+# Select A_ and B_ columns from dat_bioinspired
+bio_cols <- grep("^(A_|B_)|mean_IndCom|mean_HieEga", colnames(dat_bioinspired), value = TRUE)
+dat_bioinspired_subset <- dat_bioinspired[, bio_cols, drop = FALSE]
+dat_bioinspired_subset$source <- "bioinspired"
+
+# Select A_ and B_ columns from dat_sustainability
+sust_cols <- grep("^(A_|B_)|mean_IndCom|mean_HieEga", colnames(dat_sustainability), value = TRUE)
+dat_sustainability_subset <- dat_sustainability[, sust_cols, drop = FALSE]
+dat_sustainability_subset$source <- "sustainability"
+
+# Select A_ and B_ columns from dat_temporal
+temp_cols <- grep("^(A_|B_)|mean_IndCom|mean_HieEga", colnames(dat_temporal), value = TRUE)
+dat_temporal_subset <- dat_temporal[, temp_cols, drop = FALSE]
+dat_temporal_subset$source <- "temporal"
+
+# Combine all three
+dat_combined_long <- rbind(dat_bioinspired_subset, dat_sustainability_subset, dat_temporal_subset)
+dat_combined_long$source <- as.factor(dat_combined_long$source)
+
+table(dat_combined_long$source)
+
+## add case variable:
+dat_combined_long$CASE <- 1:nrow(dat_combined_long)
+
+
+
+rm(dat_bioinspired_subset, dat_sustainability_subset, dat_temporal_subset)
+```
+
+
+
+
+
+# Statistics
+
+## Descriptives
+
+
+```{r}
+#| echo: true
+#| warning: false
+
+
+tmp_desc <- dat_combined_long %>%
+  group_by(source) %>%
+  summarise(N = n(),
+            meanIndCom = mean(mean_IndCom, na.rm = TRUE),
+            sdIndCom = sd(mean_IndCom, na.rm = TRUE),
+            meanHieEga = mean(mean_HieEga, na.rm = TRUE),
+            sdHieEga = sd(mean_HieEga, na.rm = TRUE))
+tmp_desc
+
+
+# ! Individualism-Communitarianism is not unidimensional, as such not show here
+ggstatsplot::ggbetweenstats(data = dat_combined_long, x = source, y = mean_HieEga, type = "parametric")
+```
+
+
+Using the **stargazer** package you can create nice tables:
+
+```{r}
+#| echo: true
+#| warning: false
+#| results: asis
+#| label: descriptive extreme group use stargazer, save as HTML
+
+#> output to html
+setwd("outputs")
+stargazer(tmp_desc, type = "html", summary = FALSE, out = "summaryTable.html")
+```
+
+
+
+## Overall EFA
+
+Promax rotation, factoring method minimum residual, if scale is a likert scale less or equal than 7 answering options the EFA or parallel analysis is computed over a polychoric correlation to account for non-normality of data (see in detail R-Code “helperFunctions”)
+
+### bioinspired data set
+
+
+```{r}
+#### Overall EFA
+regExOverall <- "^A_|^B_"
+
+
+psych::cor.plot(r = cor(dat_bioinspired[, str_detect(string = colnames(dat_bioinspired),
+                                                   pattern = regExOverall)]
+                        , use = "pairwise.complete.obs"),
+                upper = FALSE, xlas = 2, main = "Overall")
+
+#> parallel analysis
+tmp_parallelAnalysis <- dimensionalityTest(label = "Overall",
+                             regEx = regExOverall, dataset = dat_bioinspired)
+
+
+#> EFA (# of factors=5)
+tmp_EFA <- explorativeFactorAnalysis(label = "Overall",
+                                 regEx = regExOverall,
+                                 dataset = dat_bioinspired, nfac = 2)
+tmp_EFA[[1]]
+```
+
+>  the factor structure seems too weak
+
+
+
+### bioinspired data set
+
+
+```{r}
+#### Overall EFA
+regExOverall <- "^A_|^B_"
+
+
+psych::cor.plot(r = cor(dat_bioinspired[, str_detect(string = colnames(dat_bioinspired),
+                                                   pattern = regExOverall)]
+                        , use = "pairwise.complete.obs"),
+                upper = FALSE, xlas = 2, main = "Overall")
+
+#> parallel analysis
+tmp_parallelAnalysis <- dimensionalityTest(label = "Overall",
+                             regEx = regExOverall, dataset = dat_bioinspired)
+
+
+#> EFA (# of factors=5)
+tmp_EFA <- explorativeFactorAnalysis(label = "Overall",
+                                 regEx = regExOverall,
+                                 dataset = dat_bioinspired, nfac = 2)
+tmp_EFA[[1]]
+```
+
+### temporal data set
+
+
+```{r}
+#### Overall EFA
+regExOverall <- "^A_|^B_"
+
+
+psych::cor.plot(r = cor(dat_temporal[, str_detect(string = colnames(dat_temporal),
+                                                   pattern = regExOverall)]
+                        , use = "pairwise.complete.obs"),
+                upper = FALSE, xlas = 2, main = "Overall")
+
+#> parallel analysis
+tmp_parallelAnalysis <- dimensionalityTest(label = "Overall",
+                             regEx = regExOverall, dataset = dat_temporal)
+
+
+#> EFA (# of factors=5)
+tmp_EFA <- explorativeFactorAnalysis(label = "Overall",
+                                 regEx = regExOverall,
+                                 dataset = dat_temporal, nfac = 2)
+tmp_EFA[[1]]
+```
+
+>  the factor structure seems too weak, even  ultra-Heywood case 
+
+
+
+## Descriptives, correlation plot, EFA, CFA for "A: Group (Individualism-Communitarianism)"
+
+Here we could apply a self-written function for example to check the reliability and amount of explained variance for the first factor: 
+
+### bioinspired data set
+
+```{r}
+#| echo: true
+#| warning: false
+
+regEx <- "^A_"
+nameVariable <- "IndividualismCommunitarianism"
+
+dat <- dat_bioinspired
+
+sum(str_detect(string = colnames(dat), pattern = regEx))
+
+tmp_dat <- na.omit(dat[,str_detect(string = colnames(dat), pattern = regEx)])
+
+
+tmp <- CFAstats(dataset = tmp_dat, regularExp = regEx, labelLatent = str_remove(string = nameVariable, pattern = "mean_"), 
+                showPlots = TRUE, 
+                computeEFA = TRUE, 
+                computeCFA = TRUE, 
+                computeCFAMplus = FALSE)
+```
+
+
+### sustainability data set
+
+
+```{r}
+#| echo: true
+#| warning: false
+
+regEx <- "^A_"
+nameVariable <- "IndividualismCommunitarianism"
+
+dat <- dat_sustainability
+
+sum(str_detect(string = colnames(dat), pattern = regEx))
+
+tmp_dat <- na.omit(dat[,str_detect(string = colnames(dat), pattern = regEx)])
+
+
+tmp <- CFAstats(dataset = tmp_dat, regularExp = regEx, labelLatent = str_remove(string = nameVariable, pattern = "mean_"), 
+                showPlots = TRUE, 
+                computeEFA = TRUE, 
+                computeCFA = TRUE, 
+                computeCFAMplus = FALSE)
+```
+
+### temporal data set
+
+
+```{r}
+#| echo: true
+#| warning: false
+
+regEx <- "^A_"
+nameVariable <- "IndividualismCommunitarianism"
+
+dat <- dat_temporal
+
+sum(str_detect(string = colnames(dat), pattern = regEx))
+
+tmp_dat <- na.omit(dat[,str_detect(string = colnames(dat), pattern = regEx)])
+
+
+tmp <- CFAstats(dataset = tmp_dat, regularExp = regEx, labelLatent = str_remove(string = nameVariable, pattern = "mean_"), 
+                showPlots = TRUE, 
+                computeEFA = TRUE, 
+                computeCFA = TRUE, 
+                computeCFAMplus = FALSE)
+```
+
+
+
+## Descriptives, correlation plot, EFA, CFA for "B: Grid (Hierarchy-Egalitarianism)"
+
+Here we could apply a self-written function for example to check the reliability and amount of explained variance for the first factor: 
+
+### bioinspired data set
+
+```{r}
+#| echo: true
+#| warning: false
+
+regEx <- "^B_"
+nameVariable <- "HierarchyEgalitarianism"
+
+dat <- dat_bioinspired
+
+sum(str_detect(string = colnames(dat), pattern = regEx))
+
+tmp_dat <- na.omit(dat[,str_detect(string = colnames(dat), pattern = regEx)])
+
+
+tmp <- CFAstats(dataset = tmp_dat, regularExp = regEx, labelLatent = str_remove(string = nameVariable, pattern = "mean_"), 
+                showPlots = TRUE, 
+                computeEFA = TRUE, 
+                computeCFA = TRUE, 
+                computeCFAMplus = FALSE)
+```
+
+
+### sustainability data set
+
+
+```{r}
+#| echo: true
+#| warning: false
+
+regEx <- "^B_"
+nameVariable <- "HierarchyEgalitarianism"
+
+dat <- dat_sustainability
+
+sum(str_detect(string = colnames(dat), pattern = regEx))
+
+tmp_dat <- na.omit(dat[,str_detect(string = colnames(dat), pattern = regEx)])
+
+
+tmp <- CFAstats(dataset = tmp_dat, regularExp = regEx, labelLatent = str_remove(string = nameVariable, pattern = "mean_"), 
+                showPlots = TRUE, 
+                computeEFA = TRUE, 
+                computeCFA = TRUE, 
+                computeCFAMplus = FALSE)
+```
+
+### temporal data set
+
+
+```{r}
+#| echo: true
+#| warning: false
+
+regEx <- "^B_"
+nameVariable <- "HierarchyEgalitarianism"
+
+dat <- dat_temporal
+
+sum(str_detect(string = colnames(dat), pattern = regEx))
+
+tmp_dat <- na.omit(dat[,str_detect(string = colnames(dat), pattern = regEx)])
+
+
+tmp <- CFAstats(dataset = tmp_dat, regularExp = regEx, labelLatent = str_remove(string = nameVariable, pattern = "mean_"), 
+                showPlots = TRUE, 
+                computeEFA = TRUE, 
+                computeCFA = TRUE, 
+                computeCFAMplus = FALSE)
+```
+
+
+## Item Response Theory (polytomous) for "A: Group (Individualism-Communitarianism)"
+
+
+Factor Loadings (F1) indicate how strongly each item is associated with the latent trait, rule of thumb:
+
++ 0.70 = strong
++ 0.40–0.69 = moderate
++ < 0.40 = weak
+    
+Communality (h²) is the proportion of variance in each item explained by the factor, rule of thumb:
++ h² > 0.40 → item is well represented
++ h² < 0.30 → potentially problematic item
+
+### bioinspired data set
+
+
+```{r}
+# Choose dataset and regular expression
+dat <- dat_bioinspired
+regEx <- "^A_"
+
+# Filter variables matching the pattern
+irt_items <- dat[, str_detect(colnames(dat), pattern = regEx)]
+
+# Drop rows with missing data (mirt requires complete cases)
+irt_items <- na.omit(irt_items)
+
+# Ensure all items are treated as ordered factors
+irt_items[] <- lapply(irt_items, function(x) as.numeric(as.character(x)))
+# Fit Graded Response Model (1-factor)
+mod_grm <- mirt(data = irt_items, model = 1, itemtype = "graded", verbose = FALSE)
+
+# Summarize model
+summary(mod_grm)
+
+
+# Plot Item Characteristic Curves (ICCs) for all items
+plot(mod_grm, type = "trace", facet_items = TRUE, main = "Item Characteristic Curves")
+
+# Plot Test Information Curve
+plot(mod_grm, type = "info", main = "Test Information Curve: Individualism–Communitarianism")
+
+
+
+### compare results to:
+cor.plot(r = cor(irt_items))
+```
+
+Compare 1-Factor vs. 2-Factor Models:
+
+```{r}
+mod_1f <- mirt(data = irt_items, model = 1, itemtype = "graded", verbose = FALSE)
+mod_2f <- mirt(data = irt_items, model = 2, itemtype = "graded", verbose = FALSE)
+anova(mod_1f, mod_2f)
+```
+
+> significant p-value (e.g., < .05) supports the 2-factor model.
+
+
+```{r}
+summary(mod_2f)
+```
+
+
+
+## latent class analysis for "A: Group (Individualism-Communitarianism)"
+
+over complete data set:
+
+
+```{r}
+setwd("outputs")
+
+# Prepare data
+if(runLCA){
+
+  LCA_dat <- dat_combined_long[, c("CASE", str_subset(colnames(dat_combined_long), "^A_"))]
+  tmp <- str_subset(colnames(LCA_dat), "^A_")
+  colnames(LCA_dat)[-1] <- str_remove_all(tmp, "^A_")
+  
+  # Ensure all variables are treated as categorical (factors)
+  LCA_dat[] <- lapply(LCA_dat, function(x) as.factor(as.character(x)))
+  
+  # Drop rows with missing data
+  LCA_dat <- na.omit(LCA_dat)
+  
+  # Create formula for poLCA
+  lca_vars <- colnames(LCA_dat)[-1]
+  f <- as.formula(paste("cbind(", paste(lca_vars, collapse = ", "), ") ~ 1"))
+  
+  # Run poLCA models for 2 to LCArunsDef classes
+  list_lca_IndCom <- list()
+  set.seed(123)  # for reproducibility
+  
+  for (i in 2:LCArunsDef) {
+    cat("Fitting", i, "class model...\n")
+    
+    lca_model <- poLCA(f, data = LCA_dat, nclass = i, maxiter = 5000, 
+                       nrep = nRep_def, verbose = FALSE, 
+                       na.rm = TRUE)
+    
+    list_lca_IndCom[[i-1]] <- lca_model
+  }
+
+  # Save results
+  saveRDS(list_lca_IndCom, file = "list_lca_IndCom.rds")
+} else {
+  list_lca_IndCom <- readRDS("list_lca_IndCom.rds" )
+}
+
+```
+
+
+get fit statistics LCA:
+
+```{r}
+getLCAfitstatistics(listLCAoutput = list_lca_IndCom)
+```
+```{r}
+plot_poLCA_profile(
+  list_lca_IndCom[[2]], 
+  class_labels = c("Class 1", "Class 2", "Class 3"), 
+  title = "LCA Response Probabilities (3-Class Solution)"
+)
+```
+
+
+
+# References
+
