@@ -233,7 +233,7 @@ z=\frac{X-\mu}{\sigma}
 <p>A reference label for a figure must have the prefix <code>fig-</code>, and in a code chunk, the caption must be set with <code>fig-cap</code>. Captions are in <a href="https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case">title case</a>.</p>
 <div class="cell FigureWithNote" data-apa-note="This is the note below the figure." data-custom-style="FigureWithNote">
 <div class="cell-output-display">
-<div id="fig-myplot" class="quarto-figure quarto-figure-center quarto-float" prefix="" data-fignum="1">
+<div id="fig-myplot" class="quarto-figure quarto-figure-center quarto-float" data-fignum="1" prefix="">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -259,7 +259,7 @@ z=\frac{X-\mu}{\sigma}
 <h2 data-anchor-id="displaying-tables">Displaying Tables</h2>
 <p>We can make a table the same way as a figure. Generating a table that conforms to APA format in all document formats can be tricky. When the table is simple, the <code>kable</code> function from knitr works well. Feel free to experiment with different methods, but I have found that David Gohel’s <a href="https://davidgohel.github.io/flextable/">flextable</a> to be the best option when I need something more complex.</p>
 <div class="cell FigureWithNote" data-apa-note="The note below the table." prefix="" data-tblnum="1" data-custom-style="FigureWithNote">
-<div id="tbl-mytable" class="cell quarto-float" data-tblnum="1" data-apa-note="The note below the table." prefix="">
+<div id="tbl-mytable" class="cell quarto-float" data-apa-note="The note below the table." data-tblnum="1" prefix="">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -313,7 +313,7 @@ z=\frac{X-\mu}{\sigma}
 <p>As demonstrated in <a href="#fig-twocolumn" class="quarto-xref" aria-expanded="false">Figure&nbsp;2</a>, you can make figures tables span the two columns by setting the <code>apa-twocolumn</code> chunk option to <code>true</code>.</p>
 <div class="cell FigureWithNote" data-layout-align="center" data-apa-note="Figures in two-column mode are only different for jou mode in .pdf documents" data-apa-twocolumn="true" data-custom-style="FigureWithNote">
 <div class="cell-output-display">
-<div id="fig-twocolumn" class="quarto-figure quarto-figure-center quarto-float" data-fig-pos="tp" data-fig-align="center" prefix="" data-fignum="2">
+<div id="fig-twocolumn" class="quarto-figure quarto-figure-center quarto-float" data-fig-align="center" data-fignum="2" data-fig-pos="tp" prefix="">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-twocolumn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -392,7 +392,7 @@ z=\frac{X-\mu}{\sigma}
 <p>Describe the basic characteristics of the primary variables. My ideal is to describe the variables well enough that someone conducting a meta-analysis can include the study without needing to ask for additional information.</p>
 <!-- Add Additional Sections as Needed -->
 <p><a href="#tbl-mymarkdowntable2" class="quarto-xref" aria-expanded="false">Table&nbsp;2</a> is an example of a plain markdown table. Note the that the caption begins with a colon.</p>
-<div id="tbl-mymarkdowntable2" class="quarto-float FigureWithNote" data-tblnum="2" data-apa-note="My note" prefix="" data-custom-style="FigureWithNote">
+<div id="tbl-mymarkdowntable2" class="quarto-float FigureWithNote" data-apa-note="My note" data-tblnum="2" prefix="" data-custom-style="FigureWithNote">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mymarkdowntable2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -469,7 +469,7 @@ Schneider, W. J., &amp; McGrew, K. S. (2012). The <span>Cattell-Horn-Carroll</sp
 <p>If there is only one appendix, the label automatically inserted above the the appendix title will be <strong>Appendix</strong>. If there are multiple appendices, the labels <strong>Appendix A</strong>, <strong>Appendix B</strong>, <strong>Appendix C</strong> and so forth will be inserted above the titles.</p>
 <p>To cite an appendix as a whole, reference it with the <code>@apx-</code> prefix. For example, see <a href="#apx-a" class="quarto-xref" aria-expanded="false">Appendix&nbsp;A</a> and <a href="#apx-b" class="quarto-xref" aria-expanded="false">Appendix&nbsp;B</a>.</p>
 <p>This is an appendix with a table using markdown (see <a href="#tbl-letters" class="quarto-xref" aria-expanded="false">Table&nbsp;A1</a>).</p>
-<div id="tbl-letters" class="quarto-float FigureWithNote" data-tblnum="1" data-apa-note="These are letters." prefix="A" data-custom-style="FigureWithNote">
+<div id="tbl-letters" class="quarto-float FigureWithNote" data-apa-note="These are letters." data-tblnum="1" prefix="A" data-custom-style="FigureWithNote">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-letters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -519,7 +519,7 @@ Schneider, W. J., &amp; McGrew, K. S. (2012). The <span>Cattell-Horn-Carroll</sp
 <section id="apx-b" class="level1" data-appendixtitle="B">
 <h1 data-appendixtitle="B">Another Appendix</h1>
 <p>See <a href="#fig-appendfig" class="quarto-xref" aria-expanded="false">Figure&nbsp;B1</a>, an example of an imported graphic using markdown syntax.</p>
-<div id="fig-appendfig" class="quarto-figure quarto-figure-center quarto-float FigureWithNote" data-apa-note="A *note* below the figure" prefix="B" data-fignum="1" data-custom-style="FigureWithNote">
+<div id="fig-appendfig" class="quarto-figure quarto-figure-center quarto-float FigureWithNote" data-fignum="1" data-apa-note="A *note* below the figure" prefix="B" data-custom-style="FigureWithNote">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-appendfig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">

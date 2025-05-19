@@ -66,5 +66,4 @@ This is my first paragraph. Any section headings in the introduction should be i
 
 # This Section Is an Appendix {#apx-a}
 
-
 # Another Appendix {#apx-b}

@@ -7,8 +7,7 @@ Mode}{\label{fig-twocolumn}}}}
 \includegraphics{example_files/figure-pdf/fig-twocolumn-1.pdf}
 \end{center}
 
-{\vspace{-20pt}
-\noindent \emph{Note.} Figures in two-column mode are only different for
-jou mode in .pdf documents}
+{\noindent \emph{Note.} Figures in two-column mode are only different
+for jou mode in .pdf documents}
 
 \end{figure*}

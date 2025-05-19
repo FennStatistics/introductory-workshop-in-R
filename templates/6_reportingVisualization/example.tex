@@ -1,5 +1,5 @@
 \documentclass[
-  jou,
+  stu,
   floatsintext,
   longtable,
   nolmodern,
@@ -212,46 +212,13 @@ Capital
 St., Albany, NY 12084-1234, USA, Email: \href{mailto:sm@example.org}{sm@example.org}}
 }
 
-\usepackage{pbalance}
-% \usepackage{float}
 \makeatletter
-\let\oldtpt\ThreePartTable
-\let\endoldtpt\endThreePartTable
-\def\ThreePartTable{\@ifnextchar[\ThreePartTable@i \ThreePartTable@ii}
-\def\ThreePartTable@i[#1]{\begin{figure}[!htbp]
-\onecolumn
-\begin{minipage}{0.485\textwidth}
-\oldtpt[#1]
-}
-\def\ThreePartTable@ii{\begin{figure}[!htbp]
-\onecolumn
-\begin{minipage}{0.48\textwidth}
-\oldtpt
-}
-\def\endThreePartTable{
-\endoldtpt
-\end{minipage}
-\twocolumn
-\end{figure}}
-\makeatother
-
-
-\makeatletter
-\let\endoldlt\endlongtable		
+\let\endoldlt\endlongtable
 \def\endlongtable{
 \hline
-\endoldlt}
+\endoldlt
+}
 \makeatother
-
-\newenvironment{twocolumntable}% environment name
-{% begin code
-\begin{table*}[!htbp]%
-\onecolumn%
-}%
-{%
-\twocolumn%
-\end{table*}%
-}% end code
 
 \urlstyle{same}
 
@@ -465,14 +432,11 @@ free to experiment with different methods, but I have found that David
 Gohel's \href{https://davidgohel.github.io/flextable/}{flextable} to be
 the best option when I need something more complex.
 
-\begin{ThreePartTable}
+\begin{table}
+
+{\caption{{The Table Caption.}{\label{tbl-mytable}}}}
 
 \begin{longtable}[]{@{}rl@{}}
-
-\caption{\label{tbl-mytable}The Table Caption.}
-
-\tabularnewline
-
 \toprule\noalign{}
 Numbers & Letters \\
 \midrule\noalign{}
@@ -483,12 +447,11 @@ Numbers & Letters \\
 2 & B \\
 3 & C \\
 4 & D \\
-
 \end{longtable}
 
 {\noindent \emph{Note.} The note below the table.}
 
-\end{ThreePartTable}
+\end{table}
 
 To refer to this table in text, use the \texttt{@} symbol followed by
 the reference label like so: As seen in Table~\ref{tbl-mytable}, the
@@ -608,14 +571,11 @@ additional information.
 Table~\ref{tbl-mymarkdowntable2} is an example of a plain markdown
 table. Note the that the caption begins with a colon.
 
-\begin{ThreePartTable}
+\begin{table}
+
+{\caption{{My Caption.}{\label{tbl-mymarkdowntable2}}}}
 
 \begin{longtable}[]{@{}cc@{}}
-\caption{My Caption.}\label{tbl-mymarkdowntable2}\tabularnewline
-\toprule\noalign{}
-Letters & Numbers \\
-\midrule\noalign{}
-\endfirsthead
 \toprule\noalign{}
 Letters & Numbers \\
 \midrule\noalign{}
@@ -629,7 +589,7 @@ C & 3 \\
 
 {\noindent \emph{Note.} My note}
 
-\end{ThreePartTable}
+\end{table}
 
 \section{Discussion}\label{discussion}
 
@@ -687,14 +647,11 @@ prefix. For example, see \hyperref[apx-a]{Appendix~A} and
 This is an appendix with a table using markdown (see
 Table~\ref{tbl-letters}).
 
-\begin{ThreePartTable}
+\begin{table}
+
+{\caption{{My Caption}{\label{tbl-letters}}}}
 
 \begin{longtable}[]{@{}lll@{}}
-\caption{My Caption}\label{tbl-letters}\tabularnewline
-\toprule\noalign{}
-Col 1 & Col 2 & Col 3 \\
-\midrule\noalign{}
-\endfirsthead
 \toprule\noalign{}
 Col 1 & Col 2 & Col 3 \\
 \midrule\noalign{}
@@ -708,7 +665,7 @@ A & G & G \\
 
 {\noindent \emph{Note.} These are letters.}
 
-\end{ThreePartTable}
+\end{table}
 
 \section{Another Appendix}\label{apx-b}
 

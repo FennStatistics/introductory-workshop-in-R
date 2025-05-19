@@ -536,7 +536,9 @@ curve(dnorm(x), add=TRUE)
 
 ```{r}
 ## Formula interface
-t.test(extra ~ group, data = sleep, paired = TRUE)
+resTtest <- t.test(extra ~ group, data = sleep, paired = TRUE)
+resTtest
+report::report(resTtest)
 ```
 outputs: 
 
